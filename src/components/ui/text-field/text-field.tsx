@@ -1,7 +1,5 @@
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
-import '@radix-ui/themes/styles.css'
-
 import { Typography } from '../typography'
 
 import s from './text-field.module.scss'
