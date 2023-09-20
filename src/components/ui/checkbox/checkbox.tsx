@@ -26,7 +26,11 @@ export const Checkbox = ({
 }: Props) => {
   return (
     <div className={s.wrapper}>
-      <Typography className={`${s.label} ${disabled ? s.labelDisabled : ''}`} as={'label'}>
+      <Typography
+        className={`${s.label} ${disabled ? s.labelDisabled : ''}`}
+        as={'label'}
+        variant={'body2'}
+      >
         <CheckboxRadix.Root
           className={`${s.default} ${!checked ? s.uncheck : ''} ${className}`}
           checked={checked}
