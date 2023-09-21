@@ -22,12 +22,12 @@ export interface TextProps<T extends ElementType> {
   className?: string
 }
 
-export function Typography<T extends ElementType = 'p'>({
+export const Typography = <T extends ElementType = 'p'>({
   as,
   className,
   variant = 'body1',
   ...restProps
-}: TextProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TextProps<T>>) {
+}: TextProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TextProps<T>>) => {
   const Component = as || 'p'
 
   return <Component className={`${s[variant]} ${className}`} {...restProps} />
