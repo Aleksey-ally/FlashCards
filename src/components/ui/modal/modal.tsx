@@ -9,9 +9,9 @@ import {
   DialogTitle,
 } from '@radix-ui/react-dialog'
 
-import { Close } from '../../../assets/icon'
-
 import s from './modal.module.scss'
+
+import { Close } from '@/assets/icons'
 
 export type ModalSize = 'sm' | 'md' | 'lg'
 
