@@ -43,12 +43,12 @@ export const TabSwitcher = ({ tabs, defaultValue, value, onValueChange, children
   )
 }
 
-type TabSwitcherContent = {
+type TabSwitcherContentType = {
   value: string
   children?: ReactNode
 }
 
-export const TabSwitcherContent = ({ value, children }: TabSwitcherContent) => {
+export const TabSwitcherContent = ({ value, children }: TabSwitcherContentType) => {
   return (
     <TabsRadix.Content className={s.content} value={value}>
       {children}
