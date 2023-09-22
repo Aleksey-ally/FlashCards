@@ -21,8 +21,8 @@ const templeTabs = [
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => {
-    return <TabSwitcher tabs={templeTabs}></TabSwitcher>
+  args: {
+    tabs: templeTabs,
   },
 }
 

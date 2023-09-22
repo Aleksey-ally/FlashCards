@@ -22,26 +22,24 @@ type Props = {
 
 export const TabSwitcher = ({ tabs, defaultValue, value, onValueChange, children }: Props) => {
   return (
-    <div>
-      <TabsRadix.Root defaultValue={defaultValue} value={value} onValueChange={onValueChange}>
-        <TabsRadix.List className={s.list}>
-          {tabs.map(t => {
-            return (
-              <TabsRadix.Trigger
-                key={t.value}
-                className={`${s.default}`}
-                autoFocus={defaultValue === t.value}
-                value={t.value}
-                disabled={t.disabled}
-              >
-                <Typography variant="body1">{t.title}</Typography>
-              </TabsRadix.Trigger>
-            )
-          })}
-        </TabsRadix.List>
-        {children}
-      </TabsRadix.Root>
-    </div>
+    <TabsRadix.Root defaultValue={defaultValue} value={value} onValueChange={onValueChange}>
+      <TabsRadix.List className={s.list}>
+        {tabs.map(t => {
+          return (
+            <TabsRadix.Trigger
+              key={t.value}
+              className={`${s.default}`}
+              autoFocus={defaultValue === t.value}
+              value={t.value}
+              disabled={t.disabled}
+            >
+              <Typography variant="body1">{t.title}</Typography>
+            </TabsRadix.Trigger>
+          )
+        })}
+      </TabsRadix.List>
+      {children}
+    </TabsRadix.Root>
   )
 }
 
