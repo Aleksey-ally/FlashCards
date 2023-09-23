@@ -25,25 +25,23 @@ export const Checkbox = ({
   children,
 }: Props) => {
   return (
-    <div className={s.wrapper}>
-      <Typography
-        className={`${s.label} ${disabled ? s.labelDisabled : ''}`}
-        as={'label'}
-        variant={'body2'}
+    <Typography
+      className={`${s.label} ${disabled ? s.labelDisabled : ''}`}
+      as={'label'}
+      variant={'body2'}
+    >
+      <CheckboxRadix.Root
+        className={`${s.default} ${!checked ? s.uncheck : ''} ${className}`}
+        checked={checked}
+        onCheckedChange={onChange}
+        disabled={disabled}
+        required={required}
       >
-        <CheckboxRadix.Root
-          className={`${s.default} ${!checked ? s.uncheck : ''} ${className}`}
-          checked={checked}
-          onCheckedChange={onChange}
-          disabled={disabled}
-          required={required}
-        >
-          <CheckboxRadix.Indicator>
-            {checked && <CheckMark disabled={disabled} />}
-          </CheckboxRadix.Indicator>
-        </CheckboxRadix.Root>
-        {children}
-      </Typography>
-    </div>
+        <CheckboxRadix.Indicator>
+          {checked && <CheckMark disabled={disabled} />}
+        </CheckboxRadix.Indicator>
+      </CheckboxRadix.Root>
+      {children}
+    </Typography>
   )
 }
