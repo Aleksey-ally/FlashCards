@@ -37,7 +37,6 @@
   }
 
   &.error {
-    cursor: not-allowed;
     color: var(--color-danger-300);
     border-color: var(--color-danger-300);
   }
@@ -68,16 +67,11 @@
 }
 
 .disabled {
-  cursor: not-allowed;
   color: var(--color-dark-300);
   border-color: var(--color-dark-300);
 
   &::placeholder {
     color: var(--color-dark-300);
-  }
-
-  &:not(:disabled):hover {
-    border-color: var(--color-dark-300);
   }
 }
 
@@ -92,7 +86,6 @@
 
 .field {
   @extend %field-styles;
-
 }
 
 .searchCont {
