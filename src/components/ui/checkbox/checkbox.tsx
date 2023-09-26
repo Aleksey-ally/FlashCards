@@ -1,5 +1,3 @@
-import { ReactNode } from 'react'
-
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 
 import s from './checkbox.module.scss'
@@ -9,31 +7,32 @@ import { Typography } from '@/components/ui/typography'
 
 type Props = {
   className?: string
+  label?: string
   checked?: boolean
-  onChange?: (checked: boolean) => void
+  onValueChange?: (checked: boolean) => void
   disabled?: boolean
   required?: boolean
-  children?: ReactNode
 }
 
 export const Checkbox = ({
   className = '',
+  label,
   checked,
-  onChange,
+  onValueChange,
   disabled,
   required,
-  children,
 }: Props) => {
+  const classNames = {
+    label: `${s.label} ${disabled ? s.labelDisabled : ''}`,
+    checkBox: `${s.default} ${!checked ? s.uncheck : ''} ${className}`,
+  }
+
   return (
-    <Typography
-      className={`${s.label} ${disabled ? s.labelDisabled : ''}`}
-      as={'label'}
-      variant={'body2'}
-    >
+    <Typography className={classNames.label} as={'label'} variant={'body2'}>
       <CheckboxRadix.Root
-        className={`${s.default} ${!checked ? s.uncheck : ''} ${className}`}
+        className={classNames.checkBox}
         checked={checked}
-        onCheckedChange={onChange}
+        onCheckedChange={onValueChange}
         disabled={disabled}
         required={required}
       >
@@ -41,7 +40,7 @@ export const Checkbox = ({
           {checked && <CheckMark disabled={disabled} />}
         </CheckboxRadix.Indicator>
       </CheckboxRadix.Root>
-      {children}
+      {label}
     </Typography>
   )
 }

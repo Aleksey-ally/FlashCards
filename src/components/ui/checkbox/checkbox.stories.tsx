@@ -43,21 +43,21 @@ export const Controlled: Story = {
   render: args => {
     const [check, setCheck] = useState<boolean>(false)
 
-    return <Checkbox {...args} checked={check} onChange={setCheck} />
+    return <Checkbox {...args} checked={check} onValueChange={setCheck} />
   },
 }
 
 export const CheckedWithText: Story = {
   args: {
     checked: true,
-    children: 'CheckBox',
+    label: 'CheckBox',
   },
 }
 
 export const UncheckedWithText: Story = {
   args: {
     checked: false,
-    children: 'CheckBox',
+    label: 'CheckBox',
   },
 }
 
@@ -65,7 +65,7 @@ export const CheckedAndDisabledWithText: Story = {
   args: {
     checked: true,
     disabled: true,
-    children: 'CheckBox',
+    label: 'CheckBox',
   },
 }
 
@@ -73,7 +73,7 @@ export const UncheckedAndDisabledWithText: Story = {
   args: {
     checked: false,
     disabled: true,
-    children: 'CheckBox',
+    label: 'CheckBox',
   },
 }
 
@@ -81,10 +81,6 @@ export const ControlledWithText: Story = {
   render: args => {
     const [check, setCheck] = useState<boolean>(false)
 
-    return (
-      <Checkbox {...args} checked={check} onChange={setCheck}>
-        CheckBox
-      </Checkbox>
-    )
+    return <Checkbox {...args} checked={check} onValueChange={setCheck} label={'CheckBox'} />
   },
 }
