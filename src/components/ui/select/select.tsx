@@ -11,7 +11,7 @@ import { ArrowUp } from '@/assets/icons/arrow-up'
 
 type Item = { value: string | number; label: string | number }
 
-type Props = {
+export type SelectProps = {
   variant?: 'default' | 'pagination'
   value: string | number
   onValueChange: (value: string) => void
@@ -30,8 +30,8 @@ export const Select = ({
   label,
   placeholder,
   disabled,
-  className,
-}: Props) => {
+  className = '',
+}: SelectProps) => {
   const [open, setOpen] = useState<boolean>(false)
 
   const classNames = {

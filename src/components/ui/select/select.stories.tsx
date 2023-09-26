@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Select } from './select'
+import { Select } from './'
 
-const meta = {
+const meta: Meta = {
   title: 'Components/Select',
   component: Select,
   tags: ['autodocs'],
@@ -26,21 +26,28 @@ const numbers = [
 ]
 
 export const Default: Story = {
-  render: () => {
+  render: args => {
     const [value, setValue] = useState('')
 
     return (
-      <Select value={value} items={items} onValueChange={setValue} placeholder={'Pick an option'} />
+      <Select
+        {...args}
+        value={value}
+        items={items}
+        onValueChange={setValue}
+        placeholder={'Pick an option'}
+      />
     )
   },
 }
 
 export const Disabled: Story = {
-  render: () => {
+  render: args => {
     const [value, setValue] = useState<number | string>('')
 
     return (
       <Select
+        {...args}
         value={value}
         items={items}
         onValueChange={setValue}
@@ -52,11 +59,12 @@ export const Disabled: Story = {
 }
 
 export const WithLabel: Story = {
-  render: () => {
+  render: args => {
     const [value, setValue] = useState<number | string>('')
 
     return (
       <Select
+        {...args}
         value={value}
         items={items}
         onValueChange={setValue}
@@ -68,11 +76,12 @@ export const WithLabel: Story = {
 }
 
 export const DisabledWithLabel: Story = {
-  render: () => {
+  render: args => {
     const [value, setValue] = useState<number | string>('')
 
     return (
       <Select
+        {...args}
         value={value}
         items={items}
         onValueChange={setValue}
@@ -85,19 +94,28 @@ export const DisabledWithLabel: Story = {
 }
 
 export const ForPaginationDefault: Story = {
-  render: () => {
-    const [value, setValue] = useState<number | string>(5)
-
-    return <Select variant={'pagination'} value={value} items={numbers} onValueChange={setValue} />
-  },
-}
-
-export const ForPaginationDisabled: Story = {
-  render: () => {
+  render: args => {
     const [value, setValue] = useState<number | string>(5)
 
     return (
       <Select
+        {...args}
+        variant={'pagination'}
+        value={value}
+        items={numbers}
+        onValueChange={setValue}
+      />
+    )
+  },
+}
+
+export const ForPaginationDisabled: Story = {
+  render: args => {
+    const [value, setValue] = useState<number | string>(5)
+
+    return (
+      <Select
+        {...args}
         variant={'pagination'}
         value={value}
         items={numbers}
@@ -109,11 +127,12 @@ export const ForPaginationDisabled: Story = {
 }
 
 export const ForPaginationWithLabel: Story = {
-  render: () => {
+  render: args => {
     const [value, setValue] = useState<number | string>(5)
 
     return (
       <Select
+        {...args}
         variant={'pagination'}
         value={value}
         items={numbers}
@@ -125,11 +144,12 @@ export const ForPaginationWithLabel: Story = {
 }
 
 export const ForPaginationWithLabelDisabled: Story = {
-  render: () => {
+  render: args => {
     const [value, setValue] = useState<number | string>(5)
 
     return (
       <Select
+        {...args}
         variant={'pagination'}
         value={value}
         items={numbers}

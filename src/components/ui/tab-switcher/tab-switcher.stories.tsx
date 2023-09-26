@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 
 import { TabSwitcher, TabSwitcherContent } from './'
 
-const meta = {
+const meta: Meta = {
   title: 'Components/TabSwitcher',
   component: TabSwitcher,
   tags: ['autodocs'],
@@ -27,9 +27,9 @@ export const Default: Story = {
 }
 
 export const WithContent: Story = {
-  render: () => {
+  render: args => {
     return (
-      <TabSwitcher tabs={templeTabs}>
+      <TabSwitcher {...args} tabs={templeTabs}>
         <TabSwitcherContent value={'Books'}>Books content</TabSwitcherContent>
         <TabSwitcherContent value={'Games'}>Games content</TabSwitcherContent>
         <TabSwitcherContent value={'Films'}>Films content</TabSwitcherContent>
@@ -41,9 +41,9 @@ export const WithContent: Story = {
 }
 
 export const WithDefaultValue: Story = {
-  render: () => {
+  render: args => {
     return (
-      <TabSwitcher tabs={templeTabs} defaultValue={'Films'}>
+      <TabSwitcher {...args} tabs={templeTabs} defaultValue={'Films'}>
         <TabSwitcherContent value={'Books'}>Books content</TabSwitcherContent>
         <TabSwitcherContent value={'Games'}>Games content</TabSwitcherContent>
         <TabSwitcherContent value={'Films'}>Films content</TabSwitcherContent>
@@ -54,7 +54,7 @@ export const WithDefaultValue: Story = {
   },
 }
 
-export const WithDisabledTabs: Story = {
+export const WithDisabledTabs = {
   render: () => {
     return (
       <TabSwitcher
