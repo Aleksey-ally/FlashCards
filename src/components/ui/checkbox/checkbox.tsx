@@ -5,7 +5,7 @@ import s from './checkbox.module.scss'
 import { CheckMark } from '@/assets/icons/check-mark'
 import { Typography } from '@/components/ui/typography'
 
-type Props = {
+export type CheckboxProps = {
   className?: string
   label?: string
   checked?: boolean
@@ -21,7 +21,7 @@ export const Checkbox = ({
   onValueChange,
   disabled,
   required,
-}: Props) => {
+}: CheckboxProps) => {
   const classNames = {
     label: `${s.label} ${disabled ? s.labelDisabled : ''}`,
     checkBox: `${s.default} ${!checked ? s.uncheck : ''} ${className}`,
