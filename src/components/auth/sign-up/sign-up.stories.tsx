@@ -1,13 +1,13 @@
 import { action } from '@storybook/addon-actions'
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { SignIn } from './sign-in.tsx'
+import { SignUp } from './'
 
 const meta = {
-  title: 'Auth/Sign In',
-  component: SignIn,
+  title: 'Auth/Sign up',
+  component: SignUp,
   tags: ['autodocs'],
-} satisfies Meta<typeof SignIn>
+} satisfies Meta<typeof SignUp>
 
 export default meta
 type Story = StoryObj<typeof meta>

@@ -4,13 +4,9 @@ import { Meta, StoryObj } from '@storybook/react'
 import { CheckEmail } from './check-email.tsx'
 
 const meta = {
-  title: 'Forms/CheckEmail',
+  title: 'Auth/CheckEmail',
   component: CheckEmail,
   tags: ['autodocs'],
-  argTypes: { onSubmit: { action: 'clicked' } },
-  parameters: {
-    controls: { expanded: true },
-  },
 } satisfies Meta<typeof CheckEmail>
 
 export default meta

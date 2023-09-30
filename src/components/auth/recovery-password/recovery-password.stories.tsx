@@ -4,13 +4,9 @@ import { Meta, StoryObj } from '@storybook/react'
 import { RecoveryPassword } from '@/components/auth'
 
 const meta = {
-  title: 'Forms/RecoveryPassword',
+  title: 'Auth/RecoveryPassword',
   component: RecoveryPassword,
   tags: ['autodocs'],
-  argTypes: { onSubmit: { action: 'clicked' } },
-  parameters: {
-    controls: { expanded: true },
-  },
 } satisfies Meta<typeof RecoveryPassword>
 
 export default meta
