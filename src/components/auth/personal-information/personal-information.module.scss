@@ -1,6 +1,10 @@
 .personalInformation {
   max-width: 413px;
   padding: 33px 33px 41px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .photoContainer {
     display: flex;
@@ -32,6 +36,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
         &:focus-visible {
           outline: var(--outline-focus);
         }
@@ -44,6 +49,10 @@
     justify-content: center;
   }
 
+  .changeNameForm {
+    width: 100%;
+  }
+
   .title {
     margin-bottom: 27px;
     text-align: center;
@@ -54,6 +63,13 @@
     gap: 8px;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  .editableNameInput {
+    margin-top: 12px;
+    margin-bottom: 36px;
   }
 
   .name {
@@ -79,6 +95,11 @@
   .email {
     margin-bottom: 13px;
     color: var(--color-dark-100);
+    text-align: center;
+  }
+
+  .saveChangesButton {
+    width: 84%;
     text-align: center;
   }
 }
