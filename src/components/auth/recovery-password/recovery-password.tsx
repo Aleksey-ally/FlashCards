@@ -26,7 +26,7 @@ export const RecoveryPassword = ({ onSubmit }: Props) => {
       <Typography variant="large" className={s.title}>
         Forgot your password?
       </Typography>
-      <form onSubmit={onFormSubmit}>
+      <form className={s.form} onSubmit={onFormSubmit}>
         <DevTool control={control} />
         <ControlledTextField label="Email" control={control} name="email" />
 

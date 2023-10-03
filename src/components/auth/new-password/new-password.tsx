@@ -23,7 +23,7 @@ export const NewPassword = ({ onSubmit }: Props) => {
       <Typography variant="large" className={s.title}>
         Create new password
       </Typography>
-      <form onSubmit={onFormSubmit}>
+      <form className={s.form} onSubmit={onFormSubmit}>
         <DevTool control={control} />
         <ControlledTextField label="Password" type={'password'} control={control} name="password" />
 

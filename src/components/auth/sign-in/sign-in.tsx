@@ -24,7 +24,7 @@ export const SignIn = ({ onSubmit }: Props) => {
       <Typography variant="large" className={s.title}>
         Sign In
       </Typography>
-      <form onSubmit={onFormSubmit}>
+      <form className={s.form} onSubmit={onFormSubmit}>
         <DevTool control={control} />
         <ControlledTextField label="Email" control={control} name="email" />
         <ControlledTextField label="Password" control={control} name="password" type="password" />

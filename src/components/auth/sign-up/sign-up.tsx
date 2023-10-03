@@ -37,12 +37,12 @@ export const SignUp = (props: Props) => {
 
   return (
     <>
-      <DevTool control={control} />
       <Card className={s.card}>
         <Typography variant="large" className={s.title}>
           Sign Up
         </Typography>
-        <form onSubmit={handleFormSubmitted}>
+        <form className={s.form} onSubmit={handleFormSubmitted}>
+          <DevTool control={control} />
           <div className={s.form}>
             <ControlledTextField
               placeholder={'Email'}
