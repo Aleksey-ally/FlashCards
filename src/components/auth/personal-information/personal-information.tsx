@@ -1,12 +1,15 @@
+import { useState } from 'react'
+
+import { SubmitHandler, useForm } from 'react-hook-form'
+
 import s from './personal-information.module.scss'
-import { Card } from '@/components/ui/card'
-import { Typography } from '@/components/ui/typography'
-import { Button } from '@/components/ui/button'
+
 import Edit from '@/assets/icons/edit.tsx'
 import Logout from '@/assets/icons/logout.tsx'
-import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Typography } from '@/components/ui/typography'
 
 type FormData = {
   newName: string
