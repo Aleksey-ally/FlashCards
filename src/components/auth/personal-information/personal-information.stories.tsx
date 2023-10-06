@@ -15,7 +15,7 @@ export const Default: Story = {
   args: {
     email: 'example@doemail.com',
     avatar:
-        'https://fastly.picsum.photos/id/819/200/200.jpg?hmac=nCwO4yKGbs8354aS0yf974UlPFBF_gwUSNazar7yBhk',
+      'https://fastly.picsum.photos/id/819/200/200.jpg?hmac=nCwO4yKGbs8354aS0yf974UlPFBF_gwUSNazar7yBhk',
     name: 'New Name',
     onAvatarChange: () => {
       console.info('avatar changed')
@@ -28,4 +28,3 @@ export const Default: Story = {
     },
   },
 }
-
