@@ -5,7 +5,7 @@ import { Typography } from '../typography'
 
 import s from './header.module.scss'
 
-import { HeaderLogo } from '@/assets/icons'
+import { HeaderLogo } from '@/assets'
 
 type Props = {
   variant?: 'with button' | 'with avatar'

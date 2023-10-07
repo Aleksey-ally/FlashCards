@@ -1,10 +1,12 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode } from 'react'
+
 import * as DropdownPrimitive from '@radix-ui/react-dropdown-menu'
-import s from '@/components/ui/dropdown/dropdownItem/dropdownItem.module.scss'
 import { motion } from 'framer-motion'
-import { Typography } from '@/components/ui/typography'
+
 import { dropdownAnimations } from '@/components/ui/dropdown/dropdownItem/dropdownAnimation.tsx'
+import s from '@/components/ui/dropdown/dropdownItem/dropdownItem.module.scss'
 import { DropdownItemProps } from '@/components/ui/dropdown/dropdownItem/dropdownItem.tsx'
+import { Typography } from '@/components/ui/typography'
 export type DropdownItemWithIconProps = Omit<DropdownItemProps, 'children'> & {
   icon: ReactNode
   text: string

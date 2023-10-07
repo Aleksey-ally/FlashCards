@@ -1,10 +1,10 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode } from 'react'
 
 import * as DropdownPrimitive from '@radix-ui/react-dropdown-menu'
-
 import { motion } from 'framer-motion'
 
 import s from './dropdownItem.module.scss'
+
 import { dropdownAnimations } from '@/components/ui/dropdown/dropdownItem/dropdownAnimation.tsx'
 
 export type DropdownItemProps = {

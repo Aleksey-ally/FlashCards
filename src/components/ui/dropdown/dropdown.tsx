@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode, useState } from 'react'
 
 import * as DropdownPrimitive from '@radix-ui/react-dropdown-menu'
-
 import { AnimatePresence, motion } from 'framer-motion'
 
 import s from './dropdown.module.scss'

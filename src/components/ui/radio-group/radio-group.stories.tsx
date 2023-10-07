@@ -1,5 +1,6 @@
-import { RadioGroup } from '@/components/ui/radio-group/radio-group.tsx'
 import { Meta, StoryObj } from '@storybook/react'
+
+import { RadioGroup } from '@/components/ui/radio-group/radio-group.tsx'
 
 const meta = {
   title: 'Components/Radio Group',

@@ -1,14 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { Dropdown } from '@/components/ui/dropdown/dropdown.tsx'
 
-import Edit from '@/assets/icons/edit.tsx'
-import Trash from '@/assets/icons/trash.tsx'
-import PlayArrow from '@/assets/icons/play-arrow.tsx'
-import Logout from '@/assets/icons/logout.tsx'
-import PersonOutline from '@/assets/icons/person-outline.tsx'
-import { DropdownItemWithIcon } from '@/components/ui/dropdown/dropdownItem/dropdownItemWithIcon.tsx'
-import { DropdownItem } from '@/components/ui/dropdown/dropdownItem'
+import { Edit, Logout, PersonOutline, PlayArrow, Trash } from '@/assets'
 import { Avatar } from '@/components/avatar'
+import { Dropdown } from '@/components/ui/dropdown/dropdown.tsx'
+import { DropdownItem } from '@/components/ui/dropdown/dropdownItem'
+import { DropdownItemWithIcon } from '@/components/ui/dropdown/dropdownItem/dropdownItemWithIcon.tsx'
 import { Typography } from '@/components/ui/typography'
 
 const meta: Meta<typeof Dropdown> = {
