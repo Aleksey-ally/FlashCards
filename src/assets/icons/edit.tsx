@@ -1,8 +1,8 @@
 import { SVGProps, Ref, forwardRef, memo } from 'react'
 const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
-    width="16"
-    height="16"
+    width="24"
+    height="24"
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
     </g>
     <defs>
       <clipPath id="clip0_5918_2436">
-        <rect width="16" height="16" fill="white" />
+        <rect width="24" height="24" fill="white" />
       </clipPath>
     </defs>
   </svg>
