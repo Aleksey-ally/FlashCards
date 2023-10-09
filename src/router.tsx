@@ -9,6 +9,7 @@ import {
 import { Header } from '@/components/ui/header'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Login } from '@/pages/login/login.tsx'
+import { useGetDecksQuery } from '@/services/base-api.ts'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  const { isLoading, isError } = useGetDecksQuery()
+
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error</div>
+
   return <RouterProvider router={router} />
 }
 
