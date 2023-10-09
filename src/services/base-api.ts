@@ -11,9 +11,9 @@ export type Deck = {
   id: string
   userId: string
   name: string
-  isPrivate: boolean
+  isPrivate?: boolean
   shots: number
-  cover: string | null
+  cover?: string | null
   rating: number
   created: string
   updated: string
@@ -34,6 +34,7 @@ export type Pagination = {
 
 export const baseApi = createApi({
   reducerPath: 'baseApi',
+  tagTypes: ['Decks'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.flashcards.andrii.es',
     credentials: 'include',
@@ -45,9 +46,19 @@ export const baseApi = createApi({
     return {
       getDecks: builder.query<Decks, void>({
         query: () => `v1/decks`,
+        providesTags: ['Decks'],
+      }),
+      createDeck: builder.mutation<Deck, CreateDeckArgs>({
+        query: body => ({
+          url: 'v1/decks',
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: ['Decks'],
       }),
     }
   },
 })
+type CreateDeckArgs = Pick<Deck, 'name' | 'cover' | 'isPrivate'>
 
-export const { useGetDecksQuery } = baseApi
+export const { useGetDecksQuery, useCreateDeckMutation } = baseApi
