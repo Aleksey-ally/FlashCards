@@ -11,18 +11,26 @@ import {
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/base-api.ts'
+import { ChangeEvent, useState } from 'react'
+import { TextField } from '@/components/ui/text-field'
 
 export const Decks = () => {
+  const [name, setName] = useState<string>('')
+  const [currentPage, setcurrentPage] = useState<number>(1)
   const { data } = useGetDecksQuery()
   const [createDeck] = useCreateDeckMutation()
 
   const onClickAddNewDeckButton = () => {
     createDeck({ name: 'Temp test deck' })
   }
+  const onChangeSearchTextField = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value)
+  }
 
   return (
     <div className={s.pageDeck}>
       <Button className={s.button} onClick={onClickAddNewDeckButton}>
+        <TextField isSearch value={name} onChange={onChangeSearchTextField} />
         <Typography variant="subtitle2" as="span">
           Add new Deck
         </Typography>
@@ -32,8 +40,8 @@ export const Decks = () => {
           <TableRow>
             <TableHeadCell>Name</TableHeadCell>
             <TableHeadCell>Cards</TableHeadCell>
-            <TableHeadCell> Last Updated</TableHeadCell>
-            <TableHeadCell> Created by</TableHeadCell>
+            <TableHeadCell>Last Updated</TableHeadCell>
+            <TableHeadCell>Created by</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
