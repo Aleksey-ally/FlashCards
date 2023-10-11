@@ -1,10 +1,7 @@
 .table {
   display: flex;
   flex-direction: column;
-
-  width: 1006px;
-  margin: 0 auto;
-
+  width: inherit;
   background-color: var(--color-dark-500);
 }
 
