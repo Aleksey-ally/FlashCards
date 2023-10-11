@@ -1,3 +1,5 @@
+import { ChangeEvent, useState } from 'react'
+
 import s from './decks.module.scss'
 
 import { Button } from '@/components/ui/button'
@@ -9,14 +11,12 @@ import {
   TableHeadCell,
   TableRow,
 } from '@/components/ui/table'
-import { Typography } from '@/components/ui/typography'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/services/base-api.ts'
-import { ChangeEvent, useState } from 'react'
 import { TextField } from '@/components/ui/text-field'
+import { Typography } from '@/components/ui/typography'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
 
 export const Decks = () => {
   const [name, setName] = useState<string>('')
-  const [currentPage, setcurrentPage] = useState<number>(1)
   const { data } = useGetDecksQuery()
   const [createDeck] = useCreateDeckMutation()
 

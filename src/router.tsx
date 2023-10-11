@@ -9,7 +9,7 @@ import {
 import { Header } from '@/components/ui/header'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Login } from '@/pages/login/login.tsx'
-import { useGetDecksQuery } from '@/services/base-api.ts'
+import { useGetDecksQuery } from '@/services/decks'
 
 const publicRoutes: RouteObject[] = [
   {
