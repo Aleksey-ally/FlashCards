@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/services/base-api.ts'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
 
 export const Decks = () => {
   const { data } = useGetDecksQuery()
