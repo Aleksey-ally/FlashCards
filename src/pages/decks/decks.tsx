@@ -17,7 +17,7 @@ import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
 
 export const Decks = () => {
   const [name, setName] = useState<string>('')
-  const { data } = useGetDecksQuery()
+  const { data } = useGetDecksQuery({ name })
   const [createDeck] = useCreateDeckMutation()
 
   const onClickAddNewDeckButton = () => {
@@ -30,11 +30,19 @@ export const Decks = () => {
   return (
     <div className={s.pageDeck}>
       <Button className={s.button} onClick={onClickAddNewDeckButton}>
-        <TextField isSearch value={name} onChange={onChangeSearchTextField} />
         <Typography variant="subtitle2" as="span">
           Add new Deck
         </Typography>
       </Button>
+      <div className={s.filterBlock}>
+        <TextField
+          placeholder={'input search'}
+          className={s.searchDecks}
+          isSearch
+          value={name}
+          onChange={onChangeSearchTextField}
+        />
+      </div>
       <Table>
         <TableHead>
           <TableRow>

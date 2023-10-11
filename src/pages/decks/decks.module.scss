@@ -2,11 +2,22 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin-top: 36px;
-}
 
-.button {
-  display: flex;
-  align-self: end;
-  margin-right: 136px;
+  max-width: 1006px;
+  margin: 36px auto auto;
+
+  .button {
+    display: flex;
+    align-self: end;
+  }
+
+  .filterBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .searchDecks {
+      width: 300px;
+    }
+  }
 }
