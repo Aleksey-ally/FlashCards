@@ -20,4 +20,21 @@
       width: 300px;
     }
   }
+
+  .tempButton {
+    background-color: var(--color-accent-500);
+    border: none;
+    border-radius: 0.25rem;
+  }
+}
+
+.textModal {
+  width: 100%;
+  white-space: pre-line;
+}
+
+.blockButton {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
