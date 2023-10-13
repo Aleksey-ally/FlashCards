@@ -42,7 +42,9 @@ export const Modal: FC<ModalPropsType> = ({
     <Dialog open={open} onOpenChange={handleModalClosed}>
       {open && (
         <DialogPortal forceMount>
-          <DialogOverlay></DialogOverlay>
+          <DialogOverlay>
+            <div className={s.overlay}></div>
+          </DialogOverlay>
           <DialogContent className={contentClassName}>
             <div className={s.header}>
               <DialogTitle asChild>
