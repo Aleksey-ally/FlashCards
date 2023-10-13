@@ -31,6 +31,7 @@ export type Pagination = {
 }
 
 export type CreateDeckArgs = Pick<Deck, 'name' | 'cover' | 'isPrivate'>
+export type DeleteDeckParams = Pick<Deck, 'id'>
 
 type Direction = 'asc' | 'desc'
 type Field = 'name' | 'updated'
@@ -43,3 +44,5 @@ export type GetDecksParams = {
   currentPage?: number
   itemsPerPage?: number
 }
+
+export type DeleteDeck = Omit<Deck, 'author'>
