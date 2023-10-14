@@ -68,7 +68,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             onChange={handleChange}
             {...restProps}
           />
-          {isSearch && !inputValue && <Search className={s.search} />}
+          {isSearch && <Search className={s.search} />}
           {passwordShown && (
             <button
               className={s.showPassword}
