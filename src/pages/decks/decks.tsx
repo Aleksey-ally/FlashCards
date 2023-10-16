@@ -14,7 +14,9 @@ import {
 } from '@/components/ui/table'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
+import { AddDeckModal } from '@/pages/decks/add-deck/add-deck-modale.tsx'
 import {
+  CreateDeckArgs,
   Deck,
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -33,8 +35,19 @@ export const Decks = () => {
   const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
 
-  const onClickAddNewDeckButton = () => {
-    createDeck({ name: 'Temp test deck' })
+  const onClickAddNewDeckButton = (data: FormData) => {
+    // Extract the necessary data from the FormData and create a CreateDeckArgs object
+    const name = data.get('name')
+    const isPrivate = data.get('isPrivate')
+    const cover = data.get('cover')
+
+    const createDeckArgs: CreateDeckArgs = {
+      name: name as string,
+      isPrivate: isPrivate === 'true', // Assuming isPrivate is a boolean
+      cover: cover as string | null,
+    }
+
+    createDeck(createDeckArgs)
   }
   const onChangeSearchTextField = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value)
@@ -75,11 +88,18 @@ export const Decks = () => {
           </Button>
         </div>
       </Modal>
-      <Button className={s.button} onClick={onClickAddNewDeckButton}>
-        <Typography variant="subtitle2" as="span">
-          Add new Deck
-        </Typography>
-      </Button>
+      <AddDeckModal
+        trigger={
+          <Button className={s.button}>
+            <Typography variant="subtitle2" as="span">
+              Add new Deck
+            </Typography>
+          </Button>
+        }
+        buttonTitle={'Add New Deck'}
+        onSubmit={onClickAddNewDeckButton}
+      ></AddDeckModal>
+
       <div className={s.filterBlock}>
         <TextField
           placeholder={'input search'}
@@ -101,7 +121,10 @@ export const Decks = () => {
         <TableBody>
           {data?.items?.map(deck => (
             <TableRow key={deck.id}>
-              <TableCell>{deck.name}</TableCell>
+              <TableCell>
+                {deck.cover && <img className={s.image} src={deck.cover} alt="deck-cover-image" />}
+                {deck.name}
+              </TableCell>
               <TableCell>{deck.cardsCount}</TableCell>
               <TableCell>{new Date(deck.updated).toLocaleDateString()}</TableCell>
               <TableCell>{deck.author.name}</TableCell>
