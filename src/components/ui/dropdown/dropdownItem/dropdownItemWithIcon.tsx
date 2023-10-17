@@ -19,7 +19,7 @@ export const DropdownItemWithIcon = forwardRef<
     <DropdownPrimitive.Item ref={ref} className={`${s.item} ${className || ''}`} asChild {...props}>
       <motion.div {...dropdownAnimations.item}>
         <div className={s.itemIcon}>{icon}</div>
-        <Typography>{text}</Typography>
+        <Typography variant="caption">{text}</Typography>
       </motion.div>
     </DropdownPrimitive.Item>
   )

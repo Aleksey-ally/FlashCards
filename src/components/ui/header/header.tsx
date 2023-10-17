@@ -46,7 +46,7 @@ export const Header = ({ variant = 'with button', ...rest }: Props) => {
                 name="User"
               />
               <div>
-                <Typography variant="large">User name</Typography>
+                <Typography variant="subtitle2">User name</Typography>
                 <Typography variant="caption" style={{ color: 'var(--color-dark-100)' }}>
                   example@email.com
                 </Typography>
