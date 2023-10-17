@@ -5,17 +5,19 @@ export type Decks = {
 }
 
 export type Deck = {
-  author: Author
   id: string
   userId: string
   name: string
-  isPrivate?: boolean
+  isPrivate: boolean
   shots: number
-  cover?: string | null
+  cover: string | null
   rating: number
+  isDeleted?: boolean | null
+  isBlocked?: boolean | null
   created: string
   updated: string
   cardsCount: number
+  author: Author
 }
 
 export type Author = {
