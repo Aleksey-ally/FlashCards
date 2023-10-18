@@ -123,7 +123,7 @@ export const Decks = () => {
         <TableBody>
           {data?.items?.map(deck => (
             <TableRow key={deck.id}>
-              <NavLink to={`/cards/${deck.id}`}>
+              <NavLink className={s.deckName} to={`/cards/${deck.id}`}>
                 <TableCell>
                   {deck.cover && (
                     <img className={s.image} src={deck.cover} alt="deck-cover-image" />
