@@ -10,6 +10,7 @@ import { Header } from '@/components/ui/header'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Login } from '@/pages/login/login.tsx'
 import { useGetDecksQuery } from '@/services/decks'
+import { Cards } from '@/pages/decks/cards'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -22,6 +23,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <Decks />,
+  },
+  {
+    path: '/cards/:deckID',
+    element: <Cards />,
   },
 ]
 
