@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Header } from '@/components/ui/header'
+import { Cards } from '@/pages/decks/cards'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Login } from '@/pages/login/login.tsx'
 import { useGetDecksQuery } from '@/services/decks'
@@ -22,6 +23,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <Decks />,
+  },
+  {
+    path: '/cards/:deckID',
+    element: <Cards />,
   },
 ]
 

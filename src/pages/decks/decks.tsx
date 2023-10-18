@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 
+import { NavLink } from 'react-router-dom'
+
 import s from './decks.module.scss'
 
 import { Button } from '@/components/ui/button'
@@ -121,10 +123,14 @@ export const Decks = () => {
         <TableBody>
           {data?.items?.map(deck => (
             <TableRow key={deck.id}>
-              <TableCell>
-                {deck.cover && <img className={s.image} src={deck.cover} alt="deck-cover-image" />}
-                {deck.name}
-              </TableCell>
+              <NavLink className={s.deckName} to={`/cards/${deck.id}`}>
+                <TableCell>
+                  {deck.cover && (
+                    <img className={s.image} src={deck.cover} alt="deck-cover-image" />
+                  )}
+                  {deck.name}
+                </TableCell>
+              </NavLink>
               <TableCell>{deck.cardsCount}</TableCell>
               <TableCell>{new Date(deck.updated).toLocaleDateString()}</TableCell>
               <TableCell>{deck.author.name}</TableCell>

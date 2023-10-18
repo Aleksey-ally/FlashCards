@@ -1,9 +1,11 @@
 import {
+  Cards,
   CreateDeckArgs,
   Deck,
   Decks,
   DeleteDeck,
   DeleteDeckParams,
+  GetCardsParams,
   GetDecksParams,
 } from './decks.types.ts'
 
@@ -34,8 +36,15 @@ export const DecksService = baseApi.injectEndpoints({
         }),
         invalidatesTags: ['Decks'],
       }),
+      getCards: builder.query<Cards, GetCardsParams>({
+        query: params => ({
+          url: `v1/decks/${params.id}/cards`,
+        }),
+        providesTags: ['Cards'],
+      }),
     }
   },
 })
 
-export const { useGetDecksQuery, useCreateDeckMutation, useDeleteDeckMutation } = DecksService
+export const { useGetDecksQuery, useCreateDeckMutation, useDeleteDeckMutation, useGetCardsQuery } =
+  DecksService
