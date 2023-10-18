@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 
+import { NavLink } from 'react-router-dom'
+
 import s from './decks.module.scss'
 
 import { Button } from '@/components/ui/button'
@@ -22,7 +24,6 @@ import {
   useDeleteDeckMutation,
   useGetDecksQuery,
 } from '@/services/decks'
-import { NavLink } from 'react-router-dom'
 
 type CurrentDeck = Pick<Deck, 'id' | 'name'>
 

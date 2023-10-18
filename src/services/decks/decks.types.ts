@@ -48,3 +48,38 @@ export type GetDecksParams = {
 }
 
 export type DeleteDeck = Omit<Deck, 'author'>
+
+export type GetCardsParams = {
+  id: string
+  question?: string
+  answer?: string
+  orderBy?: string
+  currentPage?: number
+  itemsPerPage?: number
+}
+
+export type Cards = {
+  items: Card[]
+  pagination: {
+    currentPage: number
+    itemsPerPage: number
+    totalPages: number
+    totalItems: number
+  }
+}
+
+export type Card = {
+  id: string
+  deckId: string
+  userId: string
+  question: string
+  answer: string
+  shots: number
+  answerImg: string
+  questionImg: string
+  questionVideo: string
+  answerVideo: string
+  grade: number
+  created: string
+  updated: string
+}
