@@ -83,3 +83,7 @@ export type Card = {
   created: string
   updated: string
 }
+export type UpdateDeckParamsType = {
+  id: Pick<Deck, 'id'>
+  body: FormData
+}
