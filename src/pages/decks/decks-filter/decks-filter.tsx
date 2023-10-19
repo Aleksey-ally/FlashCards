@@ -6,7 +6,7 @@ import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { TextField } from '@/components/ui/text-field'
 
-export type PanelProps = {
+export type DecksFilterProps = {
   inputValue: string
   onChangeInputValue: (value: string) => void
   tabValue: string
@@ -32,7 +32,7 @@ export const DecksFilter = ({
   onChangeTabValue,
   onChangeSliderValue,
   onClearFilter,
-}: PanelProps): JSX.Element => {
+}: DecksFilterProps): JSX.Element => {
   return (
     <div className={s.container}>
       <TextField

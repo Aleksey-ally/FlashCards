@@ -28,15 +28,26 @@ import {
   useGetDecksQuery,
   useUpdateDeckMutation,
 } from '@/services/decks'
+import { decksSlice } from '@/services/decks/deck.slice.ts'
+import { useAppDispatch, useAppSelector } from '@/services/store.ts'
 
 type CurrentDeck = Pick<Deck, 'id' | 'name'>
 
 export const Decks = () => {
+  const dispatch = useAppDispatch()
+  const cardsCount = useAppSelector(state => state.deckSlice.cardsCount)
+  const searchByName = useAppSelector(state => state.deckSlice.searchByName)
   const [name, setName] = useState<string>('')
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentDeck, setCurrentDeck] = useState<CurrentDeck>({} as CurrentDeck)
   const [tabValue, setTabValue] = useState('all')
-  const [sliderValue, setSliderValue] = useState([0, 10])
+
+  const setCardsCount = (value: number[]) => {
+    dispatch(decksSlice.actions.setCardsCount(value))
+  }
+  const setSearchByName = (value: string) => {
+    dispatch(decksSlice.actions.setSearchByName(value))
+  }
   const { data: user } = useMeQuery()
   const { data } = useGetDecksQuery({
     name,
@@ -74,9 +85,8 @@ export const Decks = () => {
     setOpenModal(false)
   }
   const onClearFilter = () => {
-    setName('')
+    setSearchByName('')
     setTabValue('all')
-    setSliderValue([0, 10])
   }
   const editDeckCallback = (id: any, data: FormData) => {
     updateDeck({ id: id, body: data })
@@ -96,16 +106,16 @@ export const Decks = () => {
         onSubmit={onClickAddNewDeckButton}
       ></AddDeckModal>
       <DecksFilter
-        inputValue={name}
-        onChangeInputValue={setName}
+        inputValue={searchByName}
+        onChange={(e: number) => setSearchByName(e.target.value)}
         tabValue={tabValue}
         tabLabel={'Show packs cards'}
         onChangeTabValue={setTabValue}
-        sliderValue={sliderValue}
+        sliderValue={cardsCount}
         minSliderValue={0}
         maxSliderValue={10}
         sliderLabel={'Number of cards'}
-        onChangeSliderValue={setSliderValue}
+        onChangeSliderValue={setCardsCount}
         onClearFilter={onClearFilter}
       />
       <Modal title={'Delete Deck'} open={openModal} onClose={onClickCloseButton}>
