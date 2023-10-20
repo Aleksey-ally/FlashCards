@@ -1,5 +1,7 @@
 import {
+  Card,
   Cards,
+  CreateCardArgs,
   CreateDeckArgs,
   Deck,
   Decks,
@@ -37,14 +39,36 @@ export const DecksService = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
       }),
       getCards: builder.query<Cards, GetCardsParams>({
-        query: params => ({
-          url: `v1/decks/${params.id}/cards`,
-        }),
+        query: params => {
+          const { id, ...otherParams } = params
+
+          return {
+            url: `v1/decks/${id}/cards`,
+            params: otherParams,
+          }
+        },
         providesTags: ['Cards'],
+      }),
+      createCard: builder.mutation<Card, CreateCardArgs>({
+        query: params => {
+          const { id, ...body } = params
+
+          return {
+            url: `v1/decks/${id}/cards`,
+            method: 'POST',
+            body,
+          }
+        },
+        invalidatesTags: ['Cards'],
       }),
     }
   },
 })
 
-export const { useGetDecksQuery, useCreateDeckMutation, useDeleteDeckMutation, useGetCardsQuery } =
-  DecksService
+export const {
+  useGetDecksQuery,
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetCardsQuery,
+  useCreateCardMutation,
+} = DecksService

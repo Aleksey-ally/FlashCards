@@ -59,7 +59,7 @@ export type GetCardsParams = {
 }
 
 export type Cards = {
-  items: Card[]
+  items: GetCard[]
   pagination: {
     currentPage: number
     itemsPerPage: number
@@ -67,6 +67,8 @@ export type Cards = {
     totalItems: number
   }
 }
+
+export type GetCard = { grade: string } & Omit<Card, 'rating'>
 
 export type Card = {
   id: string
@@ -79,7 +81,17 @@ export type Card = {
   questionImg: string
   questionVideo: string
   answerVideo: string
-  grade: number
+  rating: number
   created: string
   updated: string
+}
+
+export type CreateCardArgs = {
+  id: string
+  question: string
+  answer: string
+  questionImg?: string
+  answerImg?: string
+  questionVideo?: string
+  answerVideo?: string
 }

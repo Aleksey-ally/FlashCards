@@ -94,7 +94,7 @@ export const Decks = () => {
         trigger={
           <Button className={s.button}>
             <Typography variant="subtitle2" as="span">
-              Add new Deck
+              Add New Deck
             </Typography>
           </Button>
         }
