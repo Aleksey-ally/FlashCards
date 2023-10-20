@@ -13,8 +13,8 @@ export type DecksFilterProps = {
   tabLabel: string
   onChangeTabValue: (value: string) => void
   sliderValue: number[]
-  minSliderValue: number
-  maxSliderValue: number
+  minSliderValue?: number
+  maxSliderValue?: number
   sliderLabel: string
   onChangeSliderValue: (value: number[]) => void
   onClearFilter: () => void

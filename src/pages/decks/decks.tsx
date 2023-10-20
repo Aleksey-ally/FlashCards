@@ -19,6 +19,7 @@ import { Typography } from '@/components/ui/typography'
 import { AddDeckModal } from '@/pages/decks/add-deck/add-deck-modale.tsx'
 import { DecksFilter } from '@/pages/decks/decks-filter'
 import { EditDeck } from '@/pages/decks/edit-deck'
+import { useDebounce } from '@/pages/decks/use-deck-debounce.ts'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
 import {
   CreateDeckArgs,
@@ -37,7 +38,6 @@ export const Decks = () => {
   const dispatch = useAppDispatch()
   const cardsCount = useAppSelector(state => state.deckSlice.cardsCount)
   const searchByName = useAppSelector(state => state.deckSlice.searchByName)
-  const [name, setName] = useState<string>('')
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentDeck, setCurrentDeck] = useState<CurrentDeck>({} as CurrentDeck)
   const [tabValue, setTabValue] = useState('all')
@@ -48,10 +48,15 @@ export const Decks = () => {
   const setSearchByName = (value: string) => {
     dispatch(decksSlice.actions.setSearchByName(value))
   }
+
+  const debouncedCardsCount = useDebounce(cardsCount, 300)
+
   const { data: user } = useMeQuery()
   const { data } = useGetDecksQuery({
-    name,
+    name: searchByName,
     authorId: tabValue === 'my cards' ? user?.id : undefined,
+    minCardsCount: debouncedCardsCount[0],
+    maxCardsCount: debouncedCardsCount[1],
   })
   const [updateDeck] = useUpdateDeckMutation()
   const [createDeck] = useCreateDeckMutation()
@@ -87,6 +92,7 @@ export const Decks = () => {
   const onClearFilter = () => {
     setSearchByName('')
     setTabValue('all')
+    setCardsCount([0, data?.maxCardsCount || 100])
   }
   const editDeckCallback = (id: any, data: FormData) => {
     updateDeck({ id: id, body: data })
@@ -107,13 +113,13 @@ export const Decks = () => {
       ></AddDeckModal>
       <DecksFilter
         inputValue={searchByName}
-        onChange={(e: number) => setSearchByName(e.target.value)}
+        onChangeInputValue={value => setSearchByName(value)}
         tabValue={tabValue}
         tabLabel={'Show packs cards'}
         onChangeTabValue={setTabValue}
         sliderValue={cardsCount}
-        minSliderValue={0}
-        maxSliderValue={10}
+        minSliderValue={data?.minCardsCount}
+        maxSliderValue={data?.maxCardsCount}
         sliderLabel={'Number of cards'}
         onChangeSliderValue={setCardsCount}
         onClearFilter={onClearFilter}
