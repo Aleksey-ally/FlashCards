@@ -9,6 +9,7 @@ import {
   DeleteDeckParams,
   GetCardsParams,
   GetDecksParams,
+  UpdateDeckParamsType,
 } from './decks.types.ts'
 
 import { baseApi } from '@/services/base-api.ts'
@@ -49,6 +50,14 @@ export const DecksService = baseApi.injectEndpoints({
         },
         providesTags: ['Cards'],
       }),
+      updateDeck: builder.mutation<Deck, UpdateDeckParamsType>({
+        query: ({ id, body }) => ({
+          url: `v1/decks/${id}`,
+          method: 'PATCH',
+          body,
+        }),
+        invalidatesTags: ['Decks'],
+      }),
       createCard: builder.mutation<Card, CreateCardArgs>({
         query: params => {
           const { id, ...body } = params
@@ -70,5 +79,6 @@ export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetCardsQuery,
+  useUpdateDeckMutation,
   useCreateCardMutation,
 } = DecksService

@@ -10,16 +10,6 @@
     align-self: end;
   }
 
-  .filterBlock {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .searchDecks {
-      width: 300px;
-    }
-  }
-
   .deckName {
     color: var(--color-light-100);
     text-decoration: none;

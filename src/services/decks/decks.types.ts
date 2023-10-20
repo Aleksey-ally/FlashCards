@@ -2,6 +2,7 @@ export type Decks = {
   items: Deck[]
   pagination: Pagination
   maxCardsCount: number
+  minCardsCount?: number
 }
 
 export type Deck = {
@@ -38,8 +39,8 @@ export type DeleteDeckParams = Pick<Deck, 'id'>
 type Direction = 'asc' | 'desc'
 type Field = 'name' | 'updated'
 export type GetDecksParams = {
-  minCardsCount?: string
-  maxCardsCount?: string
+  minCardsCount?: number
+  maxCardsCount?: number
   name?: string
   authorId?: string
   orderBy?: `${Field}-${Direction}`
@@ -84,6 +85,10 @@ export type Card = {
   rating: number
   created: string
   updated: string
+}
+export type UpdateDeckParamsType = {
+  id: Pick<Deck, 'id'>
+  body: FormData
 }
 
 export type CreateCardArgs = {

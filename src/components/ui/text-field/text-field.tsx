@@ -1,4 +1,4 @@
-import { ComponentProps, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ChangeEvent, ComponentProps, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
 import { Typography } from '../typography'
 
@@ -39,7 +39,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const [inputValue, setInputValue] = useState('')
     const finalType = getFinalType(type, showPassword, isSearch)
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       onChange?.(e)
       onValueChange?.(e.target.value)
       setInputValue(e.target.value)
@@ -59,7 +59,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 
         <div className={s.TextFieldContainer}>
           <input
-            className={`${`${s.field} ${errorMessage ? s.error : ''} ${className || ''}`} ${
+            className={`${s.field} ${errorMessage ? s.error : ''} ${className || ''} ${
               isDisabled ? s.disabled : ''
             } ${isSearch ? s.searchCont : ''}`}
             placeholder={inputValue ? '' : placeholder}

@@ -1,9 +1,10 @@
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 
 import { NavLink } from 'react-router-dom'
 
 import s from './decks.module.scss'
 
+import { Edit } from '@/assets'
 import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
 import {
@@ -14,45 +15,65 @@ import {
   TableHeadCell,
   TableRow,
 } from '@/components/ui/table'
-import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { AddDeckModal } from '@/pages/decks/add-deck/add-deck-modale.tsx'
+import { DecksFilter } from '@/pages/decks/decks-filter'
+import { EditDeck } from '@/pages/decks/edit-deck'
+import { useDebounce } from '@/pages/decks/use-deck-debounce.ts'
+import { useMeQuery } from '@/services/auth/auth.service.ts'
 import {
   CreateDeckArgs,
   Deck,
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
+  useUpdateDeckMutation,
 } from '@/services/decks'
+import { decksSlice } from '@/services/decks/deck.slice.ts'
+import { useAppDispatch, useAppSelector } from '@/services/store.ts'
 
 type CurrentDeck = Pick<Deck, 'id' | 'name'>
 
 export const Decks = () => {
-  const [name, setName] = useState<string>('')
+  const dispatch = useAppDispatch()
+  const cardsCount = useAppSelector(state => state.deckSlice.cardsCount)
+  const searchByName = useAppSelector(state => state.deckSlice.searchByName)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentDeck, setCurrentDeck] = useState<CurrentDeck>({} as CurrentDeck)
+  const [tabValue, setTabValue] = useState('all')
 
-  const { data } = useGetDecksQuery({ name })
+  const setCardsCount = (value: number[]) => {
+    dispatch(decksSlice.actions.setCardsCount(value))
+  }
+  const setSearchByName = (value: string) => {
+    dispatch(decksSlice.actions.setSearchByName(value))
+  }
 
+  const debouncedCardsCount = useDebounce(cardsCount, 300)
+
+  const { data: user } = useMeQuery()
+  const { data } = useGetDecksQuery({
+    name: searchByName,
+    authorId: tabValue === 'my cards' ? user?.id : undefined,
+    minCardsCount: debouncedCardsCount[0],
+    maxCardsCount: debouncedCardsCount[1],
+  })
+  const [updateDeck] = useUpdateDeckMutation()
   const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
 
   const onClickAddNewDeckButton = (data: FormData) => {
-    // Extract the necessary data from the FormData and create a CreateDeckArgs object
     const name = data.get('name')
     const isPrivate = data.get('isPrivate')
     const cover = data.get('cover')
 
     const createDeckArgs: CreateDeckArgs = {
       name: name as string,
-      isPrivate: isPrivate === 'true', // Assuming isPrivate is a boolean
+      isPrivate: isPrivate === 'true',
       cover: cover as string | null,
     }
 
     createDeck(createDeckArgs)
-  }
-  const onChangeSearchTextField = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.currentTarget.value)
   }
 
   const onClickDeleteDeckIcon = (id: string, name: string) => {
@@ -68,9 +89,41 @@ export const Decks = () => {
   const onClickCloseButton = () => {
     setOpenModal(false)
   }
+  const onClearFilter = () => {
+    setSearchByName('')
+    setTabValue('all')
+    setCardsCount([0, data?.maxCardsCount || 100])
+  }
+  const editDeckCallback = (id: any, data: FormData) => {
+    updateDeck({ id: id, body: data })
+  }
 
   return (
     <div className={s.pageDeck}>
+      <AddDeckModal
+        trigger={
+          <Button className={s.button}>
+            <Typography variant="subtitle2" as="span">
+              Add new Deck
+            </Typography>
+          </Button>
+        }
+        buttonTitle={'Add New Deck'}
+        onSubmit={onClickAddNewDeckButton}
+      ></AddDeckModal>
+      <DecksFilter
+        inputValue={searchByName}
+        onChangeInputValue={value => setSearchByName(value)}
+        tabValue={tabValue}
+        tabLabel={'Show packs cards'}
+        onChangeTabValue={setTabValue}
+        sliderValue={cardsCount}
+        minSliderValue={data?.minCardsCount}
+        maxSliderValue={data?.maxCardsCount}
+        sliderLabel={'Number of cards'}
+        onChangeSliderValue={setCardsCount}
+        onClearFilter={onClearFilter}
+      />
       <Modal title={'Delete Deck'} open={openModal} onClose={onClickCloseButton}>
         <Typography className={s.textModal} variant="body2" as="span">
           Do you really want to remove <b>Deck {currentDeck.name}?</b>
@@ -90,27 +143,7 @@ export const Decks = () => {
           </Button>
         </div>
       </Modal>
-      <AddDeckModal
-        trigger={
-          <Button className={s.button}>
-            <Typography variant="subtitle2" as="span">
-              Add New Deck
-            </Typography>
-          </Button>
-        }
-        buttonTitle={'Add New Deck'}
-        onSubmit={onClickAddNewDeckButton}
-      ></AddDeckModal>
 
-      <div className={s.filterBlock}>
-        <TextField
-          placeholder={'input search'}
-          className={s.searchDecks}
-          isSearch
-          value={name}
-          onChange={onChangeSearchTextField}
-        />
-      </div>
       <Table>
         <TableHead>
           <TableRow>
@@ -134,7 +167,19 @@ export const Decks = () => {
               <TableCell>{deck.cardsCount}</TableCell>
               <TableCell>{new Date(deck.updated).toLocaleDateString()}</TableCell>
               <TableCell>{deck.author.name}</TableCell>
-              <TableCell>
+              <TableCell className={s.blockButton}>
+                {deck.author.id === user?.id && (
+                  <EditDeck
+                    trigger={<Edit />}
+                    buttonTitle="Save Changes"
+                    onSubmit={data => editDeckCallback(deck.id, data)}
+                    values={{
+                      name: deck.name,
+                      isPrivate: deck.isPrivate,
+                      cover: deck.cover,
+                    }}
+                  />
+                )}
                 <button
                   className={s.tempButton}
                   onClick={() => onClickDeleteDeckIcon(deck.id, deck.name)}
