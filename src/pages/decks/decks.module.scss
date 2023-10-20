@@ -7,18 +7,7 @@
   margin: 36px auto auto;
 
   .button {
-    display: flex;
     align-self: end;
-  }
-
-  .filterBlock {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .searchDecks {
-      width: 300px;
-    }
   }
 
   .deckName {
