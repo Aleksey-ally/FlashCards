@@ -22,7 +22,6 @@ import { EditDeck } from '@/pages/decks/edit-deck'
 import { useDebounce } from '@/pages/decks/use-deck-debounce.ts'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
 import {
-  CreateDeckArgs,
   Deck,
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -50,10 +49,10 @@ export const Decks = () => {
   }
 
   const debouncedCardsCount = useDebounce(cardsCount, 300)
-
+  const debouncedSearchName = useDebounce(searchByName, 500)
   const { data: user } = useMeQuery()
   const { data } = useGetDecksQuery({
-    name: searchByName,
+    name: debouncedSearchName,
     authorId: tabValue === 'my cards' ? user?.id : undefined,
     minCardsCount: debouncedCardsCount[0],
     maxCardsCount: debouncedCardsCount[1],
@@ -63,17 +62,7 @@ export const Decks = () => {
   const [deleteDeck] = useDeleteDeckMutation()
 
   const onClickAddNewDeckButton = (data: FormData) => {
-    const name = data.get('name')
-    const isPrivate = data.get('isPrivate')
-    const cover = data.get('cover')
-
-    const createDeckArgs: CreateDeckArgs = {
-      name: name as string,
-      isPrivate: isPrivate === 'true',
-      cover: cover as string | null,
-    }
-
-    createDeck(createDeckArgs)
+    createDeck(data)
   }
 
   const onClickDeleteDeckIcon = (id: string, name: string) => {

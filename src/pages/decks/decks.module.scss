@@ -15,10 +15,8 @@
     text-decoration: none;
   }
 
-  .tempButton {
-    background-color: var(--color-accent-500);
-    border: none;
-    border-radius: 0.25rem;
+  .tempbutton:hover {
+    cursor: pointer;
   }
 }
 

@@ -1,8 +1,7 @@
 import { ReactNode, useState } from 'react'
 
-import { DeckForm } from './deck-form/deck-form.tsx'
-
 import { Modal } from '@/components/ui/modal'
+import { DeckForm } from '@/pages/decks'
 
 export type DeckProps = {
   trigger: ReactNode

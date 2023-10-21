@@ -2,7 +2,6 @@ import {
   Card,
   Cards,
   CreateCardArgs,
-  CreateDeckArgs,
   Deck,
   Decks,
   DeleteDeck,
@@ -24,7 +23,7 @@ export const DecksService = baseApi.injectEndpoints({
         }),
         providesTags: ['Decks'],
       }),
-      createDeck: builder.mutation<Deck, CreateDeckArgs>({
+      createDeck: builder.mutation<Deck, FormData>({
         query: body => ({
           url: 'v1/decks',
           method: 'POST',
