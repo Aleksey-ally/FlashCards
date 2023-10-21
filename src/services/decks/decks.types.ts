@@ -33,7 +33,6 @@ export type Pagination = {
   totalItems: number
 }
 
-export type CreateDeckArgs = Pick<Deck, 'name' | 'cover' | 'isPrivate'>
 export type DeleteDeckParams = Pick<Deck, 'id'>
 
 type Direction = 'asc' | 'desc'
