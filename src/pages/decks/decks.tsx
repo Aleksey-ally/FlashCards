@@ -49,10 +49,10 @@ export const Decks = () => {
   }
 
   const debouncedCardsCount = useDebounce(cardsCount, 300)
-
+  const debouncedSearchName = useDebounce(searchByName, 500)
   const { data: user } = useMeQuery()
   const { data } = useGetDecksQuery({
-    name: searchByName,
+    name: debouncedSearchName,
     authorId: tabValue === 'my cards' ? user?.id : undefined,
     minCardsCount: debouncedCardsCount[0],
     maxCardsCount: debouncedCardsCount[1],
