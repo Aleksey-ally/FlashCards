@@ -36,7 +36,6 @@ export const OpenModalWindow: Story = {
             laudantium modi molestias odio quas rem voluptatum. Dolores?
           </Typography>
           <span>
-            {' '}
             <Button variant={'primary'} /> <Button variant={'tertiary'} />
           </span>
         </Card>

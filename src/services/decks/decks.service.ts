@@ -2,7 +2,7 @@ import {
   Cards,
   CreateCardArgs,
   Deck,
-  Decks,
+  DecksResponse,
   DeleteDeck,
   DeleteDeckParams,
   GetCardsParams,
@@ -16,7 +16,7 @@ import { Card } from '@/services/cards/cards.types.ts'
 export const DecksService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      getDecks: builder.query<Decks, GetDecksParams | void>({
+      getDecks: builder.query<DecksResponse, GetDecksParams | void>({
         query: params => ({
           url: 'v1/decks',
           params: params ?? {},
