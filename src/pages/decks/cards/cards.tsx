@@ -1,8 +1,11 @@
+import { useState } from 'react'
+
 import { useParams } from 'react-router-dom'
 
 import s from './cards.module.scss'
 
 import { Button } from '@/components/ui/button'
+import { Modal } from '@/components/ui/modal'
 import {
   Table,
   TableBody,
@@ -12,19 +15,60 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
+import { useDeleteCardMutation } from '@/services/cards/cards.service.ts'
+import { Card } from '@/services/cards/cards.types.ts'
 import { useCreateCardMutation, useGetCardsQuery } from '@/services/decks'
+type CurrentCard = Pick<Card, 'id' | 'question'>
+
 export const Cards = () => {
   const { deckID } = useParams()
 
   const { data } = useGetCardsQuery({ id: deckID as string })
   const [createCard] = useCreateCardMutation()
+  const [deleteCard] = useDeleteCardMutation()
+
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [currentCard, setCurrentCard] = useState<CurrentCard>({} as CurrentCard)
 
   const onClickCreateCard = () => {
     createCard({ id: deckID as string, question: 'Laugh', answer: 'Haha' })
   }
 
+  const onClickDeleteCard = () => {
+    deleteCard({ id: currentCard.id })
+    setOpenModal(false)
+  }
+
+  const onClickCloseButton = () => {
+    setOpenModal(false)
+  }
+
+  const onClickDeleteCardIcon = (id: string, question: string) => {
+    setCurrentCard({ id, question })
+    setOpenModal(true)
+  }
+
   return (
     <div className={s.cards}>
+      <Modal title={'Delete Card'} open={openModal} onClose={onClickCloseButton}>
+        <Typography className={s.textModal} variant="body2" as="span">
+          Do you really want to remove <b>Card {currentCard.question}?</b>
+          {'\n'}
+          Card will be deleted permanently.
+        </Typography>
+        <div className={s.blockButton}>
+          <Button variant="secondary" onClick={onClickCloseButton}>
+            <Typography variant="subtitle2" as="span">
+              Cancel
+            </Typography>
+          </Button>
+          <Button onClick={onClickDeleteCard}>
+            <Typography variant="subtitle2" as="span">
+              Delete Card
+            </Typography>
+          </Button>
+        </div>
+      </Modal>
       <Button className={s.button} onClick={onClickCreateCard}>
         <Typography variant="subtitle2" as="span">
           Add New Card
@@ -46,6 +90,14 @@ export const Cards = () => {
               <TableCell>{card.answer}</TableCell>
               <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
               <TableCell>{card.grade}</TableCell>
+              <TableCell>
+                <button
+                  className={s.tempButton}
+                  onClick={() => onClickDeleteCardIcon(card.id, card.question)}
+                >
+                  Delete
+                </button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
