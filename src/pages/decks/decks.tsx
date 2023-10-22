@@ -188,6 +188,10 @@ export const Decks = () => {
                 <div className={s.iconsContainer}>
                   {deck.author.id === user?.id && (
                     <>
+                      {' '}
+                      <Button variant={'tertiary'} className={s.icon}>
+                        <PlayArrow />
+                      </Button>
                       <Button variant={'tertiary'} className={s.icon}>
                         <EditDeck
                           trigger={<Edit />}
@@ -205,9 +209,6 @@ export const Decks = () => {
                       </Button>
                     </>
                   )}
-                  <Button variant={'tertiary'} className={s.icon}>
-                    <PlayArrow />
-                  </Button>
                 </div>
               </TableCell>
             </TableRow>
