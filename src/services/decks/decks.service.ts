@@ -29,6 +29,16 @@ export const DecksService = baseApi.injectEndpoints({
           method: 'POST',
           body,
         }),
+
+        // {
+        //   debugger
+        //
+        //   return {
+        //     url: 'v1/decks',
+        //     method: 'POST',
+        //     body,
+        //   }
+        // },
         invalidatesTags: ['Decks'],
       }),
       deleteDeck: builder.mutation<DeleteDeck, DeleteDeckParams>({
@@ -58,15 +68,11 @@ export const DecksService = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
       }),
       createCard: builder.mutation<Card, CreateCardArgs>({
-        query: params => {
-          const { id, ...body } = params
-
-          return {
-            url: `v1/decks/${id}/cards`,
-            method: 'POST',
-            body,
-          }
-        },
+        query: params => ({
+          url: `v1/decks/${params.id}/cards`,
+          method: 'POST',
+          body: params.body,
+        }),
         invalidatesTags: ['Cards'],
       }),
     }

@@ -48,7 +48,6 @@ export const DeckForm = ({
     if (cover) {
       formData.append('cover', cover || '')
     }
-
     onSubmit(formData)
     onClose()
   }

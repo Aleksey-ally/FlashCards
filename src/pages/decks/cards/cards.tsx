@@ -12,24 +12,32 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
+import { AddCardModal } from '@/pages/decks/cards/add-card-modale/add-card-modale.tsx'
 import { useCreateCardMutation, useGetCardsQuery } from '@/services/decks'
+
 export const Cards = () => {
   const { deckID } = useParams()
 
   const { data } = useGetCardsQuery({ id: deckID as string })
   const [createCard] = useCreateCardMutation()
 
-  const onClickCreateCard = () => {
-    createCard({ id: deckID as string, question: 'Laugh', answer: 'Haha' })
+  const onClickCreateCard = (body: FormData) => {
+    createCard({ id: deckID as string, body })
   }
 
   return (
     <div className={s.cards}>
-      <Button className={s.button} onClick={onClickCreateCard}>
-        <Typography variant="subtitle2" as="span">
-          Add New Card
-        </Typography>
-      </Button>
+      <AddCardModal
+        trigger={
+          <Button className={s.button}>
+            <Typography variant="subtitle2" as="span">
+              Add New Card
+            </Typography>
+          </Button>
+        }
+        buttonTitle={'Add New Card'}
+        onSubmit={onClickCreateCard}
+      ></AddCardModal>
       <Table>
         <TableHead>
           <TableRow>
