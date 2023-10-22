@@ -10,3 +10,14 @@
     align-self: end;
   }
 }
+
+.textModal {
+  width: 100%;
+  white-space: pre-line;
+}
+
+.blockButton {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
