@@ -58,7 +58,6 @@ export const PersonalInfoDropdown: Story = {
     children: (
       <>
         <DropdownItem>
-          {' '}
           <Avatar
             src={
               'https://fastly.picsum.photos/id/819/200/200.jpg?hmac=nCwO4yKGbs8354aS0yf974UlPFBF_gwUSNazar7yBhk'
