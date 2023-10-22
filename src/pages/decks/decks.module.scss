@@ -29,8 +29,19 @@
 
 .blockButton {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+
+.iconsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  padding: 0;
+  border: none;
 }
 
 .image {

@@ -4,15 +4,17 @@ import { NavLink } from 'react-router-dom'
 
 import s from './decks.module.scss'
 
-import { Edit } from '@/assets'
+import { Edit, PlayArrow, Trash } from '@/assets'
 import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
 import {
+  Column,
+  Sort,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableHeadCell,
+  TableHeader,
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
@@ -22,7 +24,6 @@ import { EditDeck } from '@/pages/decks/edit-deck'
 import { useDebounce } from '@/pages/decks/use-deck-debounce.ts'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
 import {
-  CreateDeckArgs,
   Deck,
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -33,6 +34,32 @@ import { decksSlice } from '@/services/decks/deck.slice.ts'
 import { useAppDispatch, useAppSelector } from '@/services/store.ts'
 
 type CurrentDeck = Pick<Deck, 'id' | 'name'>
+const columns: Column[] = [
+  {
+    key: 'name',
+    title: 'Name',
+    sortable: true,
+  },
+  {
+    key: 'cardsCount',
+    title: 'Cards',
+    sortable: true,
+  },
+  {
+    key: 'updated',
+    title: 'Last Updated',
+    sortable: true,
+  },
+  {
+    key: 'created',
+    title: 'Created by',
+    sortable: true,
+  },
+  {
+    key: 'icons',
+    title: '',
+  },
+]
 
 export const Decks = () => {
   const dispatch = useAppDispatch()
@@ -41,39 +68,34 @@ export const Decks = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentDeck, setCurrentDeck] = useState<CurrentDeck>({} as CurrentDeck)
   const [tabValue, setTabValue] = useState('all')
-
+  const orderBy = useAppSelector(state => state.deckSlice.orderBy)
   const setCardsCount = (value: number[]) => {
     dispatch(decksSlice.actions.setCardsCount(value))
   }
   const setSearchByName = (value: string) => {
     dispatch(decksSlice.actions.setSearchByName(value))
   }
-
+  const setOrderBy = (value: Sort) => {
+    dispatch(decksSlice.actions.setOrderBy(value))
+  }
   const debouncedCardsCount = useDebounce(cardsCount, 300)
+  const debouncedSearchName = useDebounce(searchByName, 500)
+  const sortedString = orderBy ? `${orderBy.key}-${orderBy.direction}` : null
 
   const { data: user } = useMeQuery()
   const { data } = useGetDecksQuery({
-    name: searchByName,
+    name: debouncedSearchName,
     authorId: tabValue === 'my cards' ? user?.id : undefined,
     minCardsCount: debouncedCardsCount[0],
     maxCardsCount: debouncedCardsCount[1],
+    orderBy: sortedString,
   })
   const [updateDeck] = useUpdateDeckMutation()
   const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
 
   const onClickAddNewDeckButton = (data: FormData) => {
-    const name = data.get('name')
-    const isPrivate = data.get('isPrivate')
-    const cover = data.get('cover')
-
-    const createDeckArgs: CreateDeckArgs = {
-      name: name as string,
-      isPrivate: isPrivate === 'true',
-      cover: cover as string | null,
-    }
-
-    createDeck(createDeckArgs)
+    createDeck(data)
   }
 
   const onClickDeleteDeckIcon = (id: string, name: string) => {
@@ -146,12 +168,7 @@ export const Decks = () => {
 
       <Table>
         <TableHead>
-          <TableRow>
-            <TableHeadCell>Name</TableHeadCell>
-            <TableHeadCell>Cards</TableHeadCell>
-            <TableHeadCell>Last Updated</TableHeadCell>
-            <TableHeadCell>Created by</TableHeadCell>
-          </TableRow>
+          <TableHeader columns={columns} sort={orderBy} onSort={sort => setOrderBy(sort)} />
         </TableHead>
         <TableBody>
           {data?.items?.map(deck => (
@@ -167,25 +184,31 @@ export const Decks = () => {
               <TableCell>{deck.cardsCount}</TableCell>
               <TableCell>{new Date(deck.updated).toLocaleDateString()}</TableCell>
               <TableCell>{deck.author.name}</TableCell>
-              <TableCell className={s.blockButton}>
-                {deck.author.id === user?.id && (
-                  <EditDeck
-                    trigger={<Edit />}
-                    buttonTitle="Save Changes"
-                    onSubmit={data => editDeckCallback(deck.id, data)}
-                    values={{
-                      name: deck.name,
-                      isPrivate: deck.isPrivate,
-                      cover: deck.cover,
-                    }}
-                  />
-                )}
-                <button
-                  className={s.tempButton}
-                  onClick={() => onClickDeleteDeckIcon(deck.id, deck.name)}
-                >
-                  Delete
-                </button>
+              <TableCell>
+                <div className={s.iconsContainer}>
+                  {deck.author.id === user?.id && (
+                    <>
+                      <Button variant={'tertiary'} className={s.icon}>
+                        <EditDeck
+                          trigger={<Edit />}
+                          buttonTitle="Save Changes"
+                          onSubmit={data => editDeckCallback(deck.id, data)}
+                          values={{
+                            name: deck.name,
+                            isPrivate: deck.isPrivate,
+                            cover: deck.cover,
+                          }}
+                        />
+                      </Button>
+                      <Button variant={'tertiary'} className={s.icon}>
+                        <Trash onClick={() => onClickDeleteDeckIcon(deck.id, deck.name)} />
+                      </Button>
+                    </>
+                  )}
+                  <Button variant={'tertiary'} className={s.icon}>
+                    <PlayArrow />
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}

@@ -5,6 +5,10 @@
 
 .thead {
   background-color: var(--color-dark-500);
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .th {

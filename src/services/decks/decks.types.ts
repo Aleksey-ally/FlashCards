@@ -26,6 +26,14 @@ export type Author = {
   name: string
 }
 
+export type DecksResponse = PaginatedEntity<Deck> & {
+  maxCardsCount: number
+  minCardsCount: number
+}
+export type PaginatedEntity<T> = {
+  pagination: Pagination
+  items: T[]
+}
 export type Pagination = {
   currentPage: number
   itemsPerPage: number
@@ -33,17 +41,14 @@ export type Pagination = {
   totalItems: number
 }
 
-export type CreateDeckArgs = Pick<Deck, 'name' | 'cover' | 'isPrivate'>
 export type DeleteDeckParams = Pick<Deck, 'id'>
 
-type Direction = 'asc' | 'desc'
-type Field = 'name' | 'updated'
 export type GetDecksParams = {
   minCardsCount?: number
   maxCardsCount?: number
   name?: string
   authorId?: string
-  orderBy?: `${Field}-${Direction}`
+  orderBy?: string | null
   currentPage?: number
   itemsPerPage?: number
 }
@@ -57,6 +62,8 @@ export type GetCardsParams = {
   orderBy?: string
   currentPage?: number
   itemsPerPage?: number
+  minCardsCount?: number
+  maxCardsCount?: number
 }
 
 export type Cards = {

@@ -2,9 +2,8 @@ import {
   Card,
   Cards,
   CreateCardArgs,
-  CreateDeckArgs,
   Deck,
-  Decks,
+  DecksResponse,
   DeleteDeck,
   DeleteDeckParams,
   GetCardsParams,
@@ -17,14 +16,14 @@ import { baseApi } from '@/services/base-api.ts'
 export const DecksService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      getDecks: builder.query<Decks, GetDecksParams | void>({
+      getDecks: builder.query<DecksResponse, GetDecksParams | void>({
         query: params => ({
           url: 'v1/decks',
           params: params ?? {},
         }),
         providesTags: ['Decks'],
       }),
-      createDeck: builder.mutation<Deck, CreateDeckArgs>({
+      createDeck: builder.mutation<Deck, FormData>({
         query: body => ({
           url: 'v1/decks',
           method: 'POST',
