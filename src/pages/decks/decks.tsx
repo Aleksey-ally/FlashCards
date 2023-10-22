@@ -186,12 +186,12 @@ export const Decks = () => {
               <TableCell>{deck.author.name}</TableCell>
               <TableCell>
                 <div className={s.iconsContainer}>
+                  <Button variant={'tertiary'} className={s.icon}>
+                    <PlayArrow />
+                  </Button>
                   {deck.author.id === user?.id && (
                     <>
                       {' '}
-                      <Button variant={'tertiary'} className={s.icon}>
-                        <PlayArrow />
-                      </Button>
                       <Button variant={'tertiary'} className={s.icon}>
                         <EditDeck
                           trigger={<Edit />}
