@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import s from './decks.module.scss'
 
 import { Edit, PlayArrow, Trash } from '@/assets'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button/button.tsx'
 import { Modal } from '@/components/ui/modal'
 import {
   Column,
@@ -173,14 +173,14 @@ export const Decks = () => {
         <TableBody>
           {data?.items?.map(deck => (
             <TableRow key={deck.id}>
-              <NavLink className={s.deckName} to={`/cards/${deck.id}`}>
-                <TableCell>
+              <TableCell>
+                <NavLink className={s.deckName} to={`/cards/${deck.id}`}>
                   {deck.cover && (
                     <img className={s.image} src={deck.cover} alt="deck-cover-image" />
                   )}
                   {deck.name}
-                </TableCell>
-              </NavLink>
+                </NavLink>
+              </TableCell>
               <TableCell>{deck.cardsCount}</TableCell>
               <TableCell>{new Date(deck.updated).toLocaleDateString()}</TableCell>
               <TableCell>{deck.author.name}</TableCell>

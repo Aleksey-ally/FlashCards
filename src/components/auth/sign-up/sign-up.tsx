@@ -3,7 +3,7 @@ import { DevTool } from '@hookform/devtools'
 import s from './sign-up.module.scss'
 
 import { SingUpForm, useSignUpScheme } from '@/components/schemes/use-sign-up-scheme.ts'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button/button.tsx'
 import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled'
 import { Typography } from '@/components/ui/typography'

@@ -4,11 +4,11 @@ import {
   RecoveryPasswordForm,
   useRecoveryPasswordScheme,
 } from '../../schemes/use-recovery-password-scheme.ts'
-import { Button } from '../../ui/button'
 import { ControlledTextField } from '../../ui/controlled'
 
 import s from './recovery-password.module.scss'
 
+import Button from '@/components/ui/button/button.tsx'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 
