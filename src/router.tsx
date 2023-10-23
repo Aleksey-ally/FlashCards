@@ -6,9 +6,9 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { Header } from '@/components/ui/header'
 import { Cards } from '@/pages/decks/cards'
 import { Decks } from '@/pages/decks/decks.tsx'
+import { Layout } from '@/pages/layout'
 import { Login } from '@/pages/login/login.tsx'
 import { useGetDecksQuery } from '@/services/decks'
 
@@ -61,13 +61,4 @@ function PrivateRoutes() {
   const isAuthenticated = true
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
-}
-
-function Layout() {
-  return (
-    <div>
-      <Header variant={'with avatar'} />
-      <Outlet />
-    </div>
-  )
 }

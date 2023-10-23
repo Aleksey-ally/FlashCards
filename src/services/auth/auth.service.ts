@@ -15,24 +15,14 @@ export const authService = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Me'],
     }),
-    // logout: builder.mutation<void, void>({
-    //   query: () => ({
-    //     url: '/v1/auth/logout',
-    //   }),
-    //   onQueryStarted: async (_, { getState, dispatch, queryFulfilled }) => {
-    //     try {
-    //       await queryFulfilled
-    //       dispatch(
-    //         authService.util.updateQueryData('me', undefined, draft => {
-    //           return null
-    //         })
-    //       )
-    //     } catch (e) {
-    //       console.log(e)
-    //     }
-    //   },
-    // }),
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: 'v1/auth/logout',
+        method: 'POST',
+      }),
+      invalidatesTags: ['Me'],
+    }),
   }),
 })
 
-export const { useLoginMutation, useMeQuery } = authService
+export const { useLoginMutation, useMeQuery, useLogoutMutation } = authService

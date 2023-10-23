@@ -1,10 +1,9 @@
 import { DevTool } from '@hookform/devtools'
 
-import { Button } from '../../ui/button'
-
 import s from './sign-in.module.scss'
 
 import { SingInForm, useSignInScheme } from '@/components/schemes/use-sign-in-scheme.ts'
+import Button from '@/components/ui/button/button.tsx'
 import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'

@@ -2,11 +2,12 @@ import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Button } from '../button'
 import { Card } from '../card'
 import { Typography } from '../typography'
 
 import { Modal } from './'
+
+import Button from '@/components/ui/button/button.tsx'
 
 const meta = {
   title: 'Components/Modal',
