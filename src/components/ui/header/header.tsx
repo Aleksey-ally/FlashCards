@@ -17,9 +17,10 @@ type UserData = { avatar: string | null; email: string; name: string }
 type Props = {
   variant?: 'with button' | 'with avatar'
   user?: UserData
+  onSignOut?: () => void
 } & ComponentPropsWithoutRef<'header'>
 
-export const Header = ({ variant = 'with button', user, ...rest }: Props) => {
+export const Header = ({ variant = 'with button', user, onSignOut, ...rest }: Props) => {
   return (
     <header {...rest} className={s.header}>
       <Link to={'/'}>
@@ -62,7 +63,7 @@ export const Header = ({ variant = 'with button', user, ...rest }: Props) => {
               </div>
             </DropdownItem>
             <DropdownItemWithIcon icon={<PersonOutline />} text="My Profile" onSelect={() => {}} />
-            <DropdownItemWithIcon icon={<Logout />} text="Sign Out" onSelect={() => {}} />
+            <DropdownItemWithIcon icon={<Logout />} text="Sign Out" onSelect={onSignOut} />
           </Dropdown>
         </div>
       ) : (
