@@ -1,10 +1,10 @@
-import { Button } from '../../ui/button'
 import { Card } from '../../ui/card'
 import { Typography } from '../../ui/typography'
 
 import s from './check-email.module.scss'
 
 import { Email } from '@/assets'
+import Button from '@/components/ui/button/button.tsx'
 
 export const CheckEmail = () => {
   return (

@@ -1,7 +1,7 @@
 import s from './decks-filter.module.scss'
 
 import { Trash } from '@/assets'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button/button.tsx'
 import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { TextField } from '@/components/ui/text-field'

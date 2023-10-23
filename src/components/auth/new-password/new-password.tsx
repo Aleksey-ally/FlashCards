@@ -1,11 +1,11 @@
 import { DevTool } from '@hookform/devtools'
 
 import { NewPasswordForm, useNewPasswordScheme } from '../../schemes/use-new-password-scheme.ts'
-import { Button } from '../../ui/button'
 import { ControlledTextField } from '../../ui/controlled'
 
 import s from './new-password.module.scss'
 
+import Button from '@/components/ui/button/button.tsx'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 

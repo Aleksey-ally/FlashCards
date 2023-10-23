@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import s from './decks.module.scss'
 
 import { Edit } from '@/assets'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button/button.tsx'
 import { Modal } from '@/components/ui/modal'
 import {
   Table,

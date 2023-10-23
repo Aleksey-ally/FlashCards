@@ -2,7 +2,6 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { Link } from 'react-router-dom'
 
-import { Button } from '../button'
 import { DropdownItem } from '../dropdown/dropdownItem'
 import { DropdownItemWithIcon } from '../dropdown/dropdownItem/dropdownItemWithIcon.tsx'
 import { Typography } from '../typography'
@@ -11,6 +10,7 @@ import s from './header.module.scss'
 
 import { HeaderLogo, Logout, PersonOutline } from '@/assets'
 import { Avatar } from '@/components/avatar'
+import Button from '@/components/ui/button/button.tsx'
 import { Dropdown } from '@/components/ui/dropdown'
 
 type UserData = { avatar: string | null; email: string; name: string }

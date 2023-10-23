@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import s from './cards.module.scss'
 
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button/button'
 import { Modal } from '@/components/ui/modal'
 import {
   Table,

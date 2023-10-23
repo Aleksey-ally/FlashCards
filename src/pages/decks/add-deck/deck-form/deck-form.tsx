@@ -6,7 +6,7 @@ import s from './deck-form.module.scss'
 
 import { Edit } from '@/assets'
 import { DeckFormValues, useDeckForm } from '@/components/schemes/use-deck-form.tsx'
-import { Button } from '@/components/ui/button'
+import Button from '@/components/ui/button/button.tsx'
 import { ControlledCheckbox, ControlledTextField } from '@/components/ui/controlled'
 import { Typography } from '@/components/ui/typography'
 import { FileUploader } from '@/pages/decks/add-deck/deck-form/file-uploader.tsx'
