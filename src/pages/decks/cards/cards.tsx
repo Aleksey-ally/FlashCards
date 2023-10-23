@@ -15,6 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
+import { AddCardModal } from '@/pages/decks/cards/add-card-modale/add-card-modale.tsx'
 import { useDeleteCardMutation } from '@/services/cards/cards.service.ts'
 import { Card } from '@/services/cards/cards.types.ts'
 import { useCreateCardMutation, useGetCardsQuery } from '@/services/decks'
@@ -30,8 +31,8 @@ export const Cards = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentCard, setCurrentCard] = useState<CurrentCard>({} as CurrentCard)
 
-  const onClickCreateCard = () => {
-    createCard({ id: deckID as string, question: 'Laugh', answer: 'Haha' })
+  const onClickCreateCard = (body: FormData) => {
+    createCard({ id: deckID as string, body })
   }
 
   const onClickDeleteCard = () => {
@@ -50,6 +51,17 @@ export const Cards = () => {
 
   return (
     <div className={s.cards}>
+      <AddCardModal
+        trigger={
+          <Button className={s.button}>
+            <Typography variant="subtitle2" as="span">
+              Add New Card
+            </Typography>
+          </Button>
+        }
+        buttonTitle={'Add New Card'}
+        onSubmit={onClickCreateCard}
+      ></AddCardModal>
       <Modal title={'Delete Card'} open={openModal} onClose={onClickCloseButton}>
         <Typography className={s.textModal} variant="body2" as="span">
           Do you really want to remove <b>Card {currentCard.question}?</b>
@@ -69,11 +81,6 @@ export const Cards = () => {
           </Button>
         </div>
       </Modal>
-      <Button className={s.button} onClick={onClickCreateCard}>
-        <Typography variant="subtitle2" as="span">
-          Add New Card
-        </Typography>
-      </Button>
       <Table>
         <TableHead>
           <TableRow>
@@ -86,8 +93,18 @@ export const Cards = () => {
         <TableBody>
           {data?.items?.map(card => (
             <TableRow key={card.id}>
-              <TableCell>{card.question}</TableCell>
-              <TableCell>{card.answer}</TableCell>
+              <TableCell>
+                {card.questionImg && (
+                  <img className={s.image} src={card.questionImg} alt="deck-cover-image" />
+                )}
+                {card.question}
+              </TableCell>
+              <TableCell>
+                {card.answerImg && (
+                  <img className={s.image} src={card.answerImg} alt="deck-cover-image" />
+                )}
+                {card.answer}
+              </TableCell>
               <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
               <TableCell>{card.grade}</TableCell>
               <TableCell>

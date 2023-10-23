@@ -87,10 +87,9 @@ export type UpdateDeckParamsType = {
 
 export type CreateCardArgs = {
   id: string
-  question: string
-  answer: string
-  questionImg?: string
-  answerImg?: string
-  questionVideo?: string
-  answerVideo?: string
+  body: FormData
+  // questionImg?: string
+  // answerImg?: string
+  // questionVideo?: string
+  // answerVideo?: string
 }
