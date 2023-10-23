@@ -23,7 +23,7 @@ type Props = {
 export const Header = ({ variant = 'with button', user, onSignOut, ...rest }: Props) => {
   return (
     <header {...rest} className={s.header}>
-      <Link to={'/'}>
+      <Link className={s.headerLogo} to={'/'}>
         <HeaderLogo />
       </Link>
       {variant === 'with avatar' ? (
