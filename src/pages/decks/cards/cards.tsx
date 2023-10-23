@@ -50,8 +50,18 @@ export const Cards = () => {
         <TableBody>
           {data?.items?.map(card => (
             <TableRow key={card.id}>
-              <TableCell>{card.question}</TableCell>
-              <TableCell>{card.answer}</TableCell>
+              <TableCell>
+                {card.questionImg && (
+                  <img className={s.image} src={card.questionImg} alt="deck-cover-image" />
+                )}
+                {card.question}
+              </TableCell>
+              <TableCell>
+                {card.answerImg && (
+                  <img className={s.image} src={card.answerImg} alt="deck-cover-image" />
+                )}
+                {card.answer}
+              </TableCell>
               <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
               <TableCell>{card.grade}</TableCell>
             </TableRow>

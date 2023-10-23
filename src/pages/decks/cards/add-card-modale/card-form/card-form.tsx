@@ -4,12 +4,11 @@ import s from './card-form.module.scss'
 
 import { Edit } from '@/assets'
 import { CardFormValues, useCardForm } from '@/components/schemes/use-card-form.tsx'
-import { DeckFormValues, useDeckForm } from '@/components/schemes/use-deck-form.tsx'
 import { Button } from '@/components/ui/button'
-import { ControlledCheckbox, ControlledTextField } from '@/components/ui/controlled'
+import { ControlledTextField } from '@/components/ui/controlled'
 import { Select } from '@/components/ui/select'
 import { Typography } from '@/components/ui/typography'
-import { FileUploader } from '@/pages/decks/add-deck/deck-form/file-uploader.tsx'
+import { FileUploader } from '@/pages/utils/file-uploader.tsx'
 
 type CardFormProps = {
   buttonTitle: string
@@ -18,17 +17,21 @@ type CardFormProps = {
 }
 
 export const CardForm = ({ buttonTitle, onSubmit, onClose }: CardFormProps): JSX.Element => {
-  const [cover, setCover] = useState<File | null>(null)
-  const [error, setError] = useState<null | string>()
+  const [coverQuestion, setCoverQuestion] = useState<File | null>(null)
+  const [coverAnswer, setCoverAnswer] = useState<File | null>(null)
+  const [errorQuestion, setErrorQuestion] = useState<null | string>()
+  const [errorAnswer, setErrorAnswer] = useState<null | string>()
 
   const { control, handleSubmit } = useCardForm({
     question: '',
     answer: '',
   })
 
-  // const imageUrl = cover && URL.createObjectURL(cover)
+  const imageUrlQuestion = coverQuestion && URL.createObjectURL(coverQuestion)
+  const imageUrlAnswer = coverAnswer && URL.createObjectURL(coverAnswer)
 
-  // const buttonUploadText = imageUrl ? 'Change Cover Image' : ' Add Cover Image'
+  const buttonUploadTextQuestion = imageUrlQuestion ? 'Change Cover Image' : ' Add Cover Image'
+  const buttonUploadTextAnswer = imageUrlAnswer ? 'Change Cover Image' : ' Add Cover Image'
 
   const onSubmitHandler = (data: CardFormValues) => {
     const formData = new FormData()
@@ -36,24 +39,34 @@ export const CardForm = ({ buttonTitle, onSubmit, onClose }: CardFormProps): JSX
     formData.append('question', data.question)
     formData.append('answer', data.answer)
 
-    if (cover) {
-      formData.append('cover', cover || '')
+    if (coverQuestion) {
+      formData.append('questionImg', coverQuestion || '')
+    }
+    if (coverAnswer) {
+      formData.append('answerImg', coverAnswer || '')
     }
     onSubmit(formData)
     onClose()
   }
-  // const onLoadCover = (data: File) => {
-  //   setCover(data)
-  //   setError(null)
-  // }
-  // const onLoadCoverError = (error: string) => {
-  //   setError(error)
-  // }
-  const [valueSelect, setValueSelect] = useState<number | string>('Text')
+  const onLoadCoverQuestion = (data: File) => {
+    setCoverQuestion(data)
+    setErrorQuestion(null)
+  }
+  const onLoadCoverAnswer = (data: File) => {
+    setCoverAnswer(data)
+    setErrorAnswer(null)
+  }
+  const onLoadCoverErrorQuestion = (error: string) => {
+    setErrorQuestion(error)
+  }
+  const onLoadCoverErrorAnswer = (error: string) => {
+    setErrorAnswer(error)
+  }
+  const [valueSelect, setValueSelect] = useState<string>('Text')
 
   const selectOptions = [
     { value: 'Text', label: 'Text' },
-    { value: 'Picture', label: 'Picture', disabled: true },
+    { value: 'Picture', label: 'Picture' },
   ]
 
   return (
@@ -66,26 +79,63 @@ export const CardForm = ({ buttonTitle, onSubmit, onClose }: CardFormProps): JSX
         className={s.select}
       ></Select>
 
-      {error && <div className={s.errorMessage}>{error}</div>}
-      {/*{imageUrl && (*/}
-      {/*  <div className={s.imageBlock}>*/}
-      {/*    <img src={imageUrl} alt="Pack cover" />*/}
-      {/*  </div>*/}
-      {/*)}*/}
-      {/*<FileUploader*/}
-      {/*  className={s.fileUploader}*/}
-      {/*  onLoadCover={onLoadCover}*/}
-      {/*  onLoadError={onLoadCoverError}*/}
-      {/*>*/}
-      {/*  <Button type="button" variant={'secondary'}>*/}
-      {/*    <Edit />*/}
-      {/*    <Typography variant={'h2'} as="span">*/}
-      {/*      {buttonUploadText}*/}
-      {/*    </Typography>*/}
-      {/*  </Button>*/}
-      {/*</FileUploader>*/}
-      <ControlledTextField className={s.input} control={control} name="question" label="Question" />
-      <ControlledTextField className={s.input} control={control} name="answer" label="Answer" />
+      <div>
+        <ControlledTextField
+          className={s.input}
+          control={control}
+          name="question"
+          label="Question"
+        />
+        <ControlledTextField className={s.input} control={control} name="answer" label="Answer" />
+      </div>
+
+      {valueSelect === 'Picture' && (
+        <div>
+          <Typography variant={'subtitle2'} as="span">
+            Image Question:
+          </Typography>
+          {errorQuestion && <div className={s.errorMessage}>{errorQuestion}</div>}
+          {imageUrlQuestion && (
+            <div className={s.imageBlock}>
+              <img src={imageUrlQuestion} alt="Card cover question" />
+            </div>
+          )}
+          <FileUploader
+            className={s.fileUploader}
+            onLoadCover={onLoadCoverQuestion}
+            onLoadError={onLoadCoverErrorQuestion}
+          >
+            <Button type="button" fullWidth variant={'secondary'}>
+              <Edit />
+              <Typography variant={'h2'} as="span">
+                {buttonUploadTextQuestion}
+              </Typography>
+            </Button>
+          </FileUploader>
+          <Typography variant={'subtitle2'} as="span">
+            Image Answer:
+          </Typography>
+          {errorAnswer && <div className={s.errorMessage}>{errorAnswer}</div>}
+          {imageUrlAnswer && (
+            <div className={s.imageBlock}>
+              <img src={imageUrlAnswer} alt="Card cover answer" />
+            </div>
+          )}
+          <FileUploader
+            className={s.fileUploader}
+            onLoadCover={onLoadCoverAnswer}
+            onLoadError={onLoadCoverErrorAnswer}
+          >
+            <Button type="button" fullWidth variant={'secondary'}>
+              <Edit />
+              <Typography variant={'h2'} as="span">
+                {buttonUploadTextAnswer}
+              </Typography>
+            </Button>
+          </FileUploader>
+        </div>
+      )}
+
       <div className={s.buttonsContainer}>
         <Button type="button" variant={'secondary'} onClick={onClose}>
           <Typography variant={'h2'}>Cancel</Typography>

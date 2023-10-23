@@ -29,16 +29,6 @@ export const DecksService = baseApi.injectEndpoints({
           method: 'POST',
           body,
         }),
-
-        // {
-        //   debugger
-        //
-        //   return {
-        //     url: 'v1/decks',
-        //     method: 'POST',
-        //     body,
-        //   }
-        // },
         invalidatesTags: ['Decks'],
       }),
       deleteDeck: builder.mutation<DeleteDeck, DeleteDeckParams>({
