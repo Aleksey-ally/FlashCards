@@ -8,7 +8,11 @@ import s from './select.module.scss'
 
 import { ArrowDown, ArrowUp } from '@/assets'
 
-type Item = { value: string | number; label: string | number }
+type Item = {
+  value: string | number
+  label: string | number
+  disabled?: boolean
+}
 
 export type SelectProps = {
   variant?: 'default' | 'pagination'
@@ -38,6 +42,12 @@ export const Select = ({
     item: `${s.item} ${variant === 'pagination' ? s.paginationItem : ''}`,
   }
 
+  const placeholderRadix = placeholder && (
+    <Typography className={s.placeholder} variant="body1">
+      {placeholder}
+    </Typography>
+  )
+
   return (
     <Typography variant="body2" as={'label'} className={disabled ? s.labelDisabled : s.label}>
       {label}
@@ -49,11 +59,21 @@ export const Select = ({
         onOpenChange={setOpen}
       >
         <SelectRadix.Trigger className={classNames.trigger}>
-          <SelectRadix.Value placeholder={<Typography variant="body1">{placeholder}</Typography>}>
-            <Typography variant={variant === 'pagination' ? 'body2' : 'body1'}>{value}</Typography>
+          <SelectRadix.Value placeholder={placeholderRadix}>
+            <Typography className={s.value} variant={variant === 'pagination' ? 'body2' : 'body1'}>
+              {value}
+            </Typography>
           </SelectRadix.Value>
           <SelectRadix.Icon asChild>
-            {open ? <ArrowUp /> : <ArrowDown disabled={disabled} />}
+            {open ? (
+              <div className={s.arrows}>
+                <ArrowUp />
+              </div>
+            ) : (
+              <div className={s.arrows}>
+                <ArrowDown disabled={disabled} />
+              </div>
+            )}
           </SelectRadix.Icon>
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
@@ -67,8 +87,9 @@ export const Select = ({
               {items.map(item => (
                 <SelectRadix.Item
                   key={item.value}
-                  className={classNames.item}
+                  className={`${classNames.item} ${item.disabled ? s.itemDisabled : 'sfa'}`}
                   value={item.value.toString()}
+                  disabled={item.disabled}
                 >
                   <SelectRadix.ItemText>{item.label}</SelectRadix.ItemText>
                 </SelectRadix.Item>

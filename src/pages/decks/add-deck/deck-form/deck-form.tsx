@@ -9,7 +9,7 @@ import { DeckFormValues, useDeckForm } from '@/components/schemes/use-deck-form.
 import Button from '@/components/ui/button/button.tsx'
 import { ControlledCheckbox, ControlledTextField } from '@/components/ui/controlled'
 import { Typography } from '@/components/ui/typography'
-import { FileUploader } from '@/pages/decks/add-deck/deck-form/file-uploader.tsx'
+import { FileUploader } from '@/pages/utils/file-uploader.tsx'
 
 type DeckFormProps = {
   buttonTitle: string
@@ -48,7 +48,6 @@ export const DeckForm = ({
     if (cover) {
       formData.append('cover', cover || '')
     }
-
     onSubmit(formData)
     onClose()
   }
