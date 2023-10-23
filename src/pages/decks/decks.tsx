@@ -145,14 +145,14 @@ export const Decks = () => {
         <TableBody>
           {data?.items?.map(deck => (
             <TableRow key={deck.id}>
-              <NavLink className={s.deckName} to={`/cards/${deck.id}`}>
-                <TableCell>
+              <TableCell>
+                <NavLink className={s.deckName} to={`/cards/${deck.id}`}>
                   {deck.cover && (
                     <img className={s.image} src={deck.cover} alt="deck-cover-image" />
                   )}
                   {deck.name}
-                </TableCell>
-              </NavLink>
+                </NavLink>
+              </TableCell>
               <TableCell>{deck.cardsCount}</TableCell>
               <TableCell>{new Date(deck.updated).toLocaleDateString()}</TableCell>
               <TableCell>{deck.author.name}</TableCell>
