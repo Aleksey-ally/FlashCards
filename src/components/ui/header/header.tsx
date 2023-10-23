@@ -1,5 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { Button } from '../button'
 import { DropdownItem } from '../dropdown/dropdownItem'
 import { DropdownItemWithIcon } from '../dropdown/dropdownItem/dropdownItemWithIcon.tsx'
@@ -11,28 +13,33 @@ import { HeaderLogo, Logout, PersonOutline } from '@/assets'
 import { Avatar } from '@/components/avatar'
 import { Dropdown } from '@/components/ui/dropdown'
 
+type UserData = { avatar: string | null; email: string; name: string }
 type Props = {
   variant?: 'with button' | 'with avatar'
+  user?: UserData
 } & ComponentPropsWithoutRef<'header'>
 
-export const Header = ({ variant = 'with button', ...rest }: Props) => {
+export const Header = ({ variant = 'with button', user, ...rest }: Props) => {
   return (
     <header {...rest} className={s.header}>
-      <HeaderLogo />
+      <Link to={'/'}>
+        <HeaderLogo />
+      </Link>
       {variant === 'with avatar' ? (
         <div className={s.userBlock}>
           <Typography variant="subtitle1" as="span" className={s.userName}>
-            User name
+            {user?.name ? user.name : 'User Name'}
           </Typography>
           <Dropdown
             trigger={
               <div className={s.wrapperAvatar}>
                 <Avatar
                   src={
+                    user?.avatar ||
                     'https://fikiwiki.com/uploads/posts/2022-02/1644918620_17-fikiwiki-com-p-krasivie-kartinki-visokogo-razresheniya-19.jpg'
                   }
                   size={36}
-                  name="User"
+                  name={user?.name || 'User'}
                 />
               </div>
             }
@@ -40,15 +47,17 @@ export const Header = ({ variant = 'with button', ...rest }: Props) => {
             <DropdownItem>
               <Avatar
                 src={
+                  user?.avatar ||
                   'https://fikiwiki.com/uploads/posts/2022-02/1644918620_17-fikiwiki-com-p-krasivie-kartinki-visokogo-razresheniya-19.jpg'
                 }
                 size={36}
-                name="User"
+                name={user?.name || 'User'}
               />
+
               <div>
-                <Typography variant="subtitle2">User name</Typography>
+                <Typography variant="subtitle2"> {user?.name ? user.name : 'User Name'}</Typography>
                 <Typography variant="caption" style={{ color: 'var(--color-dark-100)' }}>
-                  example@email.com
+                  {user?.email ? user.email : 'User Name'}
                 </Typography>
               </div>
             </DropdownItem>
