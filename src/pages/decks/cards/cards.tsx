@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import s from './cards.module.scss'
 
+import { Edit } from '@/assets'
 import Button from '@/components/ui/button/button'
 import { Modal } from '@/components/ui/modal'
 import {
@@ -16,7 +17,8 @@ import {
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
 import { AddCardModal } from '@/pages/decks/cards/add-card-modale/add-card-modale.tsx'
-import { useDeleteCardMutation } from '@/services/cards/cards.service.ts'
+import { EditCardModal } from '@/pages/decks/cards/edit-card-modale'
+import { useDeleteCardMutation, useUpdateCardMutation } from '@/services/cards/cards.service.ts'
 import { Card } from '@/services/cards/cards.types.ts'
 import { useCreateCardMutation, useGetCardsQuery } from '@/services/decks'
 type CurrentCard = Pick<Card, 'id' | 'question'>
@@ -27,6 +29,7 @@ export const Cards = () => {
   const { data } = useGetCardsQuery({ id: deckID as string })
   const [createCard] = useCreateCardMutation()
   const [deleteCard] = useDeleteCardMutation()
+  const [updateCard] = useUpdateCardMutation()
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentCard, setCurrentCard] = useState<CurrentCard>({} as CurrentCard)
@@ -49,9 +52,14 @@ export const Cards = () => {
     setOpenModal(true)
   }
 
+  const onClickUpdateCard = (id: string, body: FormData) => {
+    updateCard({ id, body })
+  }
+
   return (
     <div className={s.cards}>
       <AddCardModal
+        title={'Add New Card'}
         trigger={
           <Button className={s.button}>
             <Typography variant="subtitle2" as="span">
@@ -108,6 +116,12 @@ export const Cards = () => {
               <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
               <TableCell>{card.grade}</TableCell>
               <TableCell>
+                <EditCardModal
+                  title={'Edit Card'}
+                  trigger={<Edit />}
+                  buttonTitle={'Edit Card'}
+                  onSubmit={body => onClickUpdateCard(card.id, body)}
+                ></EditCardModal>
                 <button
                   className={s.tempButton}
                   onClick={() => onClickDeleteCardIcon(card.id, card.question)}
