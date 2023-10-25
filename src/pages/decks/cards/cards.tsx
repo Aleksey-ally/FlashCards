@@ -19,6 +19,7 @@ import { AddCardModal } from '@/pages/decks/cards/add-card-modale/add-card-modal
 import { useDeleteCardMutation } from '@/services/cards/cards.service.ts'
 import { Card } from '@/services/cards/cards.types.ts'
 import { useCreateCardMutation, useGetCardsQuery } from '@/services/decks'
+import { Trash } from '@/assets'
 type CurrentCard = Pick<Card, 'id' | 'question'>
 
 export const Cards = () => {
@@ -34,7 +35,6 @@ export const Cards = () => {
   const onClickCreateCard = (body: FormData) => {
     createCard({ id: deckID as string, body })
   }
-
   const onClickDeleteCard = () => {
     deleteCard({ id: currentCard.id })
     setOpenModal(false)
@@ -108,12 +108,10 @@ export const Cards = () => {
               <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
               <TableCell>{card.grade}</TableCell>
               <TableCell>
-                <button
-                  className={s.tempButton}
+                <Trash
+                  className={s.trash}
                   onClick={() => onClickDeleteCardIcon(card.id, card.question)}
-                >
-                  Delete
-                </button>
+                />
               </TableCell>
             </TableRow>
           ))}
