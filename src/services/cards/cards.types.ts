@@ -15,3 +15,7 @@ export type Card = {
 }
 
 export type DeleteCardParams = Pick<Card, 'id'>
+export type UpdateCardParams = {
+  id: string
+  body: FormData
+}
