@@ -1,5 +1,5 @@
 import { baseApi } from '@/services/base-api.ts'
-import { DeleteCardParams } from '@/services/cards/cards.types.ts'
+import { Card, DeleteCardParams, UpdateCardParams } from '@/services/cards/cards.types.ts'
 
 export const CardsService = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -11,8 +11,16 @@ export const CardsService = baseApi.injectEndpoints({
         }),
         invalidatesTags: ['Cards'],
       }),
+      updateCard: builder.mutation<Card, UpdateCardParams>({
+        query: ({ id, body }) => ({
+          url: `v1/cards/${id}`,
+          method: 'PATCH',
+          body,
+        }),
+        invalidatesTags: ['Cards'],
+      }),
     }
   },
 })
 
-export const { useDeleteCardMutation } = CardsService
+export const { useDeleteCardMutation, useUpdateCardMutation } = CardsService

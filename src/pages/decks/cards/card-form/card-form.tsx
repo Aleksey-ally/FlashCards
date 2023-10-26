@@ -3,7 +3,7 @@ import { useState } from 'react'
 import s from './card-form.module.scss'
 
 import { Edit } from '@/assets'
-import { CardFormValues, useCardForm } from '@/components/schemes/use-card-form.tsx'
+import { CreateCardForm, useCardFormScheme } from '@/components/schemes/use-card-form-scheme.ts'
 import Button from '@/components/ui/button/button.tsx'
 import { ControlledTextField } from '@/components/ui/controlled'
 import { Select } from '@/components/ui/select'
@@ -22,7 +22,7 @@ export const CardForm = ({ buttonTitle, onSubmit, onClose }: CardFormProps): JSX
   const [errorQuestion, setErrorQuestion] = useState<null | string>()
   const [errorAnswer, setErrorAnswer] = useState<null | string>()
 
-  const { control, handleSubmit } = useCardForm({
+  const { control, handleSubmit } = useCardFormScheme({
     question: '',
     answer: '',
   })
@@ -33,7 +33,7 @@ export const CardForm = ({ buttonTitle, onSubmit, onClose }: CardFormProps): JSX
   const buttonUploadTextQuestion = imageUrlQuestion ? 'Change Cover Image' : ' Add Cover Image'
   const buttonUploadTextAnswer = imageUrlAnswer ? 'Change Cover Image' : ' Add Cover Image'
 
-  const onSubmitHandler = (data: CardFormValues) => {
+  const onSubmitHandler = (data: CreateCardForm) => {
     const formData = new FormData()
 
     formData.append('question', data.question)
@@ -138,10 +138,10 @@ export const CardForm = ({ buttonTitle, onSubmit, onClose }: CardFormProps): JSX
 
       <div className={s.buttonsContainer}>
         <Button type="button" variant={'secondary'} onClick={onClose}>
-          <Typography variant={'h2'}>Cancel</Typography>
+          <Typography variant={'subtitle2'}>Cancel</Typography>
         </Button>
         <Button>
-          <Typography variant={'h2'}>{buttonTitle}</Typography>
+          <Typography variant={'subtitle2'}>{buttonTitle}</Typography>
         </Button>
       </div>
     </form>

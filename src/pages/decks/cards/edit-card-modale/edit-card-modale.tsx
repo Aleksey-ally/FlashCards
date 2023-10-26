@@ -7,10 +7,15 @@ export type DeckProps = {
   title: string
   trigger: ReactNode
   buttonTitle: string
-  onSubmit: (data: FormData) => void
+  onSubmit: (data: FormData, id?: string) => void
 }
 
-export const AddCardModal = ({ title, trigger, buttonTitle, onSubmit }: DeckProps): JSX.Element => {
+export const EditCardModal = ({
+  title,
+  trigger,
+  buttonTitle,
+  onSubmit,
+}: DeckProps): JSX.Element => {
   const [open, setOpen] = useState(false)
 
   const closeModal = () => {
