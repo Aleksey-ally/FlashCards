@@ -37,9 +37,8 @@
   gap: 25px;
 }
 
-.icon {
-  padding: 0;
-  border: none;
+.icon:hover {
+  cursor: pointer;
 }
 
 .image {
