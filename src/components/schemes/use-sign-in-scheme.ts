@@ -11,7 +11,14 @@ const schema = z.object({
 export type SingInForm = z.infer<typeof schema>
 
 export const useSignInScheme = () => {
-  const { handleSubmit, control } = useForm<SingInForm>({ resolver: zodResolver(schema) })
+  const { handleSubmit, control } = useForm<SingInForm>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+  })
 
   return { handleSubmit, control }
 }

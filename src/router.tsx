@@ -9,8 +9,8 @@ import {
 import { Cards } from '@/pages/decks/cards'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Layout } from '@/pages/layout'
-import { Login } from '@/pages/login/login.tsx'
-import { useGetDecksQuery } from '@/services/decks'
+import { Login } from '@/pages/login'
+import { useMeQuery } from '@/services/auth/auth.service.ts'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -49,16 +49,14 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
-  const { isLoading, isError } = useGetDecksQuery()
-
-  if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error</div>
-
   return <RouterProvider router={router} />
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { data, isLoading } = useMeQuery()
+
+  if (isLoading) return <div>Loading...</div>
+  const isAuthenticated = !!data
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

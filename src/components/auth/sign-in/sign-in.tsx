@@ -1,4 +1,5 @@
 import { DevTool } from '@hookform/devtools'
+import { Link } from 'react-router-dom'
 
 import s from './sign-in.module.scss'
 
@@ -39,7 +40,7 @@ export const SignIn = ({ onSubmit }: Props) => {
       <Typography variant="body2" className={s.question}>
         {`Don't have an account?`}
       </Typography>
-      <Typography variant="link1" as="a" href="#" className={s.signUp1}>
+      <Typography variant="link1" as={Link} to="/sign-up" className={s.signUp1}>
         Sign Up
       </Typography>
     </Card>

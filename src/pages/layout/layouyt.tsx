@@ -10,7 +10,7 @@ export const Layout = () => {
   return (
     <>
       <Header user={user} variant={'with avatar'} onSignOut={logout} />
-      <main>
+      <main style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Outlet />
       </main>
     </>
