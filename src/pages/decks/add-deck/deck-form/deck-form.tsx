@@ -80,12 +80,9 @@ export const DeckForm = ({
         </Button>
       </FileUploader>
       <ControlledTextField className={s.input} control={control} name="name" label="Name Pack" />
-      <ControlledCheckbox
-        control={control}
-        name="isPrivate"
-        label="Private pack"
-        className={s.isPrivate}
-      />
+      <div className={s.isPrivate}>
+        <ControlledCheckbox control={control} name="isPrivate" label="Private pack" />
+      </div>
       <div className={s.buttonsContainer}>
         <Button type="button" variant={'secondary'} onClick={onClose}>
           <Typography variant={'h2'}>Cancel</Typography>
