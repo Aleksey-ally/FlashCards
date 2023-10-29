@@ -1,22 +1,28 @@
-import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
+import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
 
 import { TextField, TextFieldProps } from '../../text-field'
 
-export type ControlledTextFieldProps<TFieldValues extends FieldValues> = {
-  name: FieldPath<TFieldValues>
-  control: Control<TFieldValues>
-} & Omit<TextFieldProps, 'onChange' | 'value' | 'id'>
+type ControlledTextFieldProps<TFieldValues extends FieldValues> = UseControllerProps<TFieldValues> &
+  Omit<TextFieldProps, 'onChange' | 'value' | 'name'>
 
-export const ControlledTextField = <TFieldValues extends FieldValues>(
-  props: ControlledTextFieldProps<TFieldValues>
-) => {
+export const ControlledTextField = <TFieldValues extends FieldValues>({
+  control,
+  name,
+  rules,
+  shouldUnregister,
+  defaultValue,
+  ...textFieldProps
+}: ControlledTextFieldProps<TFieldValues>) => {
   const {
     field,
     fieldState: { error },
   } = useController({
-    name: props.name,
-    control: props.control,
+    control,
+    name,
+    rules,
+    shouldUnregister,
+    defaultValue,
   })
 
-  return <TextField {...props} {...field} errorMessage={error?.message} id={props.name} />
+  return <TextField {...textFieldProps} {...field} errorMessage={error?.message} />
 }
