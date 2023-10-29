@@ -1,4 +1,9 @@
-import { LoginArgs, LoginResponseType } from '@/services/auth/auth.types.ts'
+import {
+  LoginArgs,
+  LoginResponseType,
+  SignUpArgs,
+  SignUpResponseType,
+} from '@/services/auth/auth.types.ts'
 import { baseApi } from '@/services/base-api.ts'
 
 export const authService = baseApi.injectEndpoints({
@@ -34,7 +39,14 @@ export const authService = baseApi.injectEndpoints({
         }
       },
     }),
+    signUp: builder.mutation<SignUpResponseType, SignUpArgs>({
+      query: body => ({
+        url: 'v1/auth/sign-up',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useLoginMutation, useMeQuery, useLogoutMutation } = authService
+export const { useLoginMutation, useMeQuery, useLogoutMutation, useSignUpMutation } = authService

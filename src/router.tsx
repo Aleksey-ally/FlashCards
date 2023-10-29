@@ -9,13 +9,18 @@ import {
 import { Cards } from '@/pages/decks/cards'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Layout } from '@/pages/layout'
-import { Login } from '@/pages/login'
+import { Login } from '@/pages/login/login.tsx'
+import { SignUpPage } from '@/pages/sign-up'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUpPage />,
   },
 ]
 
