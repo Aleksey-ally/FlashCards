@@ -63,7 +63,7 @@ export const Header = ({ variant = 'with button', user, onSignOut, ...rest }: Pr
               </div>
             </DropdownItem>
             <DropdownItemWithIcon icon={<PersonOutline />} text="My Profile" onSelect={() => {}} />
-            <DropdownItemWithIcon icon={<Logout />} text="Sign Out" onSelect={onSignOut} />
+            <DropdownItemWithIcon icon={<Logout />} text="Sign Out" onClick={onSignOut} />
           </Dropdown>
         </div>
       ) : (

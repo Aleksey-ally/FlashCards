@@ -186,26 +186,24 @@ export const Decks = () => {
               <TableCell>{deck.author.name}</TableCell>
               <TableCell>
                 <div className={s.iconsContainer}>
-                  <Button variant={'tertiary'} className={s.icon}>
-                    <PlayArrow />
-                  </Button>
+                  <PlayArrow className={s.icon} />
                   {deck.author.id === user?.id && (
                     <>
-                      <Button variant={'tertiary'} className={s.icon}>
-                        <EditDeck
-                          trigger={<Edit />}
-                          buttonTitle="Save Changes"
-                          onSubmit={data => editDeckCallback(deck.id, data)}
-                          values={{
-                            name: deck.name,
-                            isPrivate: deck.isPrivate,
-                            cover: deck.cover,
-                          }}
-                        />
-                      </Button>
-                      <Button variant={'tertiary'} className={s.icon}>
-                        <Trash onClick={() => onClickDeleteDeckIcon(deck.id, deck.name)} />
-                      </Button>
+                      <EditDeck
+                        trigger={<Edit className={s.icon} />}
+                        buttonTitle="Save Changes"
+                        onSubmit={data => editDeckCallback(deck.id, data)}
+                        values={{
+                          name: deck.name,
+                          isPrivate: deck.isPrivate,
+                          cover: deck.cover,
+                        }}
+                      />
+
+                      <Trash
+                        className={s.icon}
+                        onClick={() => onClickDeleteDeckIcon(deck.id, deck.name)}
+                      />
                     </>
                   )}
                 </div>
