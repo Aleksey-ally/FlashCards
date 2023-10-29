@@ -26,18 +26,19 @@ export const authService = baseApi.injectEndpoints({
         url: 'v1/auth/logout',
         method: 'POST',
       }),
-      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-        try {
-          await queryFulfilled
-          dispatch(
-            authService.util.updateQueryData('me', undefined, () => {
-              return null
-            })
-          )
-        } catch (e) {
-          // console.log(e)
-        }
-      },
+      invalidatesTags: ['Me'],
+      //   onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+      //     try {
+      //       await queryFulfilled
+      //       dispatch(
+      //         authService.util.updateQueryData('me', undefined, () => {
+      //           return null
+      //         })
+      //       )
+      //     } catch (e) {
+      //       // console.log(e)
+      //     }
+      //   },
     }),
     signUp: builder.mutation<SignUpResponseType, SignUpArgs>({
       query: body => ({
