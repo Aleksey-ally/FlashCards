@@ -10,6 +10,7 @@ import { Cards } from '@/pages/decks/cards'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Layout } from '@/pages/layout'
 import { Login } from '@/pages/login/login.tsx'
+import { Profile } from '@/pages/profile'
 import { SignUpPage } from '@/pages/sign-up'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
 
@@ -32,6 +33,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/cards/:deckID',
     element: <Cards />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
 ]
 

@@ -27,6 +27,7 @@ export const authService = baseApi.injectEndpoints({
         method: 'POST',
       }),
       invalidatesTags: ['Me'],
+
       //   onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
       //     try {
       //       await queryFulfilled
@@ -40,6 +41,16 @@ export const authService = baseApi.injectEndpoints({
       //     }
       //   },
     }),
+    updateProfile: builder.mutation<any, any>({
+      query: params => {
+        return {
+          url: `v1/auth/me`,
+          method: 'PATCH',
+          body: params,
+        }
+      },
+      invalidatesTags: ['Me'],
+    }),
     signUp: builder.mutation<SignUpResponseType, SignUpArgs>({
       query: body => ({
         url: 'v1/auth/sign-up',
@@ -50,4 +61,10 @@ export const authService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useLoginMutation, useMeQuery, useLogoutMutation, useSignUpMutation } = authService
+export const {
+  useLoginMutation,
+  useMeQuery,
+  useLogoutMutation,
+  useSignUpMutation,
+  useUpdateProfileMutation,
+} = authService

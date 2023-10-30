@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { DropdownItem } from '../dropdown/dropdownItem'
 import { DropdownItemWithIcon } from '../dropdown/dropdownItem/dropdownItemWithIcon.tsx'
@@ -21,6 +21,8 @@ type Props = {
 } & ComponentPropsWithoutRef<'header'>
 
 export const Header = ({ variant = 'with button', user, onSignOut, ...rest }: Props) => {
+  const navigate = useNavigate()
+
   return (
     <header {...rest} className={s.header}>
       <Link className={s.headerLogo} to={'/'}>
@@ -62,7 +64,14 @@ export const Header = ({ variant = 'with button', user, onSignOut, ...rest }: Pr
                 </Typography>
               </div>
             </DropdownItem>
-            <DropdownItemWithIcon icon={<PersonOutline />} text="My Profile" onSelect={() => {}} />
+            <DropdownItemWithIcon
+              icon={<PersonOutline />}
+              text="My Profile"
+              onSelect={() => navigate('/profile')}
+              onClick={() => {
+                navigate('/profile')
+              }}
+            />
             <DropdownItemWithIcon icon={<Logout />} text="Sign Out" onClick={onSignOut} />
           </Dropdown>
         </div>
