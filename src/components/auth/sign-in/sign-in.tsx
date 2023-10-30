@@ -30,7 +30,7 @@ export const SignIn = ({ onSubmit }: Props) => {
         <ControlledTextField label="Password" control={control} name="password" type="password" />
         <ControlledCheckbox label="Remember me" control={control} name="rememberMe" />
 
-        <Typography variant="body2" as="a" href="#" className={s.recovery}>
+        <Typography as={Link} to="/recovery-password" variant="body2" className={s.recovery}>
           Forgot Password?
         </Typography>
         <Button type="submit" fullWidth className={s.button}>

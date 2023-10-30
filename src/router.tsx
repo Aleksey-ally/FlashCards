@@ -10,6 +10,8 @@ import { Cards } from '@/pages/decks/cards'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Layout } from '@/pages/layout'
 import { Login } from '@/pages/login/login.tsx'
+import { NewPasswordPage } from '@/pages/new-password'
+import { RecoveryPasswordPage } from '@/pages/recovery-password'
 import { SignUpPage } from '@/pages/sign-up'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
 
@@ -21,6 +23,14 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/sign-up',
     element: <SignUpPage />,
+  },
+  {
+    path: '/recovery-password',
+    element: <RecoveryPasswordPage />,
+  },
+  {
+    path: '/new-password/:token',
+    element: <NewPasswordPage />,
   },
 ]
 
