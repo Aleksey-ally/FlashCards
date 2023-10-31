@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { CheckEmailPage } from '@/pages/check-email'
 import { Cards } from '@/pages/decks/cards'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Layout } from '@/pages/layout'
@@ -31,6 +32,10 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/new-password/:token',
     element: <NewPasswordPage />,
+  },
+  {
+    path: '/check-email/:email',
+    element: <CheckEmailPage />,
   },
 ]
 
