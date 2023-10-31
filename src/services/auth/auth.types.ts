@@ -30,3 +30,15 @@ export type SignUpArgs = {
   email: string
   password: string
 }
+
+export type RecoveryPasswordArgs = {
+  email: string
+  html?: string
+}
+
+export type ResetPasswordArgs = {
+  token: string
+  body: {
+    password: string
+  }
+}
