@@ -12,7 +12,7 @@ export const RecoveryPasswordPage = () => {
 
     const body = {
       email,
-      html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/new-password/##token##">here</a> to recover your password</p>',
+      html: '<h1>Hi, ##name##</h1><p>Click <a href="https://flash-cards-liard.vercel.app/new-password/##token##">here</a> to recover your password</p>',
     }
 
     recoveryPassword(body).then(() => navigate(`/check-email/${body.email}`))
