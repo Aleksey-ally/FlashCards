@@ -55,6 +55,10 @@ export type GetDecksParams = {
   itemsPerPage?: number
 }
 
+export type GetDeckParams = {
+  id: string
+}
+
 export type DeleteDeck = Omit<Deck, 'author'>
 
 export type GetCardsParams = {

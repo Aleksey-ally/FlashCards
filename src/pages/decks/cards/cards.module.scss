@@ -6,8 +6,10 @@
   max-width: 1006px;
   margin: 36px auto auto;
 
-  .button {
-    align-self: end;
+  .titleBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .image {
@@ -17,6 +19,25 @@
 
   .trash:hover {
     cursor: pointer;
+  }
+
+  .emptyDeck {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+
+    .title {
+      display: flex;
+      align-items: center;
+      align-self: start;
+      height: 41px;
+    }
+
+    .description {
+      margin-top: 40px;
+      color: var(--color-dark-100);
+    }
   }
 }
 
