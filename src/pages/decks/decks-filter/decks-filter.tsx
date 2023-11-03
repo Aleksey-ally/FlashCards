@@ -36,7 +36,7 @@ export const DecksFilter = ({
   return (
     <div className={s.container}>
       <TextField
-        placeholder={'input search'}
+        placeholder={'Input deck name'}
         isSearch
         value={inputValue}
         onValueChange={onChangeInputValue}
