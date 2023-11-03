@@ -10,6 +10,7 @@ import {
 export const Profile = () => {
   const [showText, setShowText] = useState(false)
   const [avatar, setAvatar] = useState<File | null>(null)
+  const [newAvatar, setNewAvatar] = useState<File | null>(null)
 
   const { data } = useMeQuery()
   const [logout] = useLogoutMutation()
@@ -32,6 +33,7 @@ export const Profile = () => {
     setShowText(true)
     const file = e.target.files![0]
 
+    setNewAvatar(file)
     setAvatar(file)
   }
 
@@ -46,6 +48,7 @@ export const Profile = () => {
           ? data.avatar
           : 'https://fikiwiki.com/uploads/posts/2022-02/1644918620_17-fikiwiki-com-p-krasivie-kartinki-visokogo-razresheniya-19.jpg'
       }
+      newAvatar={newAvatar}
       handleChangeAvatar={handleChangeAvatar}
       onSubmit={handleFormSubmit}
       handleLogout={() => logout()}

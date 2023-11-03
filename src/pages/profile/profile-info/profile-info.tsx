@@ -24,6 +24,7 @@ type ProfileInfoProps = {
   showText: boolean
   setShowText: (showTextField: boolean) => void
   user?: UserData
+  newAvatar: File | null
 }
 
 export const ProfileInfo: FC<ProfileInfoProps> = ({
@@ -35,6 +36,7 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({
   onSubmit,
   showText,
   setShowText,
+  newAvatar,
 }) => {
   const handleChangeName = () => {
     setShowText(true)
@@ -44,8 +46,8 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({
     mode: 'onSubmit',
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      email: '',
-      name: name,
+      email: email,
+      name: '',
     },
   })
 
@@ -55,7 +57,11 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({
         Personal Information
       </Typography>
       <div className={s.imgBlock}>
-        <Avatar src={src} name="user" size={96} />
+        {newAvatar ? (
+          <Avatar src={URL.createObjectURL(newAvatar)} size={96} />
+        ) : (
+          <Avatar src={src} name="user" size={96} />
+        )}
         <label>
           <input
             className={s.fileUploader}
