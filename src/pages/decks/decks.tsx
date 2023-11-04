@@ -21,7 +21,7 @@ import { Typography } from '@/components/ui/typography'
 import { AddDeckModal } from '@/pages/decks/add-deck/add-deck-modale.tsx'
 import { DecksFilter } from '@/pages/decks/decks-filter'
 import { EditDeck } from '@/pages/decks/edit-deck'
-import { useDebounce } from '@/pages/decks/use-deck-debounce.ts'
+import { useDebounce } from '@/pages/utils/use-debounce.ts'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
 import {
   Deck,

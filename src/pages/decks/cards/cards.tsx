@@ -20,6 +20,7 @@ import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { AddCardModal } from '@/pages/decks/cards/add-card-modale/add-card-modale.tsx'
 import { EditCardModal } from '@/pages/decks/cards/edit-card-modale'
+import { useDebounce } from '@/pages/utils'
 import { cardsSlice } from '@/services/cards/card.slice.ts'
 import { useDeleteCardMutation, useUpdateCardMutation } from '@/services/cards/cards.service.ts'
 import { Card } from '@/services/cards/cards.types.ts'
@@ -36,7 +37,9 @@ export const Cards = () => {
 
   const searchByQuestion = useAppSelector(state => state.cardSlice.searchByName)
 
-  const { data: cards } = useGetCardsQuery({ id, question: searchByQuestion })
+  const debouncedSearchByQuestion = useDebounce(searchByQuestion, 500)
+
+  const { data: cards } = useGetCardsQuery({ id, question: debouncedSearchByQuestion })
   const { data: currentDeck } = useGetDeckQuery({ id })
   const [createCard] = useCreateCardMutation()
   const [deleteCard] = useDeleteCardMutation()
