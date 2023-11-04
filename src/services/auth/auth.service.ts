@@ -42,6 +42,16 @@ export const authService = baseApi.injectEndpoints({
       //     }
       //   },
     }),
+    updateProfile: builder.mutation<any, any>({
+      query: params => {
+        return {
+          url: `v1/auth/me`,
+          method: 'PATCH',
+          body: params,
+        }
+      },
+      invalidatesTags: ['Me'],
+    }),
     signUp: builder.mutation<SignUpResponseType, SignUpArgs>({
       query: body => ({
         url: 'v1/auth/sign-up',
@@ -73,4 +83,5 @@ export const {
   useSignUpMutation,
   useRecoveryPasswordMutation,
   useResetPasswordMutation,
+  useUpdateProfileMutation,
 } = authService
