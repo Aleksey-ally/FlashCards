@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import s from './cards.module.scss'
@@ -15,19 +16,31 @@ import {
   TableHeadCell,
   TableRow,
 } from '@/components/ui/table'
+import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { AddCardModal } from '@/pages/decks/cards/add-card-modale/add-card-modale.tsx'
 import { EditCardModal } from '@/pages/decks/cards/edit-card-modale'
+import { useDebounce } from '@/pages/utils'
+import { cardsSlice } from '@/services/cards/card.slice.ts'
 import { useDeleteCardMutation, useUpdateCardMutation } from '@/services/cards/cards.service.ts'
 import { Card } from '@/services/cards/cards.types.ts'
-import { useCreateCardMutation, useGetCardsQuery } from '@/services/decks'
+import { useCreateCardMutation, useGetCardsQuery, useGetDeckQuery } from '@/services/decks'
+import { useAppSelector } from '@/services/store.ts'
 
 type CurrentCard = Pick<Card, 'id' | 'question'>
 
 export const Cards = () => {
   const { deckID } = useParams()
+  const id = deckID as string
 
-  const { data } = useGetCardsQuery({ id: deckID as string })
+  const dispatch = useDispatch()
+
+  const searchByQuestion = useAppSelector(state => state.cardSlice.searchByName)
+
+  const debouncedSearchByQuestion = useDebounce(searchByQuestion, 500)
+
+  const { data: cards } = useGetCardsQuery({ id, question: debouncedSearchByQuestion })
+  const { data: currentDeck } = useGetDeckQuery({ id })
   const [createCard] = useCreateCardMutation()
   const [deleteCard] = useDeleteCardMutation()
   const [updateCard] = useUpdateCardMutation()
@@ -56,81 +69,125 @@ export const Cards = () => {
     updateCard({ id, body })
   }
 
+  const setSearchByName = (value: string) => {
+    dispatch(cardsSlice.actions.setSearchByName(value))
+  }
+
   return (
     <div className={s.cards}>
-      <AddCardModal
-        title={'Add New Card'}
-        trigger={
-          <Button className={s.button}>
-            <Typography variant="subtitle2" as="span">
-              Add New Card
+      {cards?.items?.length || searchByQuestion.length ? (
+        <>
+          <div className={s.titleBlock}>
+            <Typography variant={'large'}>{currentDeck?.name}</Typography>
+            <AddCardModal
+              title={'Add New Card'}
+              trigger={
+                <Button className={s.button}>
+                  <Typography variant="subtitle2" as="span">
+                    Add New Card
+                  </Typography>
+                </Button>
+              }
+              buttonTitle={'Add New Card'}
+              onSubmit={onClickCreateCard}
+            ></AddCardModal>
+          </div>
+          <div className={s.searchCard}>
+            <TextField
+              placeholder={'Input card question'}
+              isSearch
+              value={searchByQuestion}
+              onValueChange={setSearchByName}
+            />
+          </div>
+
+          <Modal title={'Delete Card'} open={openModal} onClose={onClickCloseButton}>
+            <Typography className={s.textModal} variant="body2" as="span">
+              Do you really want to remove <b>Card {currentCard.question}?</b>
+              {'\n'}
+              Card will be deleted permanently.
             </Typography>
-          </Button>
-        }
-        buttonTitle={'Add New Card'}
-        onSubmit={onClickCreateCard}
-      ></AddCardModal>
-      <Modal title={'Delete Card'} open={openModal} onClose={onClickCloseButton}>
-        <Typography className={s.textModal} variant="body2" as="span">
-          Do you really want to remove <b>Card {currentCard.question}?</b>
-          {'\n'}
-          Card will be deleted permanently.
-        </Typography>
-        <div className={s.blockButton}>
-          <Button variant="secondary" onClick={onClickCloseButton}>
-            <Typography variant="subtitle2" as="span">
-              Cancel
-            </Typography>
-          </Button>
-          <Button onClick={onClickDeleteCard}>
-            <Typography variant="subtitle2" as="span">
-              Delete Card
-            </Typography>
-          </Button>
+            <div className={s.blockButton}>
+              <Button variant="secondary" onClick={onClickCloseButton}>
+                <Typography variant="subtitle2" as="span">
+                  Cancel
+                </Typography>
+              </Button>
+              <Button onClick={onClickDeleteCard}>
+                <Typography variant="subtitle2" as="span">
+                  Delete Card
+                </Typography>
+              </Button>
+            </div>
+          </Modal>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeadCell>Question</TableHeadCell>
+                <TableHeadCell>Answer</TableHeadCell>
+                <TableHeadCell>Last Updated</TableHeadCell>
+                <TableHeadCell>Grade</TableHeadCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cards?.items?.map(card => (
+                <TableRow key={card.id}>
+                  <TableCell>
+                    {card.questionImg && (
+                      <img className={s.image} src={card.questionImg} alt="deck-cover-image" />
+                    )}
+                    {card.question}
+                  </TableCell>
+                  <TableCell>
+                    {card.answerImg && (
+                      <img className={s.image} src={card.answerImg} alt="deck-cover-image" />
+                    )}
+                    {card.answer}
+                  </TableCell>
+                  <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
+                  <TableCell>{card.grade}</TableCell>
+                  <TableCell>
+                    <EditCardModal
+                      title={'Edit Card'}
+                      trigger={<Edit />}
+                      buttonTitle={'Edit Card'}
+                      onSubmit={body => onClickUpdateCard(card.id, body)}
+                    ></EditCardModal>
+                    <Trash
+                      className={s.trash}
+                      onClick={() => onClickDeleteCardIcon(card.id, card.question)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </>
+      ) : (
+        <div className={s.emptyDeck}>
+          {/*<div>*/}
+          <Typography className={s.title} variant={'large'}>
+            {currentDeck?.name}
+          </Typography>
+          {/*</div>*/}
+
+          <Typography className={s.description} variant={'body1'}>
+            This pack is empty. Click add new card to fill this pack
+          </Typography>
+          <AddCardModal
+            title={'Add New Card'}
+            trigger={
+              <Button className={s.button}>
+                <Typography variant="subtitle2" as="span">
+                  Add New Card
+                </Typography>
+              </Button>
+            }
+            buttonTitle={'Add New Card'}
+            onSubmit={onClickCreateCard}
+          ></AddCardModal>
         </div>
-      </Modal>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableHeadCell>Question</TableHeadCell>
-            <TableHeadCell>Answer</TableHeadCell>
-            <TableHeadCell>Last Updated</TableHeadCell>
-            <TableHeadCell>Grade</TableHeadCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data?.items?.map(card => (
-            <TableRow key={card.id}>
-              <TableCell>
-                {card.questionImg && (
-                  <img className={s.image} src={card.questionImg} alt="deck-cover-image" />
-                )}
-                {card.question}
-              </TableCell>
-              <TableCell>
-                {card.answerImg && (
-                  <img className={s.image} src={card.answerImg} alt="deck-cover-image" />
-                )}
-                {card.answer}
-              </TableCell>
-              <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
-              <TableCell>{card.grade}</TableCell>
-              <TableCell>
-                <EditCardModal
-                  title={'Edit Card'}
-                  trigger={<Edit />}
-                  buttonTitle={'Edit Card'}
-                  onSubmit={body => onClickUpdateCard(card.id, body)}
-                ></EditCardModal>
-                <Trash
-                  className={s.trash}
-                  onClick={() => onClickDeleteCardIcon(card.id, card.question)}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      )}
     </div>
   )
 }
