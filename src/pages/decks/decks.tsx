@@ -7,6 +7,7 @@ import s from './decks.module.scss'
 import { Edit, PlayArrow, Trash } from '@/assets'
 import Button from '@/components/ui/button/button.tsx'
 import { Modal } from '@/components/ui/modal'
+import { Pagination } from '@/components/ui/pagination'
 import {
   Column,
   Sort,
@@ -68,7 +69,9 @@ export const Decks = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentDeck, setCurrentDeck] = useState<CurrentDeck>({} as CurrentDeck)
   const [tabValue, setTabValue] = useState('all')
+  const currentPage = useAppSelector(state => state.deckSlice.currentPage)
   const orderBy = useAppSelector(state => state.deckSlice.orderBy)
+
   const setCardsCount = (value: number[]) => {
     dispatch(decksSlice.actions.setCardsCount(value))
   }
@@ -77,6 +80,9 @@ export const Decks = () => {
   }
   const setOrderBy = (value: Sort) => {
     dispatch(decksSlice.actions.setOrderBy(value))
+  }
+  const setCurrentPage = (value: number) => {
+    dispatch(decksSlice.actions.setCurrentPage(value))
   }
   const debouncedCardsCount = useDebounce(cardsCount, 300)
   const debouncedSearchName = useDebounce(searchByName, 500)
@@ -89,6 +95,7 @@ export const Decks = () => {
     minCardsCount: debouncedCardsCount[0],
     maxCardsCount: debouncedCardsCount[1],
     orderBy: sortedString,
+    currentPage,
   })
   const [updateDeck] = useUpdateDeckMutation()
   const [createDeck] = useCreateDeckMutation()
@@ -212,6 +219,13 @@ export const Decks = () => {
           ))}
         </TableBody>
       </Table>
+      <div className={s.pagination}>
+        <Pagination
+          count={data?.pagination.totalPages || 1}
+          page={currentPage}
+          onChange={setCurrentPage}
+        />
+      </div>
     </div>
   )
 }
