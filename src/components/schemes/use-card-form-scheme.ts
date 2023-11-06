@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const createCardSchema = z.object({
-  question: z.string().nonempty('Field is required!'),
-  answer: z.string().nonempty('Field is required!'),
+  question: z.string().nonempty('Field is required!').min(3),
+  answer: z.string().nonempty('Field is required!').min(3),
 })
 
 export type CreateCardForm = z.infer<typeof createCardSchema>
