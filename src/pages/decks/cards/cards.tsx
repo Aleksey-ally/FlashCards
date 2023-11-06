@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import s from './cards.module.scss'
 
-import { Edit, Trash } from '@/assets'
+import { ArrowBackOutline, Edit, Trash } from '@/assets'
 import Button from '@/components/ui/button/button'
 import { Modal } from '@/components/ui/modal'
 import {
@@ -32,6 +32,7 @@ type CurrentCard = Pick<Card, 'id' | 'question'>
 export const Cards = () => {
   const { deckID } = useParams()
   const id = deckID as string
+  const navigate = useNavigate()
 
   const dispatch = useDispatch()
 
@@ -73,12 +74,31 @@ export const Cards = () => {
     dispatch(cardsSlice.actions.setSearchByName(value))
   }
 
+  const backDeckHandler = () => {
+    navigate('/')
+  }
+
   return (
     <div className={s.cards}>
       {cards?.items?.length || searchByQuestion.length ? (
         <>
+          <div className={s.backDeck}>
+            <Typography
+              as={'label'}
+              variant={'body2'}
+              htmlFor={'backDeck'}
+              onClick={backDeckHandler}
+              className={s.label}
+            >
+              <ArrowBackOutline id={'backDeck'} className={s.arrowBackOutline} />
+              Back to Decks List
+            </Typography>
+          </div>
+
           <div className={s.titleBlock}>
-            <Typography variant={'large'}>{currentDeck?.name}</Typography>
+            <Typography variant={'large'} className={s.title}>
+              {currentDeck?.name}
+            </Typography>
             <AddCardModal
               title={'Add New Card'}
               trigger={
@@ -165,11 +185,21 @@ export const Cards = () => {
         </>
       ) : (
         <div className={s.emptyDeck}>
-          {/*<div>*/}
+          <div className={s.backDeck}>
+            <Typography
+              as={'label'}
+              variant={'body2'}
+              htmlFor={'backDeck'}
+              onClick={backDeckHandler}
+              className={s.label}
+            >
+              <ArrowBackOutline id={'backDeck'} className={s.arrowBackOutline} />
+              Back to Decks List
+            </Typography>
+          </div>
           <Typography className={s.title} variant={'large'}>
             {currentDeck?.name}
           </Typography>
-          {/*</div>*/}
 
           <Typography className={s.description} variant={'body1'}>
             This pack is empty. Click add new card to fill this pack

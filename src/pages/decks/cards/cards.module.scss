@@ -6,10 +6,29 @@
   max-width: 1006px;
   margin: 36px auto auto;
 
+  .backDeck {
+    margin-bottom: 12px;
+
+    .label {
+      cursor: pointer;
+    }
+
+    .arrowBackOutline {
+      cursor: pointer;
+      margin-right: 6px;
+    }
+  }
+
   .titleBlock {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .title {
+      display: flex;
+      align-items: center;
+      align-self: start;
+    }
   }
 
   .searchCard {
@@ -29,18 +48,21 @@
   .emptyDeck {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 24px;
     align-items: center;
+
+    .backDeck {
+      align-self: start;
+    }
 
     .title {
       display: flex;
       align-items: center;
       align-self: start;
-      height: 41px;
     }
 
     .description {
-      margin-top: 40px;
+      margin-top: 46px;
       color: var(--color-dark-100);
     }
   }
