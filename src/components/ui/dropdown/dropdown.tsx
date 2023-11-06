@@ -17,13 +17,13 @@ export const Dropdown = forwardRef<ElementRef<typeof DropdownPrimitive.Content>,
     const [open, setOpen] = useState(false)
 
     return (
-      <DropdownPrimitive.Root open={open} onOpenChange={setOpen}>
+      <DropdownPrimitive.Root open={open} onOpenChange={setOpen} modal={false}>
         <DropdownPrimitive.Trigger className={s.trigger} asChild>
           {trigger ?? <button></button>}
         </DropdownPrimitive.Trigger>
         <AnimatePresence>
           {open && (
-            <DropdownPrimitive.Portal forceMount>
+            <DropdownPrimitive.Portal>
               <DropdownPrimitive.Content
                 ref={ref}
                 className={`${s.content} ${className || ''}`}

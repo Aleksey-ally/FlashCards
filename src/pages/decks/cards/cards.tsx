@@ -5,8 +5,10 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import s from './cards.module.scss'
 
-import { ArrowBackOutline, Edit, Trash } from '@/assets'
+import { ArrowBackOutline, Edit, MoreVertical, PlayArrow, Trash } from '@/assets'
 import Button from '@/components/ui/button/button'
+import { Dropdown } from '@/components/ui/dropdown'
+import { DropdownItem } from '@/components/ui/dropdown/dropdownItem'
 import { Modal } from '@/components/ui/modal'
 import {
   Table,
@@ -20,6 +22,7 @@ import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { AddCardModal } from '@/pages/decks/cards/add-card-modale/add-card-modale.tsx'
 import { EditCardModal } from '@/pages/decks/cards/edit-card-modale'
+import { DeleteDeckModal } from '@/pages/decks/delete-deck-modal'
 import { useDebounce } from '@/pages/utils'
 import { cardsSlice } from '@/services/cards/card.slice.ts'
 import { useDeleteCardMutation, useUpdateCardMutation } from '@/services/cards/cards.service.ts'
@@ -47,6 +50,7 @@ export const Cards = () => {
   const [updateCard] = useUpdateCardMutation()
 
   const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openDeleteDeckModal, setOpenDeleteDeckModal] = useState<boolean>(false)
   const [currentCard, setCurrentCard] = useState<CurrentCard>({} as CurrentCard)
 
   const onClickCreateCard = (body: FormData) => {
@@ -94,10 +98,26 @@ export const Cards = () => {
               Back to Decks List
             </Typography>
           </div>
-
           <div className={s.titleBlock}>
             <Typography variant={'large'} className={s.title}>
               {currentDeck?.name}
+              <Dropdown trigger={<MoreVertical />}>
+                <DropdownItem>
+                  <PlayArrow />
+                </DropdownItem>
+                <DropdownItem>
+                  <Edit />
+                </DropdownItem>
+                <DropdownItem onSelect={e => e.preventDefault()}>
+                  <DeleteDeckModal
+                    open={openDeleteDeckModal}
+                    onClose={setOpenDeleteDeckModal}
+                    trigger={<Trash />}
+                    deckName={currentDeck?.name}
+                    deckId={currentDeck?.id}
+                  />
+                </DropdownItem>
+              </Dropdown>
             </Typography>
             <AddCardModal
               title={'Add New Card'}
@@ -119,8 +139,7 @@ export const Cards = () => {
               value={searchByQuestion}
               onValueChange={setSearchByName}
             />
-          </div>
-
+          </div>{' '}
           <Modal title={'Delete Card'} open={openModal} onClose={onClickCloseButton}>
             <Typography className={s.textModal} variant="body2" as="span">
               Do you really want to remove <b>Card {currentCard.question}?</b>
