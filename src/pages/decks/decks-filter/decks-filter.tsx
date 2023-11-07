@@ -5,6 +5,7 @@ import Button from '@/components/ui/button/button.tsx'
 import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { TextField } from '@/components/ui/text-field'
+import { Typography } from '@/components/ui/typography'
 
 export type DecksFilterProps = {
   inputValue: string
@@ -58,10 +59,8 @@ export const DecksFilter = ({
         title={sliderLabel}
       />
       <Button className={s.button} variant={'secondary'} onClick={onClearFilter}>
-        <>
-          <Trash />
-          Clear Filter
-        </>
+        <Trash />
+        <Typography variant={'subtitle2'}>Clear Filter</Typography>
       </Button>
     </div>
   )
