@@ -6,6 +6,7 @@ export type LoginArgs = {
 export type LoginResponseType = {
   accessToken: string
 }
+
 export type SignUpParamsType = {
   html?: string
   name?: string
@@ -17,7 +18,7 @@ export type SignUpParamsType = {
 export type SignUpDataType = Pick<SignUpParamsType, 'email' | 'password'>
 export type SignUpResponseType = Pick<User, 'id' | 'email' | 'name'>
 
-type User = {
+export type User = {
   avatar: string | null
   id: string
   email: string
@@ -25,7 +26,7 @@ type User = {
   name: string
   created: string
   updated: string
-}
+} | null
 export type SignUpArgs = {
   email: string
   password: string

@@ -6,7 +6,7 @@ import { Header } from '@/components/ui/header'
 import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service.ts'
 
 export const Layout = () => {
-  const { data: user } = useMeQuery()
+  const { currentData: user } = useMeQuery()
   const [logout] = useLogoutMutation()
 
   return (
