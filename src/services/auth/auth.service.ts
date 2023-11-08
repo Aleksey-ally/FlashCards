@@ -23,24 +23,27 @@ export const authService = baseApi.injectEndpoints({
       invalidatesTags: ['Me'],
     }),
 
-    logout: builder.mutation<void, void>({
-      query: () => ({
-        url: 'v1/auth/logout',
-        method: 'POST',
-      }),
+    logout: builder.mutation({
+      query: () => {
+        return {
+          url: 'v1/auth/logout',
+          method: 'POST',
+        }
+      },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          authService.util.updateQueryData('me', undefined, () => {
+            return null
+          })
+        )
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
       invalidatesTags: ['Me'],
-      //   onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-      //     try {
-      //       await queryFulfilled
-      //       dispatch(
-      //         authService.util.updateQueryData('me', undefined, () => {
-      //           return null
-      //         })
-      //       )
-      //     } catch (e) {
-      //       // console.log(e)
-      //     }
-      //   },
     }),
     updateProfile: builder.mutation<any, any>({
       query: params => {

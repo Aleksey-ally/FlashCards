@@ -11,7 +11,7 @@ export const Layout = () => {
 
   return (
     <>
-      <Header user={user} variant={'with avatar'} onSignOut={logout} />
+      <Header user={user} variant={user ? 'with avatar' : 'with button'} onSignOut={logout} />
       <main className={s.main}>
         <Outlet />
       </main>
