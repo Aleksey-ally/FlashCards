@@ -19,7 +19,7 @@ export type ModalSize = 'sm' | 'md' | 'lg'
 
 export type ModalPropsType = {
   trigger?: ReactNode
-  open: boolean
+  open?: boolean
   onClose?: (open: boolean) => void
   showCloseButton?: boolean
   title?: string
@@ -36,10 +36,6 @@ export const Modal: FC<ModalPropsType> = ({
   children,
   showCloseButton = true,
 }) => {
-  // function handleModalClosed() {
-  //   onClose?.()
-  // }
-
   const contentClassName = getContentClassName(modalSize, className)
 
   return (

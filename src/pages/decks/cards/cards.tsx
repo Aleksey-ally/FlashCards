@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/table'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
+import { AddEditDeckModal } from '@/pages/decks'
 import { AddCardModal } from '@/pages/decks/cards/add-card-modale/add-card-modale.tsx'
 import { EditCardModal } from '@/pages/decks/cards/edit-card-modale'
 import { DeleteDeckModal } from '@/pages/decks/delete-deck-modal'
@@ -51,8 +52,8 @@ export const Cards = () => {
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openDeleteDeckModal, setOpenDeleteDeckModal] = useState<boolean>(false)
-  const [currentCard, setCurrentCard] = useState<CurrentCard>({} as CurrentCard)
 
+  const [currentCard, setCurrentCard] = useState<CurrentCard>({} as CurrentCard)
   const onClickCreateCard = (body: FormData) => {
     createCard({ id: deckID as string, body })
   }
@@ -105,8 +106,14 @@ export const Cards = () => {
                 <DropdownItem>
                   <PlayArrow />
                 </DropdownItem>
-                <DropdownItem>
-                  <Edit />
+                <DropdownItem onSelect={e => e.preventDefault()}>
+                  <AddEditDeckModal
+                    trigger={<Edit className={s.icon} />}
+                    buttonTitle="Save Changes"
+                    values={currentDeck}
+                    deckId={deckID}
+                    type={'Edit deck'}
+                  />
                 </DropdownItem>
                 <DropdownItem onSelect={e => e.preventDefault()}>
                   <DeleteDeckModal
