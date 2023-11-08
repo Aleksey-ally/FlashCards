@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -53,6 +53,10 @@ export const Cards = () => {
 
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentCard, setCurrentCard] = useState<CurrentCard>({} as CurrentCard)
+
+  useEffect(() => {
+    dispatch(cardsSlice.actions.setCurrentPage(1))
+  }, [])
   const setCurrentPage = (value: number) => {
     dispatch(cardsSlice.actions.setCurrentPage(value))
   }
