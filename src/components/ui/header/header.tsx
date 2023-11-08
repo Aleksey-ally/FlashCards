@@ -67,7 +67,6 @@ export const Header = ({ variant = 'with button', user, onSignOut, ...rest }: Pr
             <DropdownItemWithIcon
               icon={<PersonOutline />}
               text="My Profile"
-              onSelect={() => navigate('/profile')}
               onClick={() => {
                 navigate('/profile')
               }}
