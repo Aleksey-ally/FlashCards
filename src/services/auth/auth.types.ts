@@ -26,7 +26,7 @@ export type User = {
   name: string
   created: string
   updated: string
-} | null
+}
 export type SignUpArgs = {
   email: string
   password: string
