@@ -88,7 +88,7 @@ export const Decks = () => {
   const debouncedSearchName = useDebounce(searchByName, 500)
   const sortedString = orderBy ? `${orderBy.key}-${orderBy.direction}` : null
 
-  const { data: user } = useMeQuery()
+  const { currentData: user } = useMeQuery()
   const { data } = useGetDecksQuery({
     name: debouncedSearchName,
     authorId: tabValue === 'my cards' ? user?.id : undefined,

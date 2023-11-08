@@ -12,7 +12,7 @@ export const Profile = () => {
   const [avatar, setAvatar] = useState<File | null>(null)
   const [newAvatar, setNewAvatar] = useState<File | null>(null)
 
-  const { data } = useMeQuery()
+  const { currentData: data } = useMeQuery()
   const [logout] = useLogoutMutation()
   const [updateProfile, { isLoading }] = useUpdateProfileMutation()
 
