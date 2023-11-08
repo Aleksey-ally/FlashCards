@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -8,6 +8,7 @@ import s from './cards.module.scss'
 import { ArrowBackOutline, Edit, Trash } from '@/assets'
 import Button from '@/components/ui/button/button'
 import { Modal } from '@/components/ui/modal'
+import { Pagination } from '@/components/ui/pagination'
 import {
   Table,
   TableBody,
@@ -37,10 +38,14 @@ export const Cards = () => {
   const dispatch = useDispatch()
 
   const searchByQuestion = useAppSelector(state => state.cardSlice.searchByName)
+  const currentPage = useAppSelector(state => state.cardSlice.currentPage)
 
   const debouncedSearchByQuestion = useDebounce(searchByQuestion, 500)
-
-  const { data: cards } = useGetCardsQuery({ id, question: debouncedSearchByQuestion })
+  const { data: cards } = useGetCardsQuery({
+    id,
+    question: debouncedSearchByQuestion,
+    currentPage,
+  })
   const { data: currentDeck } = useGetDeckQuery({ id })
   const [createCard] = useCreateCardMutation()
   const [deleteCard] = useDeleteCardMutation()
@@ -49,6 +54,12 @@ export const Cards = () => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [currentCard, setCurrentCard] = useState<CurrentCard>({} as CurrentCard)
 
+  useEffect(() => {
+    dispatch(cardsSlice.actions.setCurrentPage(1))
+  }, [])
+  const setCurrentPage = (value: number) => {
+    dispatch(cardsSlice.actions.setCurrentPage(value))
+  }
   const onClickCreateCard = (body: FormData) => {
     createCard({ id: deckID as string, body })
   }
@@ -218,6 +229,13 @@ export const Cards = () => {
           ></AddCardModal>
         </div>
       )}
+      <div className={s.pagination}>
+        <Pagination
+          count={cards?.pagination.totalPages || 1}
+          page={currentPage}
+          onChange={setCurrentPage}
+        />
+      </div>
     </div>
   )
 }

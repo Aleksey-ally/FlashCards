@@ -20,5 +20,8 @@ export const cardsSlice = createSlice({
       state.orderBy = action.payload
       state.currentPage = 1
     },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload
+    },
   },
 })
