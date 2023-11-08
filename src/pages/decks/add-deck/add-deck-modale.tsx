@@ -2,37 +2,52 @@ import { ReactNode, useState } from 'react'
 
 import { Modal } from '@/components/ui/modal'
 import { DeckForm } from '@/pages/decks'
+import { useCreateDeckMutation, useUpdateDeckMutation } from '@/services/decks'
 
 export type DeckProps = {
   trigger: ReactNode
-  buttonTitle: string
   values?: {
     name: string
     isPrivate?: boolean
     cover?: string | null
   }
-  onSubmit: (data: FormData) => void
+  buttonTitle: string
+  type: 'Edit deck' | 'Add deck'
+  deckId?: string
 }
-
-export const AddDeckModal = ({
+export const AddEditDeckModal = ({
   trigger,
-  buttonTitle,
   values,
-  onSubmit,
+  type,
+  deckId,
+  buttonTitle,
 }: DeckProps): JSX.Element => {
-  const [open, setOpen] = useState(false)
+  const [updateDeck] = useUpdateDeckMutation()
+  const [createDeck] = useCreateDeckMutation()
+  const [open, setOpen] = useState<boolean>(false)
+  const handleDeckSubmit = (data: FormData) => {
+    if (type === 'Edit deck') {
+      updateDeck({ id: deckId, body: data }).then(() => {
+        setOpen(false)
+      })
+    }
+    if (type === 'Add deck') {
+      createDeck(data)
+      setOpen(false)
+    }
+  }
 
   const closeModal = () => {
     setOpen(false)
   }
 
   return (
-    <Modal trigger={trigger} open={open} onClose={setOpen} title="Add New Deck">
+    <Modal title={'add edit deck'} trigger={trigger} open={open} onClose={() => setOpen(!open)}>
       <DeckForm
-        buttonTitle={buttonTitle}
         values={values}
-        onSubmit={onSubmit}
+        onSubmit={handleDeckSubmit}
         onClose={closeModal}
+        buttonTitle={buttonTitle}
       />
     </Modal>
   )
