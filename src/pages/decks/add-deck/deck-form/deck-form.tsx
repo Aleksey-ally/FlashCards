@@ -11,7 +11,7 @@ import { ControlledCheckbox, ControlledTextField } from '@/components/ui/control
 import { Typography } from '@/components/ui/typography'
 import { FileUploader } from '@/pages/utils/file-uploader.tsx'
 
-type DeckFormProps = {
+export type DeckFormProps = {
   buttonTitle: string
   values?: {
     name: string

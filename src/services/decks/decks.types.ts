@@ -43,7 +43,9 @@ export type Pagination = {
   totalItems: number
 }
 
-export type DeleteDeckParams = Pick<Deck, 'id'>
+export type DeleteDeckParams = {
+  id?: string
+}
 
 export type GetDecksParams = {
   minCardsCount?: number
@@ -85,11 +87,11 @@ export type Cards = {
 export type GetCard = { grade: string } & Omit<Card, 'rating'>
 
 export type UpdateDeckParamsType = {
-  id: Pick<Deck, 'id'>
+  id?: string
   body: FormData
 }
 
 export type CreateCardArgs = {
-  id: string
+  id?: string
   body: FormData
 }

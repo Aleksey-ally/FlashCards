@@ -6,7 +6,6 @@ import s from './decks.module.scss'
 
 import { Edit, PlayArrow, Trash } from '@/assets'
 import Button from '@/components/ui/button/button.tsx'
-import { Modal } from '@/components/ui/modal'
 import { Pagination } from '@/components/ui/pagination'
 import {
   Column,
@@ -19,22 +18,15 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
-import { AddDeckModal } from '@/pages/decks/add-deck/add-deck-modale.tsx'
+import { AddEditDeckModal } from '@/pages/decks/add-deck'
 import { DecksFilter } from '@/pages/decks/decks-filter'
-import { EditDeck } from '@/pages/decks/edit-deck'
+import { DeleteDeckModal } from '@/pages/decks/delete-deck-modal/delete-deck-modal.tsx'
 import { useDebounce } from '@/pages/utils/use-debounce.ts'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
-import {
-  Deck,
-  useCreateDeckMutation,
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-  useUpdateDeckMutation,
-} from '@/services/decks'
+import { useGetDecksQuery } from '@/services/decks'
 import { decksSlice } from '@/services/decks/deck.slice.ts'
 import { useAppDispatch, useAppSelector } from '@/services/store.ts'
 
-type CurrentDeck = Pick<Deck, 'id' | 'name'>
 const columns: Column[] = [
   {
     key: 'name',
@@ -67,7 +59,6 @@ export const Decks = () => {
   const cardsCount = useAppSelector(state => state.deckSlice.cardsCount)
   const searchByName = useAppSelector(state => state.deckSlice.searchByName)
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [currentDeck, setCurrentDeck] = useState<CurrentDeck>({} as CurrentDeck)
   const [tabValue, setTabValue] = useState('all')
   const currentPage = useAppSelector(state => state.deckSlice.currentPage)
   const orderBy = useAppSelector(state => state.deckSlice.orderBy)
@@ -97,39 +88,16 @@ export const Decks = () => {
     orderBy: sortedString,
     currentPage,
   })
-  const [updateDeck] = useUpdateDeckMutation()
-  const [createDeck] = useCreateDeckMutation()
-  const [deleteDeck] = useDeleteDeckMutation()
 
-  const onClickAddNewDeckButton = (data: FormData) => {
-    createDeck(data)
-  }
-
-  const onClickDeleteDeckIcon = (id: string, name: string) => {
-    setCurrentDeck({ id, name })
-    setOpenModal(true)
-  }
-
-  const onClickDeleteDeckButton = () => {
-    deleteDeck({ id: currentDeck.id })
-    setOpenModal(false)
-  }
-
-  const onClickCloseButton = () => {
-    setOpenModal(false)
-  }
   const onClearFilter = () => {
     setSearchByName('')
     setTabValue('all')
     setCardsCount([0, data?.maxCardsCount || 100])
   }
-  const editDeckCallback = (id: any, data: FormData) => {
-    updateDeck({ id: id, body: data })
-  }
 
   return (
     <div className={s.pageDeck}>
-      <AddDeckModal
+      <AddEditDeckModal
         trigger={
           <Button className={s.button}>
             <Typography variant="subtitle2" as="span">
@@ -137,9 +105,9 @@ export const Decks = () => {
             </Typography>
           </Button>
         }
-        buttonTitle={'Add New Deck'}
-        onSubmit={onClickAddNewDeckButton}
-      ></AddDeckModal>
+        buttonTitle="Add new deck"
+        type="Add deck"
+      ></AddEditDeckModal>
       <DecksFilter
         inputValue={searchByName}
         onChangeInputValue={value => setSearchByName(value)}
@@ -153,25 +121,6 @@ export const Decks = () => {
         onChangeSliderValue={setCardsCount}
         onClearFilter={onClearFilter}
       />
-      <Modal title={'Delete Deck'} open={openModal} onClose={onClickCloseButton}>
-        <Typography className={s.textModal} variant="body2" as="span">
-          Do you really want to remove <b>Deck {currentDeck.name}?</b>
-          {'\n'}
-          All cards will be deleted.
-        </Typography>
-        <div className={s.blockButton}>
-          <Button variant="secondary" onClick={onClickCloseButton}>
-            <Typography variant="subtitle2" as="span">
-              Cancel
-            </Typography>
-          </Button>
-          <Button onClick={onClickDeleteDeckButton}>
-            <Typography variant="subtitle2" as="span">
-              Delete Pack
-            </Typography>
-          </Button>
-        </div>
-      </Modal>
 
       <Table>
         <TableHead>
@@ -196,20 +145,24 @@ export const Decks = () => {
                   <PlayArrow className={s.icon} />
                   {deck.author.id === user?.id && (
                     <>
-                      <EditDeck
+                      <AddEditDeckModal
                         trigger={<Edit className={s.icon} />}
                         buttonTitle="Save Changes"
-                        onSubmit={data => editDeckCallback(deck.id, data)}
                         values={{
                           name: deck.name,
                           isPrivate: deck.isPrivate,
                           cover: deck.cover,
                         }}
+                        deckId={deck.id}
+                        type={'Edit deck'}
                       />
 
-                      <Trash
-                        className={s.icon}
-                        onClick={() => onClickDeleteDeckIcon(deck.id, deck.name)}
+                      <DeleteDeckModal
+                        open={openModal}
+                        onClose={setOpenModal}
+                        trigger={<Trash className={s.icon} />}
+                        deckName={deck.name}
+                        deckId={deck.id}
                       />
                     </>
                   )}
