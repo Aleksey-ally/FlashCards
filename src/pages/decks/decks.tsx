@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import s from './decks.module.scss'
 
 import { Edit, PlayArrow, Trash } from '@/assets'
-import Button from '@/components/ui/button/button.tsx'
+import Button from '@/components/ui/button/button'
 import { Pagination } from '@/components/ui/pagination'
 import {
   Column,
@@ -20,12 +20,12 @@ import {
 import { Typography } from '@/components/ui/typography'
 import { AddEditDeckModal } from '@/pages/decks/add-deck'
 import { DecksFilter } from '@/pages/decks/decks-filter'
-import { DeleteDeckModal } from '@/pages/decks/delete-deck-modal/delete-deck-modal.tsx'
-import { useDebounce } from '@/pages/utils/use-debounce.ts'
-import { useMeQuery } from '@/services/auth/auth.service.ts'
+import { DeleteDeckModal } from '@/pages/decks/delete-deck-modal/delete-deck-modal'
+import { useDebounce } from '@/pages/utils/use-debounce'
+import { useMeQuery } from '@/services/auth/auth.service'
 import { useGetDecksQuery } from '@/services/decks'
-import { decksSlice } from '@/services/decks/deck.slice.ts'
-import { useAppDispatch, useAppSelector } from '@/services/store.ts'
+import { decksSlice } from '@/services/decks/deck.slice'
+import { useAppDispatch, useAppSelector } from '@/services/store'
 
 const columns: Column[] = [
   {
@@ -142,7 +142,9 @@ export const Decks = () => {
               <TableCell>{deck.author.name}</TableCell>
               <TableCell>
                 <div className={s.iconsContainer}>
-                  <PlayArrow className={s.icon} />
+                  <NavLink to={`/card/${deck.id}`}>
+                    <PlayArrow />
+                  </NavLink>
                   {deck.author.id === user?.id && (
                     <>
                       <AddEditDeckModal
