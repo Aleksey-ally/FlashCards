@@ -6,8 +6,9 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { CardPage } from '@/pages/card/card.tsx'
+import { Cards } from '@/pages/cards'
 import { CheckEmailPage } from '@/pages/check-email'
-import { Cards } from '@/pages/decks/cards'
 import { Decks } from '@/pages/decks/decks.tsx'
 import { Layout } from '@/pages/layout'
 import { Login } from '@/pages/login/login.tsx'
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: '*',
         element: <h1>Not Found</h1>,
+      },
+      {
+        path: '/card/:deckID',
+        element: <CardPage />,
       },
     ],
   },

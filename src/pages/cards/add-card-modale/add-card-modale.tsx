@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react'
 
 import { Modal } from '@/components/ui/modal'
-import { CardForm } from '@/pages/decks/cards/card-form/card-form.tsx'
+import { CardForm } from '@/pages/cards/card-form'
 
 export type DeckProps = {
   title: string
