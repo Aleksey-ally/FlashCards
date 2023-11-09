@@ -93,3 +93,16 @@ export type CreateCardArgs = {
   id: string
   body: FormData
 }
+
+export type LearnDeckParams = {
+  id: string
+  previousCardId?: string
+}
+
+export type SaveGradeParams = {
+  id: string
+  body: {
+    cardId: string
+    grade: number
+  }
+}

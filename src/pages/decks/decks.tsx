@@ -193,7 +193,9 @@ export const Decks = () => {
               <TableCell>{deck.author.name}</TableCell>
               <TableCell>
                 <div className={s.iconsContainer}>
-                  <PlayArrow className={s.icon} />
+                  <NavLink to={`/card/${deck.id}`}>
+                    <PlayArrow />
+                  </NavLink>
                   {deck.author.id === user?.id && (
                     <>
                       <EditDeck

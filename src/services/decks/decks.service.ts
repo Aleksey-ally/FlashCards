@@ -8,6 +8,8 @@ import {
   GetCardsParams,
   GetDeckParams,
   GetDecksParams,
+  LearnDeckParams,
+  SaveGradeParams,
   UpdateDeckParamsType,
 } from './decks.types.ts'
 
@@ -30,6 +32,7 @@ export const DecksService = baseApi.injectEndpoints({
         }),
         providesTags: ['Decks'],
       }),
+
       createDeck: builder.mutation<Deck, FormData>({
         query: body => ({
           url: 'v1/decks',
@@ -72,6 +75,21 @@ export const DecksService = baseApi.injectEndpoints({
         }),
         invalidatesTags: ['Cards'],
       }),
+      learnDeck: builder.query<Card, LearnDeckParams>({
+        query: ({ id, previousCardId }) => ({
+          url: `v1/decks/${id}/learn`,
+          body: previousCardId,
+        }),
+        providesTags: ['Learn'],
+      }),
+      saveGrade: builder.mutation<void, SaveGradeParams>({
+        query: ({ id, body }) => ({
+          url: `/v1/decks/${id}/learn`,
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: ['Learn'],
+      }),
     }
   },
 })
@@ -84,4 +102,6 @@ export const {
   useUpdateDeckMutation,
   useCreateCardMutation,
   useGetDeckQuery,
+  useLearnDeckQuery,
+  useSaveGradeMutation,
 } = DecksService
