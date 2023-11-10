@@ -1,9 +1,10 @@
 .table {
-  display: flex;
+  border-collapse: collapse;
   flex-direction: column;
 }
 
 .thead {
+  flex-direction: row;
   background-color: var(--color-dark-500);
 
   &:hover {
@@ -12,23 +13,19 @@
 }
 
 .th {
-  display: flex;
-  width: 201px;
-  padding: 6px 24px;
+  flex-direction: row;
+  padding: 0.375rem 1.5rem;
+  text-align: start;
 }
 
 .row {
-  display: flex;
-  align-items: center;
-
-  border-right: 1px solid var(--color-dark-500);
-  border-bottom: 1px solid var(--color-dark-500);
-  border-left: 1px solid var(--color-dark-500);
+  border-right: 0.0625rem solid var(--color-dark-500);
+  border-bottom: 0.0625rem solid var(--color-dark-500);
+  border-left: 0.0625rem solid var(--color-dark-500);
 }
 
 .td {
-  width: 201px;
-  padding: 6px 24px;
+  padding: 0.375rem 1.5rem;
   white-space: pre-wrap;
   background-color: var(--color-dark-900);
 }

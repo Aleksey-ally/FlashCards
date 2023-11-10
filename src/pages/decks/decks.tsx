@@ -13,7 +13,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
@@ -123,9 +122,8 @@ export const Decks = () => {
       />
 
       <Table>
-        <TableHead>
-          <TableHeader columns={columns} sort={orderBy} onSort={sort => setOrderBy(sort)} />
-        </TableHead>
+        <TableHeader columns={columns} sort={orderBy} onSort={sort => setOrderBy(sort)} />
+
         <TableBody>
           {data?.items?.map(deck => (
             <TableRow key={deck.id}>
