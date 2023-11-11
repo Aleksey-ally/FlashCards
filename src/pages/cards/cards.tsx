@@ -185,36 +185,43 @@ export const Cards = () => {
                 <TableHeadCell>Answer</TableHeadCell>
                 <TableHeadCell>Last Updated</TableHeadCell>
                 <TableHeadCell>Grade</TableHeadCell>
+                <TableHeadCell></TableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {cards?.items?.map(card => (
                 <TableRow key={card.id}>
                   <TableCell>
-                    {card.questionImg && (
-                      <img className={s.image} src={card.questionImg} alt="deck-cover-image" />
-                    )}
-                    {card.question}
+                    <div className={s.descriptionWithImg}>
+                      {card.questionImg && (
+                        <img className={s.image} src={card.questionImg} alt="deck-cover-image" />
+                      )}
+                      {card.question}
+                    </div>
                   </TableCell>
                   <TableCell>
-                    {card.answerImg && (
-                      <img className={s.image} src={card.answerImg} alt="deck-cover-image" />
-                    )}
-                    {card.answer}
+                    <div className={s.descriptionWithImg}>
+                      {card.answerImg && (
+                        <img className={s.image} src={card.answerImg} alt="deck-cover-image" />
+                      )}
+                      {card.answer}
+                    </div>
                   </TableCell>
                   <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
                   <TableCell>{card.grade}</TableCell>
                   <TableCell>
-                    <EditCardModal
-                      title={'Edit Card'}
-                      trigger={<Edit />}
-                      buttonTitle={'Edit Card'}
-                      onSubmit={body => onClickUpdateCard(card.id, body)}
-                    ></EditCardModal>
-                    <Trash
-                      className={s.trash}
-                      onClick={() => onClickDeleteCardIcon(card.id, card.question)}
-                    />
+                    <div className={s.iconsContainer}>
+                      <EditCardModal
+                        title={'Edit Card'}
+                        trigger={<Edit />}
+                        buttonTitle={'Edit Card'}
+                        onSubmit={body => onClickUpdateCard(card.id, body)}
+                      ></EditCardModal>
+                      <Trash
+                        className={s.trash}
+                        onClick={() => onClickDeleteCardIcon(card.id, card.question)}
+                      />
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

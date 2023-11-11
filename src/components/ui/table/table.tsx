@@ -70,6 +70,6 @@ export const TableRow = ({ ...rest }: ComponentPropsWithoutRef<'tr'>) => {
   return <tr {...rest} className={s.row}></tr>
 }
 
-export const TableCell = ({ ...rest }: ComponentPropsWithoutRef<'td'>) => {
-  return <td {...rest} className={s.td}></td>
+export const TableCell = ({ className, ...rest }: ComponentPropsWithoutRef<'td'>) => {
+  return <td {...rest} className={`${s.td} ${className}`}></td>
 }
