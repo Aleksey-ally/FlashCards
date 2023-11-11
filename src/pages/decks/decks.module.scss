@@ -1,22 +1,29 @@
 .pageDeck {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 1.875rem;
 
-  max-width: 1006px;
-  margin: 36px auto auto;
+  max-width: 62.875rem;
+  margin: 2.25rem auto auto;
 
   .button {
     align-self: end;
   }
 
   .deckName {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+
     color: var(--color-light-100);
     text-decoration: none;
-  }
 
-  .tempbutton:hover {
-    cursor: pointer;
+    .image {
+      width: 7.375rem;
+      height: 3rem;
+      object-fit: cover;
+      border-radius: 0.125rem;
+    }
   }
 }
 
@@ -29,13 +36,9 @@
 
 .iconsContainer {
   display: flex;
-  gap: 25px;
+  gap: 0.625rem;
 }
 
 .icon:hover {
   cursor: pointer;
-}
-
-.image {
-  height: 50px;
 }
