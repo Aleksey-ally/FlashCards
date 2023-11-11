@@ -1,13 +1,13 @@
 .cards {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 1.5rem;
 
-  max-width: 1006px;
-  margin: 36px auto auto;
+  max-width: 62.875rem;
+  margin: 2.25rem auto auto;
 
   .backDeck {
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
 
     .label {
       cursor: pointer;
@@ -15,7 +15,7 @@
 
     .arrowBackOutline {
       cursor: pointer;
-      margin-right: 6px;
+      margin-right: 0.375rem;
     }
   }
 
@@ -36,9 +36,23 @@
     flex-direction: column;
   }
 
-  .image {
-    width: 150px;
-    height: 50px;
+  .descriptionWithImg {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+    word-break: break-word;
+
+    .image {
+      width: 7.375rem;
+      height: 3rem;
+      object-fit: cover;
+      border-radius: 0.125rem;
+    }
+  }
+
+  .iconsContainer {
+    display: flex;
+    gap: 0.625rem;
   }
 
   .trash:hover {
@@ -48,7 +62,7 @@
   .emptyDeck {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 1.5rem;
     align-items: center;
 
     .backDeck {
@@ -62,7 +76,7 @@
     }
 
     .description {
-      margin-top: 46px;
+      margin-top: 2.875rem;
       color: var(--color-dark-100);
     }
   }
