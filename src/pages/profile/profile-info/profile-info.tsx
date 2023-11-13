@@ -15,9 +15,9 @@ import { Typography } from '@/components/ui/typography'
 
 type UserData = { avatar: string | null; email: string; name: string }
 type ProfileInfoProps = {
-  name: string
-  email: string
-  src: string
+  name: string | undefined
+  email: string | undefined
+  src: string | null
   handleChangeAvatar: (event: ChangeEvent<HTMLInputElement>) => void
   handleLogout: () => void
   onSubmit: (data: ProfileSchemaType) => void

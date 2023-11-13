@@ -1,9 +1,11 @@
 import { Navigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { SignIn } from '@/components/auth'
 import { Typography } from '@/components/ui/typography'
+import { errorOptions, infoOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
 import { useLoginMutation, useMeQuery } from '@/services/auth/auth.service.ts'
-import { LoginArgs } from '@/services/auth/auth.types.ts'
+import { LoginArgs, LoginResponseError } from '@/services/auth/auth.types.ts'
 
 export const Login = () => {
   const { isLoading, isError } = useMeQuery()
@@ -11,6 +13,13 @@ export const Login = () => {
   const isAuth = !isError
   const loginHandler = (loginData: LoginArgs) => {
     login(loginData)
+      .unwrap()
+      .then(() => {
+        toast.info('You are welcome!', infoOptions)
+      })
+      .catch((err: LoginResponseError) => {
+        toast.error(err.data.message, errorOptions)
+      })
   }
 
   if (isLoading) {

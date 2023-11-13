@@ -5,12 +5,13 @@ import {
   ResetPasswordArgs,
   SignUpArgs,
   SignUpResponseType,
+  User,
 } from '@/services/auth/auth.types.ts'
 import { baseApi } from '@/services/base-api.ts'
 
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    me: builder.query<any, void>({
+    me: builder.query<User, void>({
       query: () => '/v1/auth/me',
       providesTags: ['Me'],
     }),
