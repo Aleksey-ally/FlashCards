@@ -34,7 +34,7 @@ export const authService = baseApi.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           authService.util.updateQueryData('me', undefined, () => {
-            return null
+            return
           })
         )
 
