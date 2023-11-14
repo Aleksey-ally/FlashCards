@@ -17,7 +17,7 @@ type UserData = { avatar: string | null; email: string; name: string }
 type ProfileInfoProps = {
   name: string | undefined
   email: string | undefined
-  src: string | null
+  src: string
   handleChangeAvatar: (event: ChangeEvent<HTMLInputElement>) => void
   handleLogout: () => void
   onSubmit: (data: ProfileSchemaType) => void
