@@ -56,7 +56,7 @@ export const Profile = () => {
       name={data?.name}
       email={data?.email}
       src={
-        data
+        data && data.avatar
           ? data.avatar
           : 'https://fikiwiki.com/uploads/posts/2022-02/1644918620_17-fikiwiki-com-p-krasivie-kartinki-visokogo-razresheniya-19.jpg'
       }
