@@ -7,6 +7,10 @@ export type LoginResponseType = {
   accessToken: string
 }
 
+export type LoginResponseError = {
+  data: { statusCode: number; message: string; timestamp: string; path: string }
+}
+
 export type SignUpParamsType = {
   html?: string
   name?: string

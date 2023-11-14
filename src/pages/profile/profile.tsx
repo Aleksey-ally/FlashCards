@@ -1,6 +1,9 @@
 import { ChangeEvent, useState } from 'react'
 
+import { toast } from 'react-toastify'
+
 import { ProfileInfo } from '@/pages/profile/profile-info'
+import { infoOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
 import {
   useLogoutMutation,
   useMeQuery,
@@ -15,6 +18,7 @@ export const Profile = () => {
   const { currentData: data } = useMeQuery()
   const [logout] = useLogoutMutation()
   const [updateProfile, { isLoading }] = useUpdateProfileMutation()
+  const parting = `Goodbye, ${data?.name || data?.email}`
 
   const handleFormSubmit = (data: { email: string; name: string }) => {
     setShowText(false)
@@ -37,12 +41,20 @@ export const Profile = () => {
     setAvatar(file)
   }
 
+  const logoutHandler = () => {
+    logout()
+      .unwrap()
+      .then(() => {
+        toast.info(parting, infoOptions)
+      })
+  }
+
   if (isLoading) return <span>Loading...</span>
 
   return (
     <ProfileInfo
-      name={data.name}
-      email={data.email}
+      name={data?.name}
+      email={data?.email}
       src={
         data
           ? data.avatar
@@ -51,7 +63,7 @@ export const Profile = () => {
       newAvatar={newAvatar}
       handleChangeAvatar={handleChangeAvatar}
       onSubmit={handleFormSubmit}
-      handleLogout={() => logout()}
+      handleLogout={logoutHandler}
       showText={showText}
       setShowText={setShowText}
     />
