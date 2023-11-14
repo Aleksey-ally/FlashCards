@@ -4,7 +4,7 @@ import s from './avatar.module.scss'
 
 export type AvatarProps = {
   name?: string
-  src: ComponentProps<'img'>['src']
+  src: ComponentProps<'img'>['src'] | null
   size?: ComponentProps<'img'>['width']
 }
 
