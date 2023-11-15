@@ -1,7 +1,10 @@
 import { ReactNode, useState } from 'react'
 
+import { toast } from 'react-toastify'
+
 import { Modal } from '@/components/ui/modal'
 import { DeckForm } from '@/pages/decks'
+import { errorOptions, successOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
 import { useCreateDeckMutation, useUpdateDeckMutation } from '@/services/decks'
 
 export type DeckProps = {
@@ -27,12 +30,29 @@ export const AddEditDeckModal = ({
   const [open, setOpen] = useState<boolean>(false)
   const handleDeckSubmit = (data: FormData) => {
     if (type === 'Edit deck') {
-      updateDeck({ id: deckId, body: data }).then(() => {
-        setOpen(false)
-      })
+      updateDeck({ id: deckId, body: data })
+        .unwrap()
+        .then(() => {
+          const nameDeck = data.get('name')
+
+          toast.success(`Deck ${nameDeck} updated successfully`, successOptions)
+          setOpen(false)
+        })
+        .catch(() => {
+          toast.error(`Deck not found`, errorOptions)
+        })
     }
     if (type === 'Add deck') {
       createDeck(data)
+        .unwrap()
+        .then(() => {
+          const newNameDeck = data.get('name')
+
+          toast.success(`Deck ${newNameDeck} created successfully`, successOptions)
+        })
+        .catch(() => {
+          toast.error(`You are unauthorized`, errorOptions)
+        })
       setOpen(false)
     }
   }

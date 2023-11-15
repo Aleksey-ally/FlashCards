@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const addDeckSchema = z.object({
-  name: z.string().nonempty('Field is required!'),
+  name: z.string().nonempty('Field is required!').min(3).max(30),
   isPrivate: z.boolean().default(false),
 })
 

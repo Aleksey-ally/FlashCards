@@ -1,12 +1,14 @@
 import { ReactNode } from 'react'
 
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import s from './delete-deck-modal.module.scss'
 
 import Button from '@/components/ui/button/button.tsx'
 import { Modal } from '@/components/ui/modal'
 import { Typography } from '@/components/ui/typography'
+import { errorOptions, successOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
 import { useDeleteDeckMutation } from '@/services/decks'
 
 type DeleteDeckModalProps = {
@@ -27,6 +29,13 @@ export const DeleteDeckModal = ({
   const navigate = useNavigate()
   const onClickDeleteDeckButton = () => {
     deleteDeck({ id: deckId })
+      .unwrap()
+      .then(() => {
+        toast.success(`Deck ${deckName} deleted  successfully`, successOptions)
+      })
+      .catch(() => {
+        toast.error(`Deck not found`, errorOptions)
+      })
     onClose(false)
     navigate('/')
   }
