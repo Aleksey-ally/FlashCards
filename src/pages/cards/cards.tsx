@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import s from './cards.module.scss'
 
@@ -26,6 +27,7 @@ import { EditCardModal } from '@/pages/cards/edit-card-modale'
 import { AddEditDeckModal } from '@/pages/decks'
 import { DeleteDeckModal } from '@/pages/decks/delete-deck-modal'
 import { useDebounce } from '@/pages/utils'
+import { errorOptions, successOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
 import { cardsSlice } from '@/services/cards/card.slice.ts'
 import { useDeleteCardMutation, useUpdateCardMutation } from '@/services/cards/cards.service.ts'
 import { Card } from '@/services/cards/cards.types.ts'
@@ -68,9 +70,25 @@ export const Cards = () => {
   }
   const onClickCreateCard = (body: FormData) => {
     createCard({ id: deckID as string, body })
+      .unwrap()
+      .then(() => {
+        const newQuestionCard = body.get('question')
+
+        toast.success(`Your card ${newQuestionCard} created successfully`, successOptions)
+      })
+      .catch(() => {
+        toast.error('Deck not found', errorOptions)
+      })
   }
   const onClickDeleteCard = () => {
     deleteCard({ id: currentCard.id })
+      .unwrap()
+      .then(() => {
+        toast.success(`Your card ${currentCard.question} deleted successfully`, successOptions)
+      })
+      .catch(() => {
+        toast.error('Card not found', errorOptions)
+      })
     setOpenModal(false)
   }
 
@@ -85,6 +103,15 @@ export const Cards = () => {
 
   const onClickUpdateCard = (id: string, body: FormData) => {
     updateCard({ id, body })
+      .unwrap()
+      .then(() => {
+        const questionCard = body.get('question')
+
+        toast.success(`Your card ${questionCard} updated successfully`, successOptions)
+      })
+      .catch(() => {
+        toast.error('Card not found', errorOptions)
+      })
   }
 
   const setSearchByName = (value: string) => {
