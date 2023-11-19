@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { Link } from 'react-router-dom'
 
 import s from './sign-in.module.scss'
@@ -25,7 +24,6 @@ export const SignIn = ({ onSubmit }: Props) => {
         Sign In
       </Typography>
       <form className={s.form} onSubmit={onFormSubmit}>
-        <DevTool control={control} />
         <ControlledTextField label="Email" control={control} name="email" />
         <ControlledTextField label="Password" control={control} name="password" type="password" />
         <ControlledCheckbox label="Remember me" control={control} name="rememberMe" />
