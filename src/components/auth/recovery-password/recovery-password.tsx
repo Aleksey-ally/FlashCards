@@ -1,4 +1,5 @@
 import { DevTool } from '@hookform/devtools'
+import { Link } from 'react-router-dom'
 
 import {
   RecoveryPasswordForm,
@@ -40,7 +41,7 @@ export const RecoveryPassword = ({ onSubmit }: Props) => {
       <Typography variant="body2" className={s.question}>
         Did you remember your password?
       </Typography>
-      <Typography variant="link1" as="a" href="#" className={s.logging}>
+      <Typography as={Link} to={'/login'} variant="link1" className={s.logging}>
         Try logging in
       </Typography>
     </Card>
