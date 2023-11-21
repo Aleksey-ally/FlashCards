@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import s from './card.module.scss'
 
@@ -50,6 +50,8 @@ export const CardPage = () => {
   const currentAnswerHandler = (value: string) => {
     setCurrentAnswer(value)
   }
+
+  if (deck?.cardsCount === 0) return <Navigate to={`/cards/${deckID}`} />
 
   return (
     <Card className={s.card}>
