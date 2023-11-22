@@ -12,6 +12,7 @@ import { Dropdown } from '@/components/ui/dropdown'
 import { DropdownItem } from '@/components/ui/dropdown/dropdownItem'
 import { Modal } from '@/components/ui/modal'
 import { Pagination } from '@/components/ui/pagination'
+import { Stars } from '@/components/ui/stars'
 import {
   Table,
   TableBody,
@@ -235,7 +236,9 @@ export const Cards = () => {
                     </div>
                   </TableCell>
                   <TableCell>{new Date(card.updated).toLocaleDateString()}</TableCell>
-                  <TableCell>{card.grade}</TableCell>
+                  <TableCell>
+                    <Stars grade={card.grade} />
+                  </TableCell>
                   <TableCell>
                     <div className={s.iconsContainer}>
                       <EditCardModal
