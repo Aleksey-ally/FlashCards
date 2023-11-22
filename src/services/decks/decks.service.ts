@@ -88,7 +88,7 @@ export const DecksService = baseApi.injectEndpoints({
           method: 'POST',
           body,
         }),
-        invalidatesTags: ['Learn'],
+        invalidatesTags: ['Learn', 'Cards'],
       }),
     }
   },

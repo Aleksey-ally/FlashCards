@@ -84,7 +84,7 @@ export type Cards = {
   }
 }
 
-export type GetCard = { grade: string } & Omit<Card, 'rating'>
+export type GetCard = { grade: number } & Omit<Card, 'rating'>
 
 export type UpdateDeckParamsType = {
   id?: string
