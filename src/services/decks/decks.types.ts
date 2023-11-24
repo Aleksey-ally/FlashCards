@@ -54,7 +54,7 @@ export type GetDecksParams = {
   authorId?: string
   orderBy?: string | null
   currentPage?: number
-  itemsPerPage?: string
+  itemsPerPage?: number
 }
 
 export type GetDeckParams = {
