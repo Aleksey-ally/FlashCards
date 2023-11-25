@@ -46,12 +46,14 @@ export const Cards = () => {
 
   const searchByQuestion = useAppSelector(state => state.cardSlice.searchByName)
   const currentPage = useAppSelector(state => state.cardSlice.currentPage)
+  const itemsPerPage = useAppSelector(state => state.cardSlice.itemsPerPage)
 
   const debouncedSearchByQuestion = useDebounce(searchByQuestion, 500)
   const { data: cards } = useGetCardsQuery({
     id,
     question: debouncedSearchByQuestion,
     currentPage,
+    itemsPerPage,
   })
   const { data: currentDeck } = useGetDeckQuery({ id })
   const [createCard] = useCreateCardMutation()
@@ -117,6 +119,10 @@ export const Cards = () => {
 
   const setSearchByName = (value: string) => {
     dispatch(cardsSlice.actions.setSearchByName(value))
+  }
+
+  const setItemsPerPage = (value: number) => {
+    dispatch(cardsSlice.actions.setItemsPerPage(value))
   }
 
   const backDeckHandler = () => {
@@ -298,6 +304,9 @@ export const Cards = () => {
           count={cards?.pagination.totalPages || 1}
           page={currentPage}
           onChange={setCurrentPage}
+          perPage={itemsPerPage}
+          onPerPageChange={value => setItemsPerPage(Number(value))}
+          perPageOptions={[10, 20, 30, 40, 50]}
         />
       </div>
     </div>

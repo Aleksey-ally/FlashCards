@@ -70,8 +70,6 @@ export type GetCardsParams = {
   orderBy?: string
   currentPage?: number
   itemsPerPage?: number
-  minCardsCount?: number
-  maxCardsCount?: number
 }
 
 export type Cards = {
