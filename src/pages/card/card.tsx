@@ -50,6 +50,7 @@ export const CardPage = () => {
   const currentAnswerHandler = (value: string) => {
     setCurrentAnswer(value)
   }
+
   if (deck?.cardsCount === 0) return <Navigate to={`/cards/${deckID}`} />
 
   return (
