@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import s from './cards.module.scss'
@@ -34,6 +34,7 @@ import { useDeleteCardMutation, useUpdateCardMutation } from '@/services/cards/c
 import { Card } from '@/services/cards/cards.types.ts'
 import { useCreateCardMutation, useGetCardsQuery, useGetDeckQuery } from '@/services/decks'
 import { useAppSelector } from '@/services/store.ts'
+import { useMeQuery } from '@/services/auth/auth.service.ts'
 
 type CurrentCard = Pick<Card, 'id' | 'question'>
 
@@ -54,6 +55,7 @@ export const Cards = () => {
     currentPage,
   })
   const { data: currentDeck } = useGetDeckQuery({ id })
+  const { currentData: currentUser } = useMeQuery()
   const [createCard] = useCreateCardMutation()
   const [deleteCard] = useDeleteCardMutation()
   const [updateCard] = useUpdateCardMutation()
@@ -148,7 +150,7 @@ export const Cards = () => {
                 </DropdownItem>
                 <DropdownItem onSelect={e => e.preventDefault()}>
                   <AddEditDeckModal
-                    trigger={<Edit className={s.icon} />}
+                    trigger={<Edit />}
                     buttonTitle="Save Changes"
                     values={currentDeck}
                     deckId={deckID}
@@ -166,18 +168,24 @@ export const Cards = () => {
                 </DropdownItem>
               </Dropdown>
             </Typography>
-            <AddCardModal
-              title={'Add New Card'}
-              trigger={
-                <Button className={s.button}>
-                  <Typography variant="subtitle2" as="span">
-                    Add New Card
-                  </Typography>
-                </Button>
-              }
-              buttonTitle={'Add New Card'}
-              onSubmit={onClickCreateCard}
-            ></AddCardModal>
+            {currentDeck?.userId === currentUser?.id ? (
+              <AddCardModal
+                title={'Add New Card'}
+                trigger={
+                  <Button className={s.button}>
+                    <Typography variant="subtitle2" as="span">
+                      Add New Card
+                    </Typography>
+                  </Button>
+                }
+                buttonTitle={'Add New Card'}
+                onSubmit={onClickCreateCard}
+              ></AddCardModal>
+            ) : (
+              <NavLink className={s.button} to={`/card/${currentDeck?.id}`}>
+                <Button>Learn to Deck</Button>
+              </NavLink>
+            )}
           </div>
           <div className={s.searchCard}>
             <TextField

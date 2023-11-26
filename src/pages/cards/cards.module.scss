@@ -59,6 +59,10 @@
     cursor: pointer;
   }
 
+  .button {
+    text-decoration: none;
+  }
+
   .emptyDeck {
     display: flex;
     flex-direction: column;
