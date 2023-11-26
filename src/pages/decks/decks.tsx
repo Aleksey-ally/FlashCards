@@ -57,10 +57,12 @@ export const Decks = () => {
   const dispatch = useAppDispatch()
   const cardsCount = useAppSelector(state => state.deckSlice.cardsCount)
   const searchByName = useAppSelector(state => state.deckSlice.searchByName)
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const [tabValue, setTabValue] = useState('all')
   const currentPage = useAppSelector(state => state.deckSlice.currentPage)
   const orderBy = useAppSelector(state => state.deckSlice.orderBy)
+  const itemsPerPage = useAppSelector(state => state.deckSlice.itemsPerPage)
+
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [tabValue, setTabValue] = useState('all')
 
   const setCardsCount = (value: number[]) => {
     dispatch(decksSlice.actions.setCardsCount(value))
@@ -74,6 +76,10 @@ export const Decks = () => {
   const setCurrentPage = (value: number) => {
     dispatch(decksSlice.actions.setCurrentPage(value))
   }
+  const setItemsPerPage = (value: number) => {
+    dispatch(decksSlice.actions.setItemsPerPage(value))
+  }
+
   const debouncedCardsCount = useDebounce(cardsCount, 300)
   const debouncedSearchName = useDebounce(searchByName, 500)
   const sortedString = orderBy ? `${orderBy.key}-${orderBy.direction}` : null
@@ -86,6 +92,7 @@ export const Decks = () => {
     maxCardsCount: debouncedCardsCount[1],
     orderBy: sortedString,
     currentPage,
+    itemsPerPage,
   })
 
   const onClearFilter = () => {
@@ -177,6 +184,9 @@ export const Decks = () => {
           count={data?.pagination.totalPages || 1}
           page={currentPage}
           onChange={setCurrentPage}
+          perPage={itemsPerPage}
+          onPerPageChange={value => setItemsPerPage(Number(value))}
+          perPageOptions={[10, 20, 30, 40, 50]}
         />
       </div>
     </div>

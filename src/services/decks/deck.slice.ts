@@ -7,6 +7,7 @@ const initialState = {
   searchByName: '',
   currentPage: 1,
   orderBy: null as Sort,
+  itemsPerPage: 10,
 }
 
 export const decksSlice = createSlice({
@@ -27,6 +28,9 @@ export const decksSlice = createSlice({
     },
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload
+    },
+    setItemsPerPage: (state, action: PayloadAction<number>) => {
+      state.itemsPerPage = action.payload
     },
   },
 })
