@@ -57,14 +57,19 @@ export const CardPage = () => {
     <Card className={s.card}>
       <Typography variant="large">Learn {deck?.name}</Typography>
       <div className={classes.question}>
-        <Typography variant="subtitle1">Question:</Typography>
+        <div className={s.questionTitle}>
+          <Typography variant="subtitle1" as={'p'}>
+            Question:
+          </Typography>
 
-        <Typography variant="body1">
-          {card?.questionImg && (
-            <img className={s.image} src={card?.questionImg} alt="Question cover" />
-          )}
-          {card?.question}
-        </Typography>
+          <Typography variant="body1" as={'p'}>
+            {card?.question}
+          </Typography>
+        </div>
+
+        {card?.questionImg && (
+          <img className={s.image} src={card?.questionImg} alt="Question cover" />
+        )}
       </div>
       <div className={classes.attempts}>
         <Typography variant="body2">Количество попыток ответов на вопрос:</Typography>
@@ -73,14 +78,18 @@ export const CardPage = () => {
       {openAnswer && (
         <>
           <div className={classes.answer}>
-            <Typography variant="subtitle1">Answer:</Typography>
+            <div className={s.answerTitle}>
+              <Typography variant="subtitle1" as={'p'}>
+                Answer:
+              </Typography>
 
-            <Typography variant="body1">
-              {card?.answerImg && (
-                <img className={s.image} src={card?.answerImg} alt="Answer cover" />
-              )}
-              {card?.answer}
-            </Typography>
+              <Typography variant="body1" as={'p'}>
+                {card?.answer}
+              </Typography>
+            </div>
+            {card?.answerImg && (
+              <img className={s.image} src={card?.answerImg} alt="Answer cover" />
+            )}
           </div>
           <div className={classes.rate}>
             <Typography variant="subtitle1">Rate yourself:</Typography>
