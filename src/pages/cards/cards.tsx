@@ -10,6 +10,7 @@ import { ArrowBackOutline, Edit, MoreVertical, PlayArrow, Trash } from '@/assets
 import Button from '@/components/ui/button/button'
 import { Dropdown } from '@/components/ui/dropdown'
 import { DropdownItem } from '@/components/ui/dropdown/dropdownItem'
+import { DropdownItemWithIcon } from '@/components/ui/dropdown/dropdownItem/dropdownItemWithIcon.tsx'
 import { Modal } from '@/components/ui/modal'
 import { Pagination } from '@/components/ui/pagination'
 import { Stars } from '@/components/ui/stars'
@@ -150,13 +151,17 @@ export const Cards = () => {
           <div className={s.titleBlock}>
             <Typography variant={'large'} className={s.title}>
               {currentDeck?.name}
-              <Dropdown trigger={<MoreVertical />}>
-                <DropdownItem>
-                  <PlayArrow />
-                </DropdownItem>
-                <DropdownItem onSelect={e => e.preventDefault()}>
+              <Dropdown trigger={<MoreVertical />} align={'end'}>
+                <DropdownItemWithIcon icon={<PlayArrow />} text="Learn" />
+
+                <DropdownItem onSelect={e => e.preventDefault()} text={'Edit'}>
                   <AddEditDeckModal
-                    trigger={<Edit />}
+                    trigger={
+                      <Typography as={'div'} variant="caption" className={s.captionItem}>
+                        <Edit />
+                        Edit
+                      </Typography>
+                    }
                     buttonTitle="Save Changes"
                     values={currentDeck}
                     deckId={deckID}
@@ -167,7 +172,12 @@ export const Cards = () => {
                   <DeleteDeckModal
                     open={openDeleteDeckModal}
                     onClose={setOpenDeleteDeckModal}
-                    trigger={<Trash />}
+                    trigger={
+                      <Typography as={'div'} variant="caption" className={s.captionItem}>
+                        <Trash />
+                        Delete
+                      </Typography>
+                    }
                     deckName={currentDeck?.name}
                     deckId={currentDeck?.id}
                   />
