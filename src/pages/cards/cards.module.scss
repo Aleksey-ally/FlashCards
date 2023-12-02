@@ -97,7 +97,12 @@
   width: 100%;
 }
 
+.playLearn {
+  text-decoration: none;
+}
+
 .captionItem {
   display: flex;
-  gap: 10px;
+  gap: 0.313rem;
+  align-items: center;
 }
