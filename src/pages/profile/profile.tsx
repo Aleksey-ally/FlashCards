@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 
 import { toast } from 'react-toastify'
 
+import { Loader } from '@/components/ui/loader'
 import { ProfileInfo } from '@/pages/profile/profile-info'
 import { infoOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
 import {
@@ -49,7 +50,7 @@ export const Profile = () => {
       })
   }
 
-  if (isLoading) return <span>Loading...</span>
+  if (isLoading) return <Loader />
 
   return (
     <ProfileInfo

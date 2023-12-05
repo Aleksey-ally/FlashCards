@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { SignIn } from '@/components/auth'
-import { Typography } from '@/components/ui/typography'
+import { Loader } from '@/components/ui/loader'
 import { errorOptions, infoOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
 import { useLoginMutation, useMeQuery } from '@/services/auth/auth.service.ts'
 import { LoginArgs, LoginResponseError } from '@/services/auth/auth.types.ts'
@@ -22,13 +22,7 @@ export const Login = () => {
       })
   }
 
-  if (isLoading) {
-    return (
-      <Typography variant={'large'} as="h1">
-        Loading...
-      </Typography>
-    )
-  }
+  if (isLoading) return <Loader />
 
   if (isAuth) return <Navigate to={'/'} replace={true} />
 

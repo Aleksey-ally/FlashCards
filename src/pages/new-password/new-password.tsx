@@ -3,10 +3,13 @@ import { toast } from 'react-toastify'
 
 import { NewPassword } from '@/components/auth'
 import { NewPasswordForm } from '@/components/schemes/use-new-password-scheme'
+import { Loader } from '@/components/ui/loader'
 import { errorOptions, successOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
-import { useResetPasswordMutation } from '@/services/auth/auth.service'
+import { useMeQuery, useResetPasswordMutation } from '@/services/auth/auth.service'
 
 export const NewPasswordPage = () => {
+  const { isLoading } = useMeQuery()
+
   const { token } = useParams()
   const navigate = useNavigate()
   const [resetPassword] = useResetPasswordMutation()
@@ -27,6 +30,8 @@ export const NewPasswordPage = () => {
       })
       .catch(() => toast.error('Incorrect or expired password reset token', errorOptions))
   }
+
+  if (isLoading) return <Loader />
 
   return <NewPassword onSubmit={resetPasswordHandler} />
 }
