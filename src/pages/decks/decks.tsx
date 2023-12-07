@@ -95,6 +95,8 @@ export const Decks = () => {
     itemsPerPage,
   })
 
+  // console.log(data?.maxCardsCount)
+
   const onClearFilter = () => {
     setSearchByName('')
     setTabValue('all')
