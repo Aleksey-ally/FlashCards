@@ -123,8 +123,8 @@ export const Decks = () => {
         tabLabel={'Show packs cards'}
         onChangeTabValue={setTabValue}
         sliderValue={cardsCount}
-        minSliderValue={data?.minCardsCount}
-        maxSliderValue={data?.maxCardsCount}
+        minSliderValue={0}
+        maxSliderValue={100}
         sliderLabel={'Number of cards'}
         onChangeSliderValue={setCardsCount}
         onClearFilter={onClearFilter}
