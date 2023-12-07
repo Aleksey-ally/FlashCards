@@ -17,7 +17,7 @@ export const CardPage = () => {
 
   const { data: deck, isLoading: isLoadingDeck } = useGetDeckQuery({ id })
   const { data: card, isLoading: isLoadingCard } = useLearnDeckQuery({ id })
-  const [saveGrade] = useSaveGradeMutation()
+  const [saveGrade, { isLoading: isLoadingGrade }] = useSaveGradeMutation()
 
   const classes = {
     question: `${s.textWrapper} ${s.question}`,
@@ -54,7 +54,7 @@ export const CardPage = () => {
 
   if (deck?.cardsCount === 0) return <Navigate to={`/cards/${deckID}`} />
 
-  if (isLoadingDeck && isLoadingCard) return <Loader />
+  if ((isLoadingCard && isLoadingDeck) || isLoadingGrade) return <Loader />
 
   return (
     <Card className={s.card}>
