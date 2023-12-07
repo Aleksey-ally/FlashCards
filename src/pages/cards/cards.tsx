@@ -10,6 +10,7 @@ import { ArrowBackOutline, Edit, MoreVertical, PlayArrow, Trash } from '@/assets
 import Button from '@/components/ui/button/button'
 import { Dropdown } from '@/components/ui/dropdown'
 import { DropdownItem } from '@/components/ui/dropdown/dropdownItem'
+import { Loader } from '@/components/ui/loader'
 import { Modal } from '@/components/ui/modal'
 import { Pagination } from '@/components/ui/pagination'
 import { Stars } from '@/components/ui/stars'
@@ -50,7 +51,7 @@ export const Cards = () => {
   const itemsPerPage = useAppSelector(state => state.cardSlice.itemsPerPage)
 
   const debouncedSearchByQuestion = useDebounce(searchByQuestion, 500)
-  const { data: cards } = useGetCardsQuery({
+  const { data: cards, isLoading } = useGetCardsQuery({
     id,
     question: debouncedSearchByQuestion,
     currentPage,
@@ -130,6 +131,8 @@ export const Cards = () => {
   const backDeckHandler = () => {
     navigate('/')
   }
+
+  if (isLoading) return <Loader />
 
   return (
     <div className={s.cards}>

@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
+import { Loader } from '@/components/ui/loader'
 import { CardPage } from '@/pages/card/card.tsx'
 import { Cards } from '@/pages/cards'
 import { CheckEmailPage } from '@/pages/check-email'
@@ -54,6 +55,10 @@ const privateRoutes: RouteObject[] = [
     path: '/profile',
     element: <Profile />,
   },
+  {
+    path: '/card/:deckID',
+    element: <CardPage />,
+  },
 ]
 
 const router = createBrowserRouter([
@@ -70,10 +75,6 @@ const router = createBrowserRouter([
         path: '*',
         element: <h1>Not Found</h1>,
       },
-      {
-        path: '/card/:deckID',
-        element: <CardPage />,
-      },
     ],
   },
 ])
@@ -86,7 +87,7 @@ function PrivateRoutes() {
   const { isError, isLoading } = useMeQuery()
   const isAuthenticated = !isError
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Loader />
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

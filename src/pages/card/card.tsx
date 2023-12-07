@@ -6,6 +6,7 @@ import s from './card.module.scss'
 
 import Button from '@/components/ui/button/button'
 import { Card } from '@/components/ui/card'
+import { Loader } from '@/components/ui/loader'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { Typography } from '@/components/ui/typography'
 import { useGetDeckQuery, useLearnDeckQuery, useSaveGradeMutation } from '@/services/decks'
@@ -14,8 +15,8 @@ export const CardPage = () => {
   const { deckID } = useParams()
   const id = deckID as string
 
-  const { data: deck } = useGetDeckQuery({ id })
-  const { data: card } = useLearnDeckQuery({ id })
+  const { data: deck, isLoading: isLoadingDeck } = useGetDeckQuery({ id })
+  const { data: card, isLoading: isLoadingCard } = useLearnDeckQuery({ id })
   const [saveGrade] = useSaveGradeMutation()
 
   const classes = {
@@ -52,6 +53,8 @@ export const CardPage = () => {
   }
 
   if (deck?.cardsCount === 0) return <Navigate to={`/cards/${deckID}`} />
+
+  if (isLoadingDeck && isLoadingCard) return <Loader />
 
   return (
     <Card className={s.card}>
