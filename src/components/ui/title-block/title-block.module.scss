@@ -1,0 +1,22 @@
+.titleBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .title {
+    display: flex;
+    align-items: center;
+    align-self: start;
+  }
+}
+
+.playLearn {
+  color: var(--color-light-100);
+  text-decoration: none;
+}
+
+.captionItem {
+  display: flex;
+  gap: 0.313rem;
+  align-items: center;
+}
