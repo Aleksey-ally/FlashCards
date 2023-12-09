@@ -19,18 +19,6 @@
     }
   }
 
-  .titleBlock {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .title {
-      display: flex;
-      align-items: center;
-      align-self: start;
-    }
-  }
-
   .searchCard {
     display: flex;
     flex-direction: column;
@@ -95,14 +83,4 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-}
-
-.playLearn {
-  text-decoration: none;
-}
-
-.captionItem {
-  display: flex;
-  gap: 0.313rem;
-  align-items: center;
 }

@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
-import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import s from './cards.module.scss'
 
-import { ArrowBackOutline, Edit, MoreVertical, PlayArrow, Trash } from '@/assets'
+import { ArrowBackOutline, Edit, Trash } from '@/assets'
 import Button from '@/components/ui/button/button'
-import { Dropdown } from '@/components/ui/dropdown'
-import { DropdownItem } from '@/components/ui/dropdown/dropdownItem'
 import { Loader } from '@/components/ui/loader'
 import { Modal } from '@/components/ui/modal'
 import { Pagination } from '@/components/ui/pagination'
@@ -23,11 +21,10 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { TextField } from '@/components/ui/text-field'
+import { TitleBlock } from '@/components/ui/title-block/title-block.tsx'
 import { Typography } from '@/components/ui/typography'
 import { AddCardModal } from '@/pages/cards/add-card-modale'
 import { EditCardModal } from '@/pages/cards/edit-card-modale'
-import { AddEditDeckModal } from '@/pages/decks'
-import { DeleteDeckModal } from '@/pages/decks/delete-deck-modal'
 import { useDebounce } from '@/pages/utils'
 import { errorOptions, successOptions } from '@/pages/utils/toastify-options/toastify-options.ts'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
@@ -136,82 +133,36 @@ export const Cards = () => {
 
   return (
     <div className={s.cards}>
+      <div className={s.backDeck}>
+        <Typography
+          as={'label'}
+          variant={'body2'}
+          htmlFor={'backDeck'}
+          onClick={backDeckHandler}
+          className={s.label}
+        >
+          <ArrowBackOutline id={'backDeck'} className={s.arrowBackOutline} />
+          Back to Decks List
+        </Typography>
+      </div>
+      {((cards?.items?.length || searchByQuestion.length) && (
+        <TitleBlock
+          variant={'with dropdown'}
+          currentDeck={currentDeck}
+          currentUser={currentUser}
+          deckID={deckID}
+          open={openDeleteDeckModal}
+          onClose={setOpenDeleteDeckModal}
+          onSubmit={onClickCreateCard}
+        />
+      )) || (
+        <Typography className={s.title} variant={'large'}>
+          {currentDeck?.name}
+        </Typography>
+      )}
+
       {cards?.items?.length || searchByQuestion.length ? (
         <>
-          <div className={s.backDeck}>
-            <Typography
-              as={'label'}
-              variant={'body2'}
-              htmlFor={'backDeck'}
-              onClick={backDeckHandler}
-              className={s.label}
-            >
-              <ArrowBackOutline id={'backDeck'} className={s.arrowBackOutline} />
-              Back to Decks List
-            </Typography>
-          </div>
-          <div className={s.titleBlock}>
-            <Typography variant={'large'} className={s.title}>
-              {currentDeck?.name}
-              <Dropdown trigger={<MoreVertical />} align={'end'}>
-                <DropdownItem>
-                  <NavLink to={`/card/${currentDeck?.id}`} className={s.playLearn}>
-                    <Typography variant="caption" className={s.captionItem}>
-                      <PlayArrow />
-                      Learn
-                    </Typography>
-                  </NavLink>
-                </DropdownItem>
-
-                <DropdownItem onSelect={e => e.preventDefault()} text={'Edit'}>
-                  <AddEditDeckModal
-                    trigger={
-                      <Typography variant="caption" className={s.captionItem}>
-                        <Edit />
-                        Edit
-                      </Typography>
-                    }
-                    buttonTitle="Save Changes"
-                    values={currentDeck}
-                    deckId={deckID}
-                    type={'Edit deck'}
-                  />
-                </DropdownItem>
-                <DropdownItem onSelect={e => e.preventDefault()}>
-                  <DeleteDeckModal
-                    open={openDeleteDeckModal}
-                    onClose={setOpenDeleteDeckModal}
-                    trigger={
-                      <Typography variant="caption" className={s.captionItem}>
-                        <Trash />
-                        Delete
-                      </Typography>
-                    }
-                    deckName={currentDeck?.name}
-                    deckId={currentDeck?.id}
-                  />
-                </DropdownItem>
-              </Dropdown>
-            </Typography>
-            {currentDeck?.userId === currentUser?.id ? (
-              <AddCardModal
-                title={'Add New Card'}
-                trigger={
-                  <Button className={s.button}>
-                    <Typography variant="subtitle2" as="span">
-                      Add New Card
-                    </Typography>
-                  </Button>
-                }
-                buttonTitle={'Add New Card'}
-                onSubmit={onClickCreateCard}
-              ></AddCardModal>
-            ) : (
-              <NavLink className={s.button} to={`/card/${currentDeck?.id}`}>
-                <Button>Learn to Deck</Button>
-              </NavLink>
-            )}
-          </div>
           <div className={s.searchCard}>
             <TextField
               placeholder={'Input card question'}
@@ -293,22 +244,6 @@ export const Cards = () => {
         </>
       ) : (
         <div className={s.emptyDeck}>
-          <div className={s.backDeck}>
-            <Typography
-              as={'label'}
-              variant={'body2'}
-              htmlFor={'backDeck'}
-              onClick={backDeckHandler}
-              className={s.label}
-            >
-              <ArrowBackOutline id={'backDeck'} className={s.arrowBackOutline} />
-              Back to Decks List
-            </Typography>
-          </div>
-          <Typography className={s.title} variant={'large'}>
-            {currentDeck?.name}
-          </Typography>
-
           <Typography className={s.description} variant={'body1'}>
             This pack is empty. Click add new card to fill this pack
           </Typography>
