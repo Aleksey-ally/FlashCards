@@ -241,6 +241,16 @@ export const Cards = () => {
               ))}
             </TableBody>
           </Table>
+          <div className={s.pagination}>
+            <Pagination
+              count={cards?.pagination.totalPages || 1}
+              page={currentPage}
+              onChange={setCurrentPage}
+              perPage={itemsPerPage}
+              onPerPageChange={value => setItemsPerPage(Number(value))}
+              perPageOptions={[10, 20, 30, 40, 50]}
+            />
+          </div>
         </>
       ) : (
         <div className={s.emptyDeck}>
@@ -261,16 +271,6 @@ export const Cards = () => {
           ></AddCardModal>
         </div>
       )}
-      <div className={s.pagination}>
-        <Pagination
-          count={cards?.pagination.totalPages || 1}
-          page={currentPage}
-          onChange={setCurrentPage}
-          perPage={itemsPerPage}
-          onPerPageChange={value => setItemsPerPage(Number(value))}
-          perPageOptions={[10, 20, 30, 40, 50]}
-        />
-      </div>
     </div>
   )
 }
