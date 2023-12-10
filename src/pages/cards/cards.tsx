@@ -145,6 +145,7 @@ export const Cards = () => {
           Back to Decks List
         </Typography>
       </div>
+
       {((cards?.items?.length || searchByQuestion.length) && (
         <TitleBlock
           variant={'with dropdown'}
@@ -160,7 +161,6 @@ export const Cards = () => {
           {currentDeck?.name}
         </Typography>
       )}
-
       {cards?.items?.length || searchByQuestion.length ? (
         <>
           <div className={s.searchCard}>
@@ -241,36 +241,44 @@ export const Cards = () => {
               ))}
             </TableBody>
           </Table>
+          <div className={s.pagination}>
+            <Pagination
+              count={cards?.pagination.totalPages || 1}
+              page={currentPage}
+              onChange={setCurrentPage}
+              perPage={itemsPerPage}
+              onPerPageChange={value => setItemsPerPage(Number(value))}
+              perPageOptions={[10, 20, 30, 40, 50]}
+            />
+          </div>
         </>
       ) : (
         <div className={s.emptyDeck}>
-          <Typography className={s.description} variant={'body1'}>
-            This pack is empty. Click add new card to fill this pack
-          </Typography>
-          <AddCardModal
-            title={'Add New Card'}
-            trigger={
-              <Button className={s.button}>
-                <Typography variant="subtitle2" as="span">
-                  Add New Card
-                </Typography>
-              </Button>
-            }
-            buttonTitle={'Add New Card'}
-            onSubmit={onClickCreateCard}
-          ></AddCardModal>
+          {currentDeck?.userId !== currentUser?.id ? (
+            <Typography className={s.description} variant={'body1'}>
+              This pack is empty
+            </Typography>
+          ) : (
+            <>
+              <Typography className={s.description} variant={'body1'}>
+                This pack is empty. Click add new card to fill this pack
+              </Typography>
+              <AddCardModal
+                title={'Add New Card'}
+                trigger={
+                  <Button className={s.button}>
+                    <Typography variant="subtitle2" as="span">
+                      Add New Card
+                    </Typography>
+                  </Button>
+                }
+                buttonTitle={'Add New Card'}
+                onSubmit={onClickCreateCard}
+              ></AddCardModal>
+            </>
+          )}
         </div>
       )}
-      <div className={s.pagination}>
-        <Pagination
-          count={cards?.pagination.totalPages || 1}
-          page={currentPage}
-          onChange={setCurrentPage}
-          perPage={itemsPerPage}
-          onPerPageChange={value => setItemsPerPage(Number(value))}
-          perPageOptions={[10, 20, 30, 40, 50]}
-        />
-      </div>
     </div>
   )
 }
