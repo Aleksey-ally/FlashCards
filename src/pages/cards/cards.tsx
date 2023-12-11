@@ -197,7 +197,7 @@ export const Cards = () => {
                 <TableHeadCell>Answer</TableHeadCell>
                 <TableHeadCell>Last Updated</TableHeadCell>
                 <TableHeadCell>Grade</TableHeadCell>
-                <TableHeadCell></TableHeadCell>
+                {currentDeck?.userId === currentUser?.id && <TableHeadCell></TableHeadCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -223,20 +223,22 @@ export const Cards = () => {
                   <TableCell>
                     <Stars grade={card.grade} />
                   </TableCell>
-                  <TableCell>
-                    <div className={s.iconsContainer}>
-                      <EditCardModal
-                        title={'Edit Card'}
-                        trigger={<Edit />}
-                        buttonTitle={'Edit Card'}
-                        onSubmit={body => onClickUpdateCard(card.id, body)}
-                      ></EditCardModal>
-                      <Trash
-                        className={s.trash}
-                        onClick={() => onClickDeleteCardIcon(card.id, card.question)}
-                      />
-                    </div>
-                  </TableCell>
+                  {currentDeck?.userId === currentUser?.id && (
+                    <TableCell>
+                      <div className={s.iconsContainer}>
+                        <EditCardModal
+                          title={'Edit Card'}
+                          trigger={<Edit />}
+                          buttonTitle={'Edit Card'}
+                          onSubmit={body => onClickUpdateCard(card.id, body)}
+                        ></EditCardModal>
+                        <Trash
+                          className={s.trash}
+                          onClick={() => onClickDeleteCardIcon(card.id, card.question)}
+                        />
+                      </div>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
@@ -261,7 +263,7 @@ export const Cards = () => {
           ) : (
             <>
               <Typography className={s.description} variant={'body1'}>
-                This pack is empty. Click add new card to fill this pack
+                This deck is empty. Click add new card to fill this pack
               </Typography>
               <AddCardModal
                 title={'Add New Card'}
