@@ -11,7 +11,6 @@ export type DecksFilterProps = {
   inputValue: string
   onChangeInputValue: (value: string) => void
   tabValue: string
-  tabLabel: string
   onChangeTabValue: (value: string) => void
   sliderValue: number[]
   minSliderValue?: number
@@ -47,8 +46,8 @@ export const DecksFilter = ({
         value={tabValue}
         onValueChange={onChangeTabValue}
         tabs={[
-          { title: 'All Cards', value: 'all' },
-          { title: ' My Cards ', value: 'my cards' },
+          { title: 'My Decks', value: 'my' },
+          { title: 'All Decks', value: 'all' },
         ]}
       ></TabSwitcher>
       <Slider

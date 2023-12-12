@@ -28,8 +28,7 @@ export const TabSwitcher = ({ tabs, defaultValue, value, onValueChange, children
           return (
             <TabsRadix.Trigger
               key={t.value}
-              className={`${s.default}`}
-              autoFocus={defaultValue === t.value}
+              className={`${s.default} ${value === t.value && s.active}`}
               value={t.value}
               disabled={t.disabled}
             >

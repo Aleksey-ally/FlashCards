@@ -62,7 +62,7 @@ export const Decks = () => {
   const itemsPerPage = useAppSelector(state => state.deckSlice.itemsPerPage)
 
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [tabValue, setTabValue] = useState('all')
+  const [tabValue, setTabValue] = useState<string>('all')
 
   const setCardsCount = (value: number[]) => {
     dispatch(decksSlice.actions.setCardsCount(value))
@@ -87,15 +87,13 @@ export const Decks = () => {
   const { currentData: user } = useMeQuery()
   const { data } = useGetDecksQuery({
     name: debouncedSearchName,
-    authorId: tabValue === 'my cards' ? user?.id : undefined,
+    authorId: tabValue === 'my' ? user?.id : undefined,
     minCardsCount: debouncedCardsCount[0],
     maxCardsCount: debouncedCardsCount[1],
     orderBy: sortedString,
     currentPage,
     itemsPerPage,
   })
-
-  // console.log(data?.maxCardsCount)
 
   const onClearFilter = () => {
     setSearchByName('')
@@ -120,7 +118,6 @@ export const Decks = () => {
         inputValue={searchByName}
         onChangeInputValue={value => setSearchByName(value)}
         tabValue={tabValue}
-        tabLabel={'Show packs cards'}
         onChangeTabValue={setTabValue}
         sliderValue={cardsCount}
         minSliderValue={0}
