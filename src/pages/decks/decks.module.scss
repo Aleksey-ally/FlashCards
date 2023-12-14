@@ -6,8 +6,13 @@
   max-width: 62.875rem;
   margin: 2.25rem auto auto;
 
-  .button {
-    align-self: end;
+  .title {
+    display: flex;
+    justify-content: space-between;
+
+    .button {
+      min-width: 10%;
+    }
   }
 
   .deckName {

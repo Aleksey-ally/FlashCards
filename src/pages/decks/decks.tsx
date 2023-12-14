@@ -103,17 +103,21 @@ export const Decks = () => {
 
   return (
     <div className={s.pageDeck}>
-      <AddEditDeckModal
-        trigger={
-          <Button className={s.button}>
-            <Typography variant="subtitle2" as="span">
-              Add New Deck
-            </Typography>
-          </Button>
-        }
-        buttonTitle="Add new deck"
-        type="Add deck"
-      ></AddEditDeckModal>
+      <div className={s.title}>
+        <Typography variant={'large'}>Decks list</Typography>
+        <AddEditDeckModal
+          trigger={
+            <Button className={s.button}>
+              <Typography variant="subtitle2" as="span">
+                Add New Deck
+              </Typography>
+            </Button>
+          }
+          buttonTitle="Add new deck"
+          type="Add deck"
+        ></AddEditDeckModal>
+      </div>
+
       <DecksFilter
         inputValue={searchByName}
         onChangeInputValue={value => setSearchByName(value)}
