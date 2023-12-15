@@ -13,11 +13,12 @@ import { Modal } from '@/components/ui/modal'
 import { Pagination } from '@/components/ui/pagination'
 import { Stars } from '@/components/ui/stars'
 import {
+  Column,
+  Sort,
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeadCell,
+  TableHeader,
   TableRow,
 } from '@/components/ui/table'
 import { TextField } from '@/components/ui/text-field'
@@ -36,6 +37,33 @@ import { useAppSelector } from '@/services/store.ts'
 
 type CurrentCard = Pick<Card, 'id' | 'question'>
 
+const columns: Column[] = [
+  {
+    key: 'question',
+    title: 'Question',
+    sortable: true,
+  },
+  {
+    key: 'answer',
+    title: 'Answer',
+    sortable: true,
+  },
+  {
+    key: 'updated',
+    title: 'Last Updated',
+    sortable: true,
+  },
+  {
+    key: 'grade',
+    title: 'Grade',
+    sortable: true,
+  },
+  {
+    key: 'icons',
+    title: '',
+  },
+]
+
 export const Cards = () => {
   const { deckID } = useParams()
   const id = deckID as string
@@ -46,13 +74,17 @@ export const Cards = () => {
   const searchByQuestion = useAppSelector(state => state.cardSlice.searchByName)
   const currentPage = useAppSelector(state => state.cardSlice.currentPage)
   const itemsPerPage = useAppSelector(state => state.cardSlice.itemsPerPage)
+  const orderBy = useAppSelector(state => state.cardSlice.orderBy)
 
   const debouncedSearchByQuestion = useDebounce(searchByQuestion, 500)
+  const sortedString = orderBy ? `${orderBy.key}-${orderBy.direction}` : null
+
   const { data: cards, isLoading } = useGetCardsQuery({
     id,
     question: debouncedSearchByQuestion,
     currentPage,
     itemsPerPage,
+    orderBy: sortedString,
   })
   const { data: currentDeck } = useGetDeckQuery({ id })
   const { currentData: currentUser } = useMeQuery()
@@ -125,6 +157,10 @@ export const Cards = () => {
     dispatch(cardsSlice.actions.setItemsPerPage(value))
   }
 
+  const setOrderBy = (value: Sort) => {
+    dispatch(cardsSlice.actions.setOrderBy(value))
+  }
+
   const backDeckHandler = () => {
     navigate('/')
   }
@@ -191,15 +227,12 @@ export const Cards = () => {
             </div>
           </Modal>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeadCell>Question</TableHeadCell>
-                <TableHeadCell>Answer</TableHeadCell>
-                <TableHeadCell>Last Updated</TableHeadCell>
-                <TableHeadCell>Grade</TableHeadCell>
-                {currentDeck?.userId === currentUser?.id && <TableHeadCell></TableHeadCell>}
-              </TableRow>
-            </TableHead>
+            <TableHeader
+              className={s.tableHeader}
+              columns={columns}
+              sort={orderBy}
+              onSort={setOrderBy}
+            />
             <TableBody>
               {cards?.items?.map(card => (
                 <TableRow key={card.id}>

@@ -67,7 +67,7 @@ export type GetCardsParams = {
   id: string
   question?: string
   answer?: string
-  orderBy?: string
+  orderBy?: string | null
   currentPage?: number
   itemsPerPage?: number
 }

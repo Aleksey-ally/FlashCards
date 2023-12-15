@@ -24,6 +24,10 @@
     flex-direction: column;
   }
 
+  .tableHeader {
+    width: 25%;
+  }
+
   .descriptionWithImg {
     display: flex;
     gap: 0.625rem;
