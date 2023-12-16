@@ -72,7 +72,7 @@ export const DeckForm = ({
         onLoadCover={onLoadCover}
         onLoadError={onLoadCoverError}
       >
-        <Button type="button" variant={'secondary'}>
+        <Button type="button" variant={'secondary'} fullWidth>
           <Edit />
           <Typography variant={'h2'} as="span">
             {buttonUploadText}
@@ -85,10 +85,10 @@ export const DeckForm = ({
       </div>
       <div className={s.buttonsContainer}>
         <Button type="button" variant={'secondary'} onClick={onClose}>
-          <Typography variant={'h2'}>Cancel</Typography>
+          <Typography variant={'subtitle2'}>Cancel</Typography>
         </Button>
         <Button>
-          <Typography variant={'h2'}>{buttonTitle}</Typography>
+          <Typography variant={'subtitle2'}>{buttonTitle}</Typography>
         </Button>
       </div>
       <DevTool control={control} />

@@ -113,7 +113,7 @@ export const Decks = () => {
               </Typography>
             </Button>
           }
-          buttonTitle="Add new deck"
+          buttonTitle="Add New Deck"
           type="Add deck"
         ></AddEditDeckModal>
       </div>
