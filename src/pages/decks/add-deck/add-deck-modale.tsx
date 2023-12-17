@@ -62,7 +62,7 @@ export const AddEditDeckModal = ({
   }
 
   return (
-    <Modal title={'add edit deck'} trigger={trigger} open={open} onClose={() => setOpen(!open)}>
+    <Modal title={'Add New Deck'} trigger={trigger} open={open} onClose={() => setOpen(!open)}>
       <DeckForm
         values={values}
         onSubmit={handleDeckSubmit}

@@ -4,9 +4,25 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
+  overflow-y: auto;
+
+  max-height: 80vh;
+
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
   border-radius: 2px;
+
+  &::-webkit-scrollbar {
+    width: 14px; /* Ширина полосы прокрутки */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-dark-500); /* Цвет полосы прокрутки */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-dark-700); /* Цвет фона полосы прокрутки */
+  }
 
   &.sm {
     width: 367px;
@@ -34,6 +50,9 @@
   position: fixed;
   z-index: 0;
   inset: 0;
+
+  width: 100%;
+
   background-color: rgb(0 0 0 / 50%);
 }
 
