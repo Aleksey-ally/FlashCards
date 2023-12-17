@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-import { DevTool } from '@hookform/devtools'
-
 import s from './deck-form.module.scss'
 
 import { Edit } from '@/assets'
@@ -91,7 +89,6 @@ export const DeckForm = ({
           <Typography variant={'subtitle2'}>{buttonTitle}</Typography>
         </Button>
       </div>
-      <DevTool control={control} />
     </form>
   )
 }
