@@ -184,7 +184,7 @@ export const Cards = () => {
 
       {((cards?.items?.length || searchByQuestion.length) && (
         <TitleBlock
-          variant={'with dropdown'}
+          variant={currentDeck?.userId === currentUser?.id ? 'with dropdown' : 'default'}
           currentDeck={currentDeck}
           currentUser={currentUser}
           deckID={deckID}
