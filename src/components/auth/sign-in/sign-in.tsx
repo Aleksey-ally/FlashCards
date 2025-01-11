@@ -23,6 +23,7 @@ export const SignIn = ({ onSubmit }: Props) => {
       <Typography variant="large" className={s.title}>
         Sign In
       </Typography>
+
       <form className={s.form} onSubmit={onFormSubmit}>
         <ControlledTextField label="Email" control={control} name="email" />
         <ControlledTextField label="Password" control={control} name="password" type="password" />
@@ -30,6 +31,9 @@ export const SignIn = ({ onSubmit }: Props) => {
 
         <Typography as={Link} to="/recovery-password" variant="body2" className={s.recovery}>
           Forgot Password?
+        </Typography>
+        <Typography variant="error" as={'p'}>
+          Проверьте, что ваш браузер не блокирует cookie.
         </Typography>
         <Button type="submit" fullWidth className={s.button}>
           Sign In
