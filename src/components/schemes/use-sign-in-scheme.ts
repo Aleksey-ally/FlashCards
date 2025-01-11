@@ -14,8 +14,8 @@ export const useSignInScheme = () => {
   const { handleSubmit, control } = useForm<SingInForm>({
     resolver: zodResolver(schema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'test@test.com',
+      password: 'test',
       rememberMe: false,
     },
   })
