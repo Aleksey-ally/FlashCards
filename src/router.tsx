@@ -19,7 +19,7 @@ import { RecoveryPasswordPage } from '@/pages/recovery-password'
 import { SignUpPage } from '@/pages/sign-up'
 import { useMeQuery } from '@/services/auth/auth.service.ts'
 
-const publicRoutes: RouteObject[] = [
+export const publicRoutes: RouteObject[] = [
   {
     path: '/login',
     element: <Login />,
@@ -42,7 +42,7 @@ const publicRoutes: RouteObject[] = [
   },
 ]
 
-const privateRoutes: RouteObject[] = [
+export const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <Decks />,
@@ -61,7 +61,7 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
