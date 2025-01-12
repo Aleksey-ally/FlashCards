@@ -14,10 +14,7 @@ export const Layout = () => {
 
   const logoutHandler = () => {
     logout()
-      .unwrap()
-      .then(() => {
-        toast.info(parting, infoOptions)
-      })
+    toast.info(parting, infoOptions)
   }
 
   return (
