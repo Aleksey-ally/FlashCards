@@ -21,7 +21,7 @@ export const DecksService = baseApi.injectEndpoints({
     return {
       getDecks: builder.query<DecksResponse, GetDecksParams | void>({
         query: params => ({
-          url: 'v1/decks',
+          url: 'v2/decks',
           params: params ?? {},
         }),
         providesTags: ['Decks'],

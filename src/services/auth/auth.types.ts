@@ -5,6 +5,7 @@ export type LoginArgs = {
 }
 export type LoginResponseType = {
   accessToken: string
+  refreshToken: string
 }
 
 export type LoginResponseError = {

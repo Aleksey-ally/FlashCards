@@ -16,35 +16,36 @@ export const authService = baseApi.injectEndpoints({
       providesTags: ['Me'],
     }),
     login: builder.mutation<LoginResponseType, LoginArgs>({
-      query: body => ({
-        url: `v1/auth/login`,
-        method: 'POST',
-        body,
-      }),
       invalidatesTags: ['Me'],
+      async onQueryStarted(_, { queryFulfilled }) {
+        const { data } = await queryFulfilled
+
+        if (!data) {
+          return
+        }
+
+        localStorage.setItem('accessTokenCards', data.accessToken)
+        localStorage.setItem('refreshTokenCards', data.refreshToken)
+      },
+      query: body => {
+        return {
+          body,
+          method: 'POST',
+          url: '/v1/auth/login',
+        }
+      },
     }),
 
     logout: builder.mutation<void, void>({
-      query: () => {
-        return {
-          url: 'v1/auth/logout',
-          method: 'POST',
-        }
-      },
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          authService.util.updateQueryData('me', undefined, () => {
-            return
-          })
-        )
-
-        try {
-          await queryFulfilled
-        } catch {
-          patchResult.undo()
-        }
-      },
       invalidatesTags: ['Me'],
+      async onQueryStarted() {
+        localStorage.removeItem('accessTokenCards')
+        localStorage.removeItem('refreshTokenCards')
+      },
+      query: () => ({
+        method: 'POST',
+        url: 'v2/auth/logout',
+      }),
     }),
     updateProfile: builder.mutation<any, any>({
       query: params => {
